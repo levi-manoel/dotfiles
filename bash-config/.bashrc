@@ -19,7 +19,7 @@ alias cd-personal="cd /home/levi/dev/personal"
 alias cd-irancho="cd /home/levi/dev/irancho"
 
 ## nixos
-alias nixos-config="sudo bash /home/levi/dev/scripts/sync-config-files.sh"
+alias nixos-config="sudo bash /home/levi/dev/personal/dotfiles/bash-config/scripts/sync-config-files.sh"
 
 ## git
 alias gst="git status"
