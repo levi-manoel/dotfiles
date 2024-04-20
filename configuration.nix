@@ -4,6 +4,7 @@
   imports =
     [
       ./hardware-configuration.nix
+      <home-manager/nixos>
     ];
 
   # Bootloader.
@@ -83,6 +84,7 @@
     stremio
     onlyoffice-bin
     alejandra
+    nil
     nixpkgs-fmt
 
     nano
