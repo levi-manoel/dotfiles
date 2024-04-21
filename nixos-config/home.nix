@@ -62,24 +62,8 @@
     };
   };
 
-  programs.bash = {
+  programs.zsh = {
     enable = true;
-
-    bashrcExtra = "
-      export XDG_DATA_HOME=\"$HOME/.local/share\"
-      source /home/levi/dev/personal/scripts/git-prompt.sh
-
-      function changes_in_branch() {
-        if [ -d .git ] || [ -d ../.git ] || [ -d ../../.git ] || [ -d ../../../.git ] || [ -d ../../../../.git ]; then
-        if expr length + \"$(git status -s)\" 2>&1 > /dev/null; then
-          echo -ne \"\\033[0;33m$(__git_ps1)\\033[0m\";
-        else
-          echo -ne \"\\033[0;32m$(__git_ps1)\\033[0m\"; fi;
-        fi
-      }
-
-      PS1=\"\\[\\033[0;32m\\]\\[\\033[0m\\033[0;32m\\]\\u\\[\\033[0;36m\\] @ \\[\\033[0;36m\\]\\h \\w\\[\\033[0;32m\\]$(__git_ps1)\\n\\[\\033[0;32m\\]└─\\[\\033[0m\\033[0;32m\\] \\$\\[\\033[0m\\033[0;32m\\] ▶\\[\\033[0m\\]  \"
-    ";
 
     shellAliases = {
       dotfiles-sync = "cat /home/levi/dev/personal/dotfiles/nixos-config/flake.nix | sudo tee /etc/nixos/flake.nix && cat /home/levi/dev/personal/dotfiles/nixos-config/configuration.nix | sudo tee /etc/nixos/configuration.nix && cat /home/levi/dev/personal/dotfiles/nixos-config/home.nix | sudo tee /etc/nixos/home.nix";
@@ -93,6 +77,18 @@
       gcp = "git cherry-pick";
       gd = "git diff";
       gds = "git diff --staged";
+    };
+
+    oh-my-zsh = {
+      enable = true;
+      theme = "candy";
+      plugins = [
+        "git"
+        "npm"
+        "history"
+        "node"
+        "rust"
+      ];
     };
   };
 
