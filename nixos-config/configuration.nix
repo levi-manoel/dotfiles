@@ -61,7 +61,7 @@
   users.users.levi = {
     isNormalUser = true;
     description = "levi";
-    extraGroups = ["networkmanager" "wheel"];
+    extraGroups = ["audio" "video" "cdrom" "plugdev" "networkmanager" "wheel"];
     packages = with pkgs; [
       firefox
     ];
