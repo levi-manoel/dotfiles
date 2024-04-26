@@ -4,7 +4,7 @@
   ...
 }: {
   imports = [
-    ./hardware-configuration.nix
+    ./hardware.nix
   ];
 
   # Bootloader.
@@ -44,9 +44,6 @@
   # Configure console keymap
   console.keyMap = "br-abnt2";
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
   # Enable sound with pipewire.
   sound.enable = true;
   hardware.pulseaudio.enable = false;
@@ -68,7 +65,7 @@
   };
 
   users.defaultUserShell = pkgs.zsh;
-  environment.shells = with pkgs; [ zsh ];
+  environment.shells = with pkgs; [zsh];
   programs.zsh.enable = true;
 
   nixpkgs.config.allowUnfree = true;
@@ -86,6 +83,7 @@
     gparted
     stremio
     onlyoffice-bin
+    libreoffice
     alejandra
     nil
     nixpkgs-fmt
@@ -96,6 +94,7 @@
     wget
     tldr
     lshw
+    bzip2
   ];
 
   programs.steam = {
@@ -103,6 +102,41 @@
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
   };
+
+  # SERVICES
+  services.printing = {
+    enable = true;
+    drivers = [pkgs.epson_201207w];
+    browsing = true;
+    defaultShared = true;
+  };
+
+  services.avahi = {
+    enable = true;
+    nssmdns = true;
+    publish.enable = true;
+    publish.addresses = true;
+    publish.userServices = true;
+  };
+
+  hardware.sane = {
+    enable = true;
+    extraBackends = [pkgs.epson_201207w];
+  };
+
+  services.redis.servers = {
+    "redis" = {
+      enable = true;
+      port = 6379;
+    };
+  };
+
+  services.mysql = {
+    enable = true;
+    package = pkgs.mariadb;
+  };
+
+  system.stateVersion = "23.11";
 
   fonts = {
     fontDir.enable = true;
@@ -157,16 +191,6 @@
       };
     };
   };
-
-  # SERVICES
-  services.redis.servers = {
-    "redis" = {
-      enable = true;
-      port = 6379;
-    };
-  };
-
-  system.stateVersion = "23.11";
 
   # NVIDIA
   hardware.opengl = {
