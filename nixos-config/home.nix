@@ -16,6 +16,7 @@
     p7zip
 
     cowsay
+    cmatrix
     file
     which
     tree
@@ -66,8 +67,6 @@
     enable = true;
 
     shellAliases = {
-      dotfiles-sync = "cat /home/levi/dev/personal/dotfiles/nixos-config/flake.nix | sudo tee /etc/nixos/flake.nix && cat /home/levi/dev/personal/dotfiles/nixos-config/configuration.nix | sudo tee /etc/nixos/configuration.nix && cat /home/levi/dev/personal/dotfiles/nixos-config/home.nix | sudo tee /etc/nixos/home.nix";
-
       gst = "git status";
       ga = "git add";
       gcmsg = "git commit -m";
