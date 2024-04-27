@@ -22,8 +22,9 @@ in {
         copy_on_select = true;
         disable_ligatures = "cursor";
         enable_audio_bell = false;
+        window_padding_width = 8;
 
-        background_opacity = "0.9";
+        background_opacity = "0.8";
       };
 
       # TODO: use theming

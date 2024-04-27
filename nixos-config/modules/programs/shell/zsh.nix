@@ -23,6 +23,20 @@ in {
     user.home.programs.zsh = {
       inherit (cfg) enable;
 
+      completionInit = ''
+        ${
+          if kitty.enable
+          then "set -g TERM xterm"
+          else ""
+        }
+
+        ${
+          if starship.enable
+          then "eval \"$(starship init zsh)\""
+          else ""
+        }
+      '';
+
       oh-my-zsh = {
         enable = true;
         theme = "candy";
