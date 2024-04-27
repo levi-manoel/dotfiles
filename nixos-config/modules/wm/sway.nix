@@ -7,10 +7,10 @@
   terminal = "${pkgs.kitty}/bin/kitty";
   menu = "${pkgs.rofi}/bin/rofi";
 
-  left = "h";
-  down = "j";
-  up = "k";
-  right = "l";
+  # left = "h";
+  # down = "j";
+  # up = "k";
+  # right = "l";
 
   dbus-sway-environment = pkgs.writeTextFile {
     name = "dbus-sway-environment";
@@ -418,20 +418,20 @@ in {
 
           "${modifier}+Shift+s" = "exec ${pkgs.shotman}/bin/shotman --capture region";
 
-          "${modifier}+${left}" = "focus left";
-          "${modifier}+${down}" = "focus down";
-          "${modifier}+${up}" = "focus up";
-          "${modifier}+${right}" = "focus right";
+          # "${modifier}+${left}" = "focus left";
+          # "${modifier}+${down}" = "focus down";
+          # "${modifier}+${up}" = "focus up";
+          # "${modifier}+${right}" = "focus right";
 
           "${modifier}+Left" = "focus left";
           "${modifier}+Down" = "focus down";
           "${modifier}+Up" = "focus up";
           "${modifier}+Right" = "focus right";
 
-          "${modifier}+Shift+${left}" = "move left";
-          "${modifier}+Shift+${down}" = "move down";
-          "${modifier}+Shift+${up}" = "move up";
-          "${modifier}+Shift+${right}" = "move right";
+          # "${modifier}+Shift+${left}" = "move left";
+          # "${modifier}+Shift+${down}" = "move down";
+          # "${modifier}+Shift+${up}" = "move up";
+          # "${modifier}+Shift+${right}" = "move right";
 
           "${modifier}+Shift+Left" = "move left";
           "${modifier}+Shift+Down" = "move down";
@@ -489,6 +489,10 @@ in {
 
           "XF86MonBrightnessDown" = "exec light -U 10";
           "XF86MonBrightnessUp" = "exec light -A 10";
+
+          "XF86AudioPlay" = "exec playerctl play-pause";
+          "XF86AudioNext" = "exec playerctl next";
+          "XF86AudioPrev" = "exec playerctl previous";
 
           "XF86AudioRaiseVolume" = "exec wpctl set-volume -l 1 @DEFAULT_SINK@ 5%+";
           "XF86AudioLowerVolume" = "exec wpctl set-volume -l 1 @DEFAULT_SINK@ 5%-";

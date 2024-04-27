@@ -10,9 +10,14 @@
   # Programs
   programs.command-not-found.enable = true;
 
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+  };
+
   # Packages
   environment.systemPackages = with pkgs; [
-    #
     bind
     bintools
     coreutils
@@ -22,9 +27,9 @@
     git-crypt
     killall
     parted
+    playerctl
     ripgrep
     wget
-
     bat
     bottom
     btop
@@ -33,27 +38,15 @@
     mpv
     nitch
     tldr
-
     p7zip
     unrar
     unzip
     zip
-
     libnotify
-
-    zx
-
     glib
-
     shfmt
-    iwd
+    zx
   ];
-
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-    dedicatedServer.openFirewall = true;
-  };
 
   # Services
   services.redis.servers = {
@@ -73,11 +66,12 @@
   programs.adb.enable = true;
 
   modules.programs = {
-    # fish.enable = true;
     zsh.enable = true;
+    kitty.enable = true;
+    # fish.enable = true;
+    # starship.enable = true;
 
     git.enable = true;
-    kitty.enable = true;
 
     helix = {
       enable = true;
@@ -123,26 +117,18 @@
     in [
       alejandra
       d2
+      dbeaver
       dotnet-sdk_8
       flameshot
       gcloud
       google-chrome
       gh
       gtk-engine-murrine
-      jetbrains.datagrip
-      jetbrains.rider
-      jetbrains.webstorm
-      logseq
-      minikube
       nicotine-plus
-      nil
       obsidian
       onlyoffice-bin
-      signal-desktop
-      spotify
       stremio
       terraform
-      tor-browser-bundle-bin
       ventoy-full
       vesktop
       vscode
