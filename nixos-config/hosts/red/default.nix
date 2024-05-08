@@ -11,7 +11,7 @@
   programs.command-not-found.enable = true;
 
   programs.steam = {
-    enable = true;
+    enable = false;
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
   };
@@ -20,6 +20,7 @@
   environment.systemPackages = with pkgs; [
     bind
     bintools
+    cifs-utils
     coreutils
     curl
     file
@@ -36,19 +37,29 @@
     eza
     fzf
     mpv
+    nmap
+    nomacs
     nitch
     tldr
     p7zip
+    pavucontrol
+    pv
     unrar
     unzip
     zip
     libnotify
     glib
     shfmt
+    wine
+    xmousepasteblock
     zx
   ];
 
   # Services
+  services.devmon.enable = true;
+  services.gvfs.enable = true;
+  services.udisks2.enable = true;
+
   services.redis.servers = {
     "redis" = {
       enable = true;
@@ -92,7 +103,7 @@
     name = "levi";
     description = "Levi Manoel";
 
-    groups = ["adbusers" "docker" "networking" "video" "wheel"];
+    groups = ["adbusers" "docker" "plugdev" "networking" "video" "wheel"];
 
     shellAliases = {
       ls = "exa";
@@ -107,6 +118,7 @@
       gcp = "git cherry-pick";
       gd = "git diff";
       gds = "git diff --staged";
+      gsw = "git switch";
     };
 
     packages = with pkgs; let
@@ -116,22 +128,30 @@
       ]);
     in [
       alejandra
+      beekeeper-studio
       d2
       dbeaver
+      discord
       dotnet-sdk_8
       flameshot
       gcloud
+      gimp
       google-chrome
       gh
       gtk-engine-murrine
       nicotine-plus
+      nil
       obsidian
       onlyoffice-bin
+      qbittorrent
+      spotify
       stremio
+      sublime
       terraform
       ventoy-full
       vesktop
       vscode
+      zed-editor
     ];
 
     home.programs = {
@@ -149,7 +169,7 @@
         enable = true;
 
         font = {
-          name = "Zed Sans";
+          name = "Iosevka Comfy Motion";
           size = 10;
         };
 
@@ -184,31 +204,43 @@
     };
   };
 
+  # environment.sessionVariables.DEFAULT_BROWSER = "${pkgs.google-chrome}/bin/google-chrome-stable";
+  # xdg.mime = {
+  #   enable = true;
+  #   defaultApplications = {
+  #     "text/html" = "org.qutebrowser.qutebrowser.desktop";
+  #     "x-scheme-handler/http" = "org.qutebrowser.qutebrowser.desktop";
+  #     "x-scheme-handler/https" = "org.qutebrowser.qutebrowser.desktop";
+  #     "x-scheme-handler/about" = "org.qutebrowser.qutebrowser.desktop";
+  #     "x-scheme-handler/unknown" = "org.qutebrowser.qutebrowser.desktop";
+  #   };
+  # };
+
   # NVIDIA
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-  };
+  #  hardware.opengl = {
+  #    enable = true;
+  #    driSupport = true;
+  #    driSupport32Bit = true;
+  #  };
 
-  services.xserver.videoDrivers = ["nvidia"];
+  #  services.xserver.videoDrivers = ["nvidia"];
 
-  hardware.nvidia = {
-    modesetting.enable = true;
+  # hardware.nvidia = {
+  # modesetting.enable = true;
 
-    powerManagement.enable = false;
-    powerManagement.finegrained = false;
-    open = false;
-    nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+  #  powerManagement.enable = false;
+  #  powerManagement.finegrained = false;
+  #  open = false;
+  #  nvidiaSettings = true;
+  #  package = config.boot.kernelPackages.nvidiaPackages.stable;
 
-    prime = {
-      offload = {
-        enable = true;
-        enableOffloadCmd = true;
-      };
-      intelBusId = "PCI:0:2:0";
-      nvidiaBusId = "PCI:1:0:0";
-    };
-  };
+  #  prime = {
+  #    offload = {
+  #      enable = true;
+  #      enableOffloadCmd = true;
+  #    };
+  #    intelBusId = "PCI:0:2:0";
+  #    nvidiaBusId = "PCI:1:0:0";
+  #  };
+  #};
 }

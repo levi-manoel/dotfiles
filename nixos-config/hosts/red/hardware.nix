@@ -24,11 +24,6 @@
       options = [ "fmask=0022" "dmask=0022" ];
     };
 
-  fileSystems."/home/levi/ssd2tb" =
-    { device = "/dev/disk/by-uuid/d362636c-ad1b-45dd-9ca5-cfbe3f1b03d2";
-      fsType = "ext4";
-    };
-
   swapDevices =
     [ { device = "/dev/disk/by-uuid/c3dbf4c3-10e4-40c3-84ef-bbdebc187091"; }
     ];
