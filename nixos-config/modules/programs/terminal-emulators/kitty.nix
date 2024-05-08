@@ -22,18 +22,17 @@ in {
         copy_on_select = true;
         disable_ligatures = "cursor";
         enable_audio_bell = false;
-        window_padding_width = 8;
+        window_padding_width = 10;
 
         background_opacity = "0.8";
       };
 
-      # TODO: use theming
       font = {
-        name = "Zed Mono";
-        size = 10.0;
+        name = "VictorMono NF";
+        size = 12.0;
       };
 
-      theme = "Catppuccin-Mocha";
+      theme = "Gruvbox Material Dark Hard";
 
       shellIntegration.enableFishIntegration = fish.enable;
       shellIntegration.enableZshIntegration = zsh.enable;

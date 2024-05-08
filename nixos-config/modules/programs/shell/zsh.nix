@@ -41,8 +41,6 @@ in {
         enable = true;
         theme = "candy";
         plugins = [
-          "git"
-          "npm"
           "history"
           "node"
           "rust"

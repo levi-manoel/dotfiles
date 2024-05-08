@@ -11,7 +11,7 @@
 in {
   config = {
     nix = {
-      package = pkgs.nixUnstable;
+      package = pkgs.nixVersions.latest;
 
       settings = {
         substituters = cachesUrls;
@@ -30,6 +30,6 @@ in {
       };
     };
 
-    system.stateVersion = "23.11";
+    system.stateVersion = "24.05";
   };
 }

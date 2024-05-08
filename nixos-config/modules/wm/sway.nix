@@ -7,10 +7,10 @@
   terminal = "${pkgs.kitty}/bin/kitty";
   menu = "${pkgs.rofi}/bin/rofi";
 
-  # left = "h";
-  # down = "j";
-  # up = "k";
-  # right = "l";
+  left = "h";
+  down = "j";
+  up = "k";
+  right = "l";
 
   dbus-sway-environment = pkgs.writeTextFile {
     name = "dbus-sway-environment";
@@ -75,6 +75,7 @@ in {
     shotman
     slurp
     swaybg
+    swayidle
     swaylock-effects
     wdisplays
     wl-clipboard
@@ -85,19 +86,19 @@ in {
     programs.rofi = {
       enable = true;
       terminal = terminal;
-      font = "Zed Sans 14";
+      font = "Iosevka Comfy Motion 14";
       theme = let
         inherit (config.home-manager.users.${config.user.name}.lib.formats.rasi) mkLiteral;
       in {
         "*" = {
-          bg-col = mkLiteral "#24273a";
-          bg-col-light = mkLiteral "#24273a";
-          border-col = mkLiteral "#24273a";
-          selected-col = mkLiteral "#24273a";
-          blue = mkLiteral "#8aadf4";
-          fg-col = mkLiteral "#cad3f5";
-          fg-col2 = mkLiteral "#ed8796";
-          grey = mkLiteral "#6e738d";
+          bg-col = mkLiteral "#1d2021";
+          bg-col-light = mkLiteral "#1d2021";
+          border-col = mkLiteral "#1d2021";
+          selected-col = mkLiteral "#1d2021";
+          blue = mkLiteral "#d79921";
+          fg-col = mkLiteral "#fbf1c7";
+          fg-col2 = mkLiteral "#ebdbb2";
+          grey = mkLiteral "#a89984";
 
           width = 600;
         };
@@ -224,7 +225,7 @@ in {
         ignore-empty-password = true;
 
         font-size = 24;
-        font = "Zed Sans";
+        font = "Iosevka Comfy Motion";
 
         clock = true;
 
@@ -308,42 +309,42 @@ in {
       defaultTimeout = 10000;
 
       extraConfig = ''
-        background-color=#1e1e2e
+        background-color=#1d2021
         text-color=#cdd6f4
-        border-color=#b4befe
-        progress-color=over #313244
+        border-color=#a89984
+        progress-color=over #fbf1c7
 
         [urgency=high]
-        border-color=#fab387
+        border-color=#d79921
       '';
     };
 
     extraConfig.wayland.windowManager.sway = let
       theme = {
-        rosewater = "#f5e0dc";
-        flamingo = "#f2cdcd";
+        rosewater = "#a89984";
+        flamingo = "#ebdbb2";
         pink = "#f5c2e7";
         mauve = "#cba6f7";
         red = "#f38ba8";
         maroon = "#eba0ac";
         peach = "#fab387";
         yellow = "#f9e2af";
-        green = "#a6e3a1";
+        green = "#98971a";
         teal = "#94e2d5";
         sky = "#89dceb";
         sapphire = "#74c7ec";
-        blue = "#b4befe";
-        lavender = "#b4befe";
+        blue = "#83a598";
+        lavender = "#ebdbb2";
         text = "#cdd6f4";
         subtext1 = "#bac2de";
         subtext0 = "#a6adc8";
         overlay2 = "#9399b2";
         overlay1 = "#7f849c";
-        overlay0 = "#6c7086";
+        overlay0 = "#928374";
         surface2 = "#585b70";
-        surface1 = "#45475a";
+        surface1 = "#d79921";
         surface0 = "#313244";
-        base = "#1e1e2e";
+        base = "#1d2021";
         mantle = "#181825";
         crust = "#11111b";
       };
@@ -411,27 +412,30 @@ in {
         ];
 
         keybindings = {
+          "${modifier}+End" = "exec swaylock";
+
           "${modifier}+Return" = "exec ${terminal}";
           "${modifier}+q" = "kill";
           "${modifier}+space" = "exec ${menu} -show drun";
           "XF86Search" = "exec pcmanfm";
 
-          "${modifier}+Shift+s" = "exec ${pkgs.shotman}/bin/shotman --capture region";
+          "${modifier}+Ctrl+s" = "exec ${pkgs.shotman}/bin/shotman --capture region";
+          "${modifier}+Shift+s" = "exec flameshot gui";
 
-          # "${modifier}+${left}" = "focus left";
-          # "${modifier}+${down}" = "focus down";
-          # "${modifier}+${up}" = "focus up";
-          # "${modifier}+${right}" = "focus right";
+          "${modifier}+${left}" = "focus left";
+          "${modifier}+${down}" = "focus down";
+          "${modifier}+${up}" = "focus up";
+          "${modifier}+${right}" = "focus right";
 
           "${modifier}+Left" = "focus left";
           "${modifier}+Down" = "focus down";
           "${modifier}+Up" = "focus up";
           "${modifier}+Right" = "focus right";
 
-          # "${modifier}+Shift+${left}" = "move left";
-          # "${modifier}+Shift+${down}" = "move down";
-          # "${modifier}+Shift+${up}" = "move up";
-          # "${modifier}+Shift+${right}" = "move right";
+          "${modifier}+Shift+${left}" = "move left";
+          "${modifier}+Shift+${down}" = "move down";
+          "${modifier}+Shift+${up}" = "move up";
+          "${modifier}+Shift+${right}" = "move right";
 
           "${modifier}+Shift+Left" = "move left";
           "${modifier}+Shift+Down" = "move down";
