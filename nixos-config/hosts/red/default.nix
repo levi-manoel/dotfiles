@@ -161,10 +161,10 @@
     };
 
     sessionVariables = {
-      GTK_THEME = "Catppuccin-Mocha-Compact-Lavender-Dark";
+      GTK_THEME = "Gruvbox-Dark-B";
     };
 
-    home.extraConfig = {
+    home.extraConfig = {      
       gtk = {
         enable = true;
 
@@ -174,23 +174,13 @@
         };
 
         theme = {
-          name = "Catppuccin-Mocha-Compact-Lavender-Dark";
-          package = pkgs.catppuccin-gtk.override {
-            accents = ["lavender"];
-            size = "compact";
-            tweaks = ["rimless"];
-            variant = "mocha";
-          };
+          name = "Gruvbox-Dark-B";
+          package = pkgs.gruvbox-gtk-theme;
         };
 
         iconTheme = {
-          name = "Papirus-Dark";
-          package = pkgs.catppuccin-papirus-folders;
-        };
-
-        cursorTheme = {
-          name = "Catppuccin-Mocha-Dark-Cursors";
-          package = pkgs.catppuccin-cursors.mochaDark;
+          name = "Mint-Y-Sand";
+          package = pkgs.cinnamon.mint-y-icons;
         };
 
         gtk3.extraConfig = {
