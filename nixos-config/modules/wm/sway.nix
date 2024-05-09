@@ -96,7 +96,7 @@ in {
           border-col = mkLiteral "#1d2021";
           selected-col = mkLiteral "#1d2021";
           blue = mkLiteral "#d79921";
-          fg-col = mkLiteral "#fbf1c7";
+          fg-col = mkLiteral "#d79921";
           fg-col2 = mkLiteral "#ebdbb2";
           grey = mkLiteral "#a89984";
 
