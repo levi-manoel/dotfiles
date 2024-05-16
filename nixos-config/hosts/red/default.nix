@@ -28,6 +28,7 @@
     git-crypt
     killall
     parted
+    gparted
     playerctl
     ripgrep
     wget
@@ -37,6 +38,7 @@
     eza
     fzf
     mpv
+    nano
     nmap
     nomacs
     nitch
@@ -51,7 +53,6 @@
     glib
     shfmt
     wine
-    xmousepasteblock
     zx
   ];
 
@@ -59,6 +60,26 @@
   services.devmon.enable = true;
   services.gvfs.enable = true;
   services.udisks2.enable = true;
+
+  services.printing = {
+    enable = true;
+    drivers = [pkgs.epson_201207w];
+    browsing = true;
+    defaultShared = true;
+  };
+
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    publish.enable = true;
+    publish.addresses = true;
+    publish.userServices = true;
+  };
+
+  hardware.sane = {
+    enable = true;
+    extraBackends = [pkgs.epson_201207w];
+  };
 
   services.redis.servers = {
     "redis" = {
@@ -83,27 +104,22 @@
     # starship.enable = true;
 
     git.enable = true;
-
-    helix = {
-      enable = true;
-      defaultEditor = true;
-
-      viAlias = true;
-      vimAlias = true;
-      nvimAlias = true;
-    };
   };
 
   modules.services = {
     docker.enable = true;
   };
 
+  # slow down rebuild
+  # virtualisation.virtualbox.host.enable = true;
+  # virtualisation.virtualbox.guest.enable = true;
+
   # User Account
   user = {
     name = "levi";
     description = "Levi Manoel";
 
-    groups = ["adbusers" "docker" "plugdev" "networking" "video" "wheel"];
+    groups = ["adbusers" "docker" "plugdev" "networking" "vboxusers" "video" "wheel"];
 
     shellAliases = {
       ls = "exa";
@@ -121,42 +137,36 @@
       gsw = "git switch";
     };
 
-    packages = with pkgs; let
-      gcloud = google-cloud-sdk.withExtraComponents (with google-cloud-sdk.components; [
-        gke-gcloud-auth-plugin
-        kubectl
-      ]);
-    in [
+    packages = with pkgs; [
       alejandra
       beekeeper-studio
       d2
       dbeaver
       discord
-      dotnet-sdk_8
-      flameshot
-      gcloud
       gimp
       google-chrome
       gh
       gtk-engine-murrine
-      nicotine-plus
       nil
       obsidian
-      onlyoffice-bin
       qbittorrent
       spotify
       stremio
-      sublime
       terraform
       ventoy-full
       vesktop
       vscode
+      wpsoffice
       zed-editor
     ];
 
-    home.programs = {
-      vscode = {
-        enable = true;
+    home = {
+      programs = {
+        vscode.enable = true;
+      };
+
+      services = {
+        flameshot.enable = true;
       };
     };
 
@@ -164,7 +174,17 @@
       GTK_THEME = "Gruvbox-Dark-B";
     };
 
-    home.extraConfig = {      
+    home.extraConfig = {
+      home = {
+        pointerCursor = {
+          name = "phinger-cursors-dark";
+          package = pkgs.phinger-cursors;
+          size = 24;
+          pointerCursor.gtk.enable = true;
+          pointerCursor.x11.enable = true;
+        };
+      };
+
       gtk = {
         enable = true;
 
@@ -183,6 +203,12 @@
           package = pkgs.cinnamon.mint-y-icons;
         };
 
+        cursorTheme = {
+          name = "phinger-cursors-dark";
+          package = pkgs.phinger-cursors;
+          size = 24;
+        };
+
         gtk3.extraConfig = {
           gtk-application-prefer-dark-theme = true;
         };
@@ -193,18 +219,6 @@
       };
     };
   };
-
-  # environment.sessionVariables.DEFAULT_BROWSER = "${pkgs.google-chrome}/bin/google-chrome-stable";
-  # xdg.mime = {
-  #   enable = true;
-  #   defaultApplications = {
-  #     "text/html" = "org.qutebrowser.qutebrowser.desktop";
-  #     "x-scheme-handler/http" = "org.qutebrowser.qutebrowser.desktop";
-  #     "x-scheme-handler/https" = "org.qutebrowser.qutebrowser.desktop";
-  #     "x-scheme-handler/about" = "org.qutebrowser.qutebrowser.desktop";
-  #     "x-scheme-handler/unknown" = "org.qutebrowser.qutebrowser.desktop";
-  #   };
-  # };
 
   # NVIDIA
   #  hardware.opengl = {
