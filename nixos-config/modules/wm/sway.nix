@@ -18,34 +18,34 @@
     executable = true;
 
     text = ''
-      systemctl --user import DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_SESSION_TYPE XDG_CURRENT_DESKTOP
-      dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
-      systemctl --user stop pipewire pipewire-media-session xdg-desktop-portal xdg-desktop-portal-wlr
-      systemctl --user start pipewire pipewire-media-session xdg-desktop-portal xdg-desktop-portal-wlr
+      systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
+      dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP
     '';
   };
 
-  importGsettings = let
+  configure-gtk = let
     gsettings = "${pkgs.glib}/bin/gsettings";
-    gnomeSchema = "org.gnome.desktop.interface";
   in
-    pkgs.writeShellScript "import-gsettings.sh" ''
-      CONFIG_FILE="/home/${config.user.name}/.config/gtk-3.0/settings.ini"
+    pkgs.writeTextFile {
+      name = "configure-gtk";
+      destination = "/bin/configure-gtk";
+      executable = true;
 
-      if [ ! -f "$CONFIG_FILE" ]; then
-        exit 1;
-      fi
-
-      GTK_THEME="$(grep 'gtk-theme-name' "$CONFIG_FILE" | sed 's/.*\s*=\s*//')"
-      ICON_THEME="$(grep 'gtk-icon-theme-name' "$CONFIG_FILE" | sed 's/.*\s*=\s*//')"
-      CURSOR_THEME="$(grep 'gtk-cursor-theme-name' "$CONFIG_FILE" | sed 's/.*\s*=\s*//')"
-      FONT_NAME="$(grep 'gtk-font-name' "$CONFIG_FILE" | sed 's/.*\s*=\s*//')"
-
-      ${gsettings} set ${gnomeSchema} gtk-theme "$GTK_THEME"
-      ${gsettings} set ${gnomeSchema} icon-theme "$ICON_THEME"
-      ${gsettings} set ${gnomeSchema} cursor-theme "$CURSOR_THEME"
-      ${gsettings} set ${gnomeSchema} font-name "$FONT_NAME"
-    '';
+      text = ''
+        CONFIG_FILE="/home/${config.user.name}/.config/gtk-3.0/settings.ini"
+        if [ ! -f "$CONFIG_FILE" ]; then
+          exit 1;
+        fi
+        GTK_THEME="$(grep 'gtk-theme-name' "$CONFIG_FILE" | sed 's/.*\s*=\s*//')"
+        ICON_THEME="$(grep 'gtk-icon-theme-name' "$CONFIG_FILE" | sed 's/.*\s*=\s*//')"
+        CURSOR_THEME="$(grep 'gtk-cursor-theme-name' "$CONFIG_FILE" | sed 's/.*\s*=\s*//')"
+        FONT_NAME="$(grep 'gtk-font-name' "$CONFIG_FILE" | sed 's/.*\s*=\s*//')"
+        ${gsettings} set org.gnome.desktop.interface gtk-theme "$GTK_THEME"
+        ${gsettings} set org.gnome.desktop.interface icon-theme "$ICON_THEME"
+        ${gsettings} set org.gnome.desktop.interface cursor-theme "$CURSOR_THEME"
+        ${gsettings} set org.gnome.desktop.interface font-name "$FONT_NAME"
+      '';
+    };
 in {
   security.polkit.enable = true;
 
@@ -69,6 +69,7 @@ in {
   };
 
   environment.systemPackages = with pkgs; [
+    configure-gtk
     dbus-sway-environment
     grim
     pcmanfm
@@ -351,19 +352,14 @@ in {
     in {
       enable = true;
 
-      wrapperFeatures = {
-        base = true;
-        gtk = true;
-      };
+      wrapperFeatures.gtk = true;
 
       config = {
         modifier = modifier;
         terminal = terminal;
 
         startup = [
-          {command = "${importGsettings}";}
           {command = "bluetoothctl power on";}
-          {command = "nohup flameshot &";}
           {command = "wpaperd";}
         ];
 
@@ -519,21 +515,26 @@ in {
         client.background        ${theme.base}
 
         # Monitors
-        set $PRIMARY "HDMI-A-1"
-        set $FALLBACK "eDP-1"
+        set $PRIMARY "eDP-2"
+        set $SECONDARY "HDMI-A-1"
 
-        workspace 1 output $PRIMARY $FALLBACK
-        workspace 2 output $PRIMARY $FALLBACK
-        workspace 3 output $PRIMARY $FALLBACK
-        workspace 4 output $PRIMARY $FALLBACK
-        workspace 5 output $PRIMARY $FALLBACK
-        workspace 6 output $PRIMARY $FALLBACK
-        workspace 7 output $PRIMARY $FALLBACK
-        workspace 8 output $PRIMARY $FALLBACK
-        workspace 9 output $PRIMARY $FALLBACK
+        output eDP2 pos 0 1080
+        output HDMI1 pos 0 0
+
+        workspace 1 output $PRIMARY
+        workspace 2 output $PRIMARY
+        workspace 3 output $PRIMARY
+        workspace 4 output $SECONDARY $PRIMARY
+        workspace 5 output $PRIMARY
+        workspace 6 output $PRIMARY
+        workspace 7 output $PRIMARY
+        workspace 8 output $PRIMARY
+        workspace 9 output $PRIMARY
+
+        exec dbus-sway-environment
+        exec configure-gtk
+        for_window [app_id="flameshot"] border pixel 0, floating enable, fullscreen disable, move absolute position 0 0
       '';
-
-      # for_window [app_id="flameshot"] border pixel 0, floating enable, fullscreen disable, move absolute position 0 0
 
       swaynag.enable = true;
     };

@@ -1,4 +1,4 @@
-{...}: {
+{config, ...}: {
   user.home = {
     programs = {
       wpaperd = {
@@ -6,7 +6,7 @@
         settings = {
           default = {
             duration = "2m";
-            path = "/home/levi/.dotfiles/nixos-config/wallpapers";
+            path = "/home/${config.user.name}/.dotfiles/nixos-config/wallpapers";
             sorting = "ascending";
             apply-shadow = false;
           };
