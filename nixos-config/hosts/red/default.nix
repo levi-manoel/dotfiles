@@ -53,6 +53,7 @@
     glib
     shfmt
     wine
+    zoxide
     zx
   ];
 
