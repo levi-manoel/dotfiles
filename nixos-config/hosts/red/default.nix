@@ -30,6 +30,7 @@
   };
 
   # Packages
+
   environment.systemPackages = with pkgs; [
     bind
     bintools
@@ -151,7 +152,12 @@
       gsw = "git switch";
     };
 
-    packages = with pkgs; [
+    packages = with pkgs; let
+      # fixes copy/paste bug
+      dbeaver = pkgs.writeShellScriptBin "dbeaver" ''
+        GDK_BACKEND=x11 ${pkgs.dbeaver}/bin/dbeaver
+      '';
+    in [
       alejandra
       beekeeper-studio
       d2
@@ -189,13 +195,11 @@
     };
 
     home.extraConfig = {
-      home = {
+      xsession = {
         pointerCursor = {
           name = "phinger-cursors-dark";
           package = pkgs.phinger-cursors;
           size = 24;
-          pointerCursor.gtk.enable = true;
-          pointerCursor.x11.enable = true;
         };
       };
 
