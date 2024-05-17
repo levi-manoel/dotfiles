@@ -1,11 +1,24 @@
 {
   pkgs,
+  lib,
   config,
   inputs,
   system,
   ...
 }: {
   imports = [./hardware.nix];
+
+  systemd.services.numLockOnTty = {
+    wantedBy = ["multi-user.target"];
+    serviceConfig = {
+      # /run/current-system/sw/bin/setleds -D +num < "$tty";
+      ExecStart = lib.mkForce (pkgs.writeShellScript "numLockOnTty" ''
+        for tty in /dev/tty{1..6}; do
+            ${pkgs.kbd}/bin/setleds -D +num < "$tty";
+        done
+      '');
+    };
+  };
 
   # Programs
   programs.command-not-found.enable = true;
@@ -111,7 +124,7 @@
     docker.enable = true;
   };
 
-  # slow down rebuild
+  # slows down rebuild
   # virtualisation.virtualbox.host.enable = true;
   # virtualisation.virtualbox.guest.enable = true;
 
