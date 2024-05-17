@@ -23,6 +23,8 @@ in {
     user.home.programs.zsh = {
       inherit (cfg) enable;
 
+      initExtra = "source /home/${config.user.name}/.dotfiles/.zshrc";
+
       completionInit = ''
         ${
           if kitty.enable
@@ -36,16 +38,6 @@ in {
           else ""
         }
       '';
-
-      oh-my-zsh = {
-        enable = true;
-        theme = "candy";
-        plugins = [
-          "history"
-          "node"
-          "rust"
-        ];
-      };
 
       shellAliases = user.shellAliases;
     };
