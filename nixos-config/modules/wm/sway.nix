@@ -518,18 +518,18 @@ in {
         set $PRIMARY "eDP-2"
         set $SECONDARY "HDMI-A-1"
 
-        output eDP2 pos 0 1080
-        output HDMI1 pos 0 0
+        output "eDP-2" pos 0 1349 res 1920x1080
+        output "HDMI-A-1" pos 0 0 res 1920x1080 scale 0.8
 
         workspace 1 output $PRIMARY
         workspace 2 output $PRIMARY
         workspace 3 output $PRIMARY
-        workspace 4 output $SECONDARY $PRIMARY
-        workspace 5 output $PRIMARY
-        workspace 6 output $PRIMARY
-        workspace 7 output $PRIMARY
-        workspace 8 output $PRIMARY
-        workspace 9 output $PRIMARY
+        workspace 4 output $PRIMARY
+        workspace 5 output $SECONDARY $PRIMARY
+        workspace 6 output $SECONDARY $PRIMARY
+        workspace 7 output $SECONDARY $PRIMARY
+        workspace 8 output $SECONDARY $PRIMARY
+        workspace 9 output $SECONDARY $PRIMARY
 
         exec dbus-sway-environment
         exec configure-gtk
