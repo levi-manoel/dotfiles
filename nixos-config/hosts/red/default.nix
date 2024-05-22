@@ -8,18 +8,6 @@
 }: {
   imports = [./hardware.nix];
 
-  systemd.services.numLockOnTty = {
-    wantedBy = ["multi-user.target"];
-    serviceConfig = {
-      # /run/current-system/sw/bin/setleds -D +num < "$tty";
-      ExecStart = lib.mkForce (pkgs.writeShellScript "numLockOnTty" ''
-        for tty in /dev/tty{1..6}; do
-            ${pkgs.kbd}/bin/setleds -D +num < "$tty";
-        done
-      '');
-    };
-  };
-
   # Programs
   programs.command-not-found.enable = true;
 
@@ -30,43 +18,42 @@
   };
 
   # Packages
-
   environment.systemPackages = with pkgs; [
+    bat
     bind
     bintools
+    bottom
+    btop
     cifs-utils
     coreutils
     curl
+    eza
     file
+    fzf
     git
     git-crypt
-    killall
-    parted
+    glib
     gparted
-    playerctl
-    ripgrep
-    wget
-    bat
-    bottom
-    btop
-    eza
-    fzf
+    killall
+    libnotify
     mpv
     nano
+    nitch
     nmap
     nomacs
-    nitch
-    tldr
     p7zip
+    parted
     pavucontrol
+    playerctl
     pv
+    ripgrep
+    shfmt
+    tldr
     unrar
     unzip
-    zip
-    libnotify
-    glib
-    shfmt
+    wget
     wine
+    zip
     zoxide
     zx
   ];
@@ -76,6 +63,7 @@
   services.gvfs.enable = true;
   services.udisks2.enable = true;
 
+  # need to change driver via cups after reboot (todo?)
   services.printing = {
     enable = true;
     drivers = [pkgs.epson_201207w];
@@ -119,10 +107,13 @@
     # starship.enable = true;
 
     git.enable = true;
-  };
+    neovim = {
+      enable = true;
+      defaultEditor = false;
 
-  modules.services = {
-    docker.enable = true;
+      viAlias = true;
+      vimAlias = true;
+    };
   };
 
   # slows down rebuild
@@ -134,7 +125,7 @@
     name = "levi";
     description = "Levi Manoel";
 
-    groups = ["adbusers" "docker" "plugdev" "networking" "vboxusers" "video" "wheel"];
+    groups = ["adbusers" "avahi" "docker" "plugdev" "networking" "vboxusers" "video" "wheel"];
 
     shellAliases = {
       ls = "exa";
@@ -165,7 +156,6 @@
       discord
       gimp
       google-chrome
-      gh
       gtk-engine-murrine
       nil
       obsidian
@@ -236,33 +226,5 @@
         };
       };
     };
-  };
-
-  # NVIDIA
-  #  hardware.opengl = {
-  #    enable = true;
-  #    driSupport = true;
-  #    driSupport32Bit = true;
-  #  };
-
-  #  services.xserver.videoDrivers = ["nvidia"];
-
-  # hardware.nvidia = {
-  # modesetting.enable = true;
-
-  #  powerManagement.enable = false;
-  #  powerManagement.finegrained = false;
-  #  open = false;
-  #  nvidiaSettings = true;
-  #  package = config.boot.kernelPackages.nvidiaPackages.stable;
-
-  #  prime = {
-  #    offload = {
-  #      enable = true;
-  #      enableOffloadCmd = true;
-  #    };
-  #    intelBusId = "PCI:0:2:0";
-  #    nvidiaBusId = "PCI:1:0:0";
-  #  };
-  #};
+  };  
 }
