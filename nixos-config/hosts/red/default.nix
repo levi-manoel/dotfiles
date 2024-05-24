@@ -20,34 +20,25 @@
   # Packages
   environment.systemPackages = with pkgs; [
     bat
-    bind
-    bintools
-    bottom
     btop
     cifs-utils
     coreutils
     curl
     eza
-    file
+    fastfetch
     fzf
     git
     git-crypt
-    glib
     gparted
-    killall
     libnotify
     mpv
     nano
-    nitch
     nmap
     nomacs
     p7zip
     parted
     pavucontrol
     playerctl
-    pv
-    ripgrep
-    shfmt
     tldr
     unrar
     unzip
@@ -55,7 +46,6 @@
     wine
     zip
     zoxide
-    zx
   ];
 
   # Services
@@ -116,16 +106,12 @@
     };
   };
 
-  # slows down rebuild
-  # virtualisation.virtualbox.host.enable = true;
-  # virtualisation.virtualbox.guest.enable = true;
-
   # User Account
   user = {
     name = "levi";
     description = "Levi Manoel";
 
-    groups = ["adbusers" "avahi" "docker" "plugdev" "networking" "vboxusers" "video" "wheel"];
+    groups = ["adbusers" "avahi" "plugdev" "networking" "video" "wheel"];
 
     shellAliases = {
       ls = "exa";
@@ -143,20 +129,14 @@
       gsw = "git switch";
     };
 
-    packages = with pkgs; let
-      # fixes copy/paste bug
-      dbeaver = pkgs.writeShellScriptBin "dbeaver" ''
-        GDK_BACKEND=x11 ${pkgs.dbeaver}/bin/dbeaver
-      '';
-    in [
+    packages = with pkgs; [
       alejandra
-      beekeeper-studio
-      d2
-      dbeaver
+      dbeaver-bin
       discord
       gimp
       google-chrome
       gtk-engine-murrine
+      kooha
       nil
       obsidian
       qbittorrent
@@ -226,5 +206,5 @@
         };
       };
     };
-  };  
+  };
 }

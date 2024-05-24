@@ -234,16 +234,16 @@ in {
         indicator-idle-visible = true;
         show-failed-attempts = true;
 
-        color = "1e1e2e";
-        bs-hl-color = "f5e0dc";
-        caps-lock-bs-hl-color = "f5e0dc";
-        caps-lock-key-hl-color = "a6e3a1";
+        color = "1d2021";
+        bs-hl-color = "d79921";
+        caps-lock-bs-hl-color = "d79921";
+        caps-lock-key-hl-color = "a89984";
         inside-color = "00000000";
         inside-clear-color = "00000000";
         inside-caps-lock-color = "00000000";
         inside-ver-color = "00000000";
         inside-wrong-color = "00000000";
-        key-hl-color = "a6e3a1";
+        key-hl-color = "a89984";
         layout-bg-color = "00000000";
         layout-border-color = "00000000";
         layout-text-color = "cdd6f4";
