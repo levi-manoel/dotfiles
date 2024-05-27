@@ -32,7 +32,7 @@ in {
         size = 12.0;
       };
 
-      theme = "Gruvbox Material Dark Hard";
+      theme = "Catppuccin-Mocha";
 
       shellIntegration.enableFishIntegration = fish.enable;
       shellIntegration.enableZshIntegration = zsh.enable;
