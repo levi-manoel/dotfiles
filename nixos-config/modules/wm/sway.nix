@@ -92,14 +92,14 @@ in {
         inherit (config.home-manager.users.${config.user.name}.lib.formats.rasi) mkLiteral;
       in {
         "*" = {
-          bg-col = mkLiteral "#1d2021";
-          bg-col-light = mkLiteral "#1d2021";
-          border-col = mkLiteral "#1d2021";
-          selected-col = mkLiteral "#1d2021";
-          blue = mkLiteral "#d79921";
-          fg-col = mkLiteral "#d79921";
-          fg-col2 = mkLiteral "#ebdbb2";
-          grey = mkLiteral "#a89984";
+          bg-col = mkLiteral "#24273a";
+          bg-col-light = mkLiteral "#24273a";
+          border-col = mkLiteral "#24273a";
+          selected-col = mkLiteral "#24273a";
+          blue = mkLiteral "#8aadf4";
+          fg-col = mkLiteral "#cad3f5";
+          fg-col2 = mkLiteral "#ed8796";
+          grey = mkLiteral "#6e738d";
 
           width = 600;
         };
@@ -234,16 +234,16 @@ in {
         indicator-idle-visible = true;
         show-failed-attempts = true;
 
-        color = "1d2021";
-        bs-hl-color = "d79921";
-        caps-lock-bs-hl-color = "d79921";
-        caps-lock-key-hl-color = "a89984";
+        color = "1e1e2e";
+        bs-hl-color = "f5e0dc";
+        caps-lock-bs-hl-color = "f5e0dc";
+        caps-lock-key-hl-color = "a6e3a1";
         inside-color = "00000000";
         inside-clear-color = "00000000";
         inside-caps-lock-color = "00000000";
         inside-ver-color = "00000000";
         inside-wrong-color = "00000000";
-        key-hl-color = "a89984";
+        key-hl-color = "a6e3a1";
         layout-bg-color = "00000000";
         layout-border-color = "00000000";
         layout-text-color = "cdd6f4";
@@ -310,44 +310,44 @@ in {
       defaultTimeout = 10000;
 
       extraConfig = ''
-        background-color=#1d2021
+        background-color=#1e1e2e
         text-color=#cdd6f4
-        border-color=#a89984
-        progress-color=over #fbf1c7
+        border-color=#b4befe
+        progress-color=over #313244
 
         [urgency=high]
-        border-color=#d79921
+        border-color=#fab387
       '';
     };
 
     extraConfig.wayland.windowManager.sway = let
       theme = {
-        rosewater = "#ebdbb2";
-        flamingo = "#d5c4a1";
-        pink = "#bdae93";
-        mauve = "#a89984";
-        red = "#cc241d";
-        maroon = "#fb4934";
-        peach = "#fe8019";
-        yellow = "#fabd2f";
-        green = "#b8bb26";
-        teal = "#83a598";
-        sky = "#458588";
-        sapphire = "#689d6a";
-        blue = "#83a598";
-        lavender = "#928374";
-        text = "#fbf1c7";
-        subtext1 = "#ebdbb2";
-        subtext0 = "#d5c4a1";
-        overlay2 = "#bdae93";
-        overlay1 = "#a89984";
-        overlay0 = "#928374";
-        surface2 = "#7c6f64";
-        surface1 = "#665c54";
-        surface0 = "#504945";
-        base = "#282828";
-        mantle = "#1d2021";
-        crust = "#0c0d0e";
+        rosewater = "#f5e0dc";
+        flamingo = "#f2cdcd";
+        pink = "#f5c2e7";
+        mauve = "#cba6f7";
+        red = "#f38ba8";
+        maroon = "#eba0ac";
+        peach = "#fab387";
+        yellow = "#f9e2af";
+        green = "#a6e3a1";
+        teal = "#94e2d5";
+        sky = "#89dceb";
+        sapphire = "#74c7ec";
+        blue = "#b4befe";
+        lavender = "#b4befe";
+        text = "#cdd6f4";
+        subtext1 = "#bac2de";
+        subtext0 = "#a6adc8";
+        overlay2 = "#9399b2";
+        overlay1 = "#7f849c";
+        overlay0 = "#6c7086";
+        surface2 = "#585b70";
+        surface1 = "#45475a";
+        surface0 = "#313244";
+        base = "#1e1e2e";
+        mantle = "#181825";
+        crust = "#11111b";
       };
     in {
       enable = true;
