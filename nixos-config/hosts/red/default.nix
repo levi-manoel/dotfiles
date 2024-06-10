@@ -35,6 +35,7 @@
     nano
     nmap
     nomacs
+    oh-my-posh
     p7zip
     parted
     pavucontrol
@@ -42,6 +43,7 @@
     tldr
     unrar
     unzip
+    xclip
     wget
     wine
     zip
@@ -106,6 +108,11 @@
     };
   };
 
+  catppuccin = {
+    enable = true;
+    flavor = "mocha";
+  };
+
   # User Account
   user = {
     name = "levi";
@@ -122,19 +129,24 @@
       gcmsg = "git commit -m";
       gp = "git push";
       gl = "git pull";
-      gunst = "git restore --staged";
+      gun = "git restore --staged";
       gcp = "git cherry-pick";
       gd = "git diff";
       gds = "git diff --staged";
       gsw = "git switch";
+
+      irShell = "cd /home/levi/dev/irancho/sistema-irancho && nix develop --impure && cd -";
     };
 
     packages = with pkgs; [
       alejandra
+      beekeeper-studio
       dbeaver-bin
       discord
+      google-cloud-sdk
       gimp
       google-chrome
+      gource
       gtk-engine-murrine
       kooha
       nil
@@ -161,7 +173,7 @@
     };
 
     sessionVariables = {
-      GTK_THEME = "Gruvbox-Dark-B";
+      GTK_THEME = "Catppuccin-Mocha-Compact-Lavender-Dark";
     };
 
     home.extraConfig = {
@@ -182,13 +194,18 @@
         };
 
         theme = {
-          name = "Gruvbox-Dark-B";
-          package = pkgs.gruvbox-gtk-theme;
+          name = "Catppuccin-Mocha-Compact-Lavender-Dark";
+          package = pkgs.catppuccin-gtk.override {
+            accents = ["lavender"];
+            size = "compact";
+            tweaks = ["rimless"];
+            variant = "mocha";
+          };
         };
 
         iconTheme = {
-          name = "Mint-Y-Sand";
-          package = pkgs.cinnamon.mint-y-icons;
+          name = "Papirus-Dark";
+          package = pkgs.catppuccin-papirus-folders;
         };
 
         cursorTheme = {

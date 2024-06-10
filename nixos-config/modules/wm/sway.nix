@@ -314,6 +314,7 @@ in {
         text-color=#cdd6f4
         border-color=#b4befe
         progress-color=over #313244
+        output="eDP-2"
 
         [urgency=high]
         border-color=#fab387
@@ -521,15 +522,25 @@ in {
         output "eDP-2" pos 0 1349 res 1920x1080
         output "HDMI-A-1" pos 0 0 res 1920x1080 scale 0.8
 
-        workspace 1 output $PRIMARY
-        workspace 2 output $PRIMARY
-        workspace 3 output $PRIMARY
-        workspace 4 output $PRIMARY
-        workspace 5 output $SECONDARY $PRIMARY
-        workspace 6 output $SECONDARY $PRIMARY
-        workspace 7 output $SECONDARY $PRIMARY
-        workspace 8 output $SECONDARY $PRIMARY
-        workspace 9 output $SECONDARY $PRIMARY
+        # workspace 1 output $PRIMARY $SECONDARY
+        # workspace 2 output $PRIMARY $SECONDARY
+        # workspace 3 output $PRIMARY $SECONDARY
+        # workspace 4 output $PRIMARY $SECONDARY
+        # workspace 5 output $SECONDARY $PRIMARY
+        # workspace 6 output $SECONDARY $PRIMARY
+        # workspace 7 output $SECONDARY $PRIMARY
+        # workspace 8 output $SECONDARY $PRIMARY
+        # workspace 9 output $SECONDARY $PRIMARY
+
+        workspace 1 output $SECONDARY $PRIMARY
+        workspace 2 output $SECONDARY $PRIMARY
+        workspace 3 output $SECONDARY $PRIMARY
+        workspace 4 output $SECONDARY $PRIMARY
+        workspace 5 output $PRIMARY $PRIMARY
+        workspace 6 output $PRIMARY $PRIMARY
+        workspace 7 output $PRIMARY $PRIMARY
+        workspace 8 output $PRIMARY $PRIMARY
+        workspace 9 output $PRIMARY $PRIMARY
 
         exec dbus-sway-environment
         exec configure-gtk
