@@ -11,6 +11,7 @@
     flake-utils.url = "github:numtide/flake-utils";
 
     apple-fonts.url = "github:ostmarco/apple-fonts.nix";
+    catppuccin.url = "github:catppuccin/nix";
   };
 
   outputs = inputs @ {
@@ -19,6 +20,7 @@
     home-manager,
     flake-utils,
     apple-fonts,
+    catppuccin,
     ...
   }: let
     systems = with flake-utils.lib.system; [
@@ -71,6 +73,7 @@
               }
 
               home-manager.nixosModule
+              catppuccin.nixosModules.catppuccin
 
               (import path)
             ]
