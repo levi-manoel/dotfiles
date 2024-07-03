@@ -40,6 +40,8 @@
     parted
     pavucontrol
     playerctl
+    # rust-bin.stable.latest.default
+    rustup
     tldr
     unrar
     unzip
@@ -135,7 +137,16 @@
       gds = "git diff --staged";
       gsw = "git switch";
 
-      irShell = "cd /home/levi/dev/irancho/sistema-irancho && nix develop --impure && cd -";
+      irShell = "cd /home/levi/dev/irancho/sistema-irancho && nix develop --impure";
+
+      scDev = "export NODE_ENV=dev && cd /home/levi/dev/irancho/sistema-irancho/src/client && git restore config/dev.firebase.js && npm run dev";
+      ssDev = "export NODE_ENV=development && cd /home/levi/dev/irancho/sistema-irancho/src/server && npm run debug";
+
+      scQa = "export NODE_ENV=dev && cd /home/levi/dev/irancho/sistema-irancho/src/client && echo \"$(<config/prod.firebase.js)\" > config/dev.firebase.js && npm run dev";
+      ssQa = "export NODE_ENV=test && cd /home/levi/dev/irancho/sistema-irancho/src/server && npm run debug";
+
+      scProd = "export NODE_ENV=dev && cd /home/levi/dev/irancho/sistema-irancho/src/client && echo \"$(<config/prod.firebase.js)\" > config/dev.firebase.js && npm run dev";
+      ssProd = "export NODE_ENV=production && cd /home/levi/dev/irancho/sistema-irancho/src/server && npm run debug";
     };
 
     packages = with pkgs; [
@@ -149,6 +160,7 @@
       gource
       gtk-engine-murrine
       kooha
+      libreoffice-fresh
       nil
       obsidian
       qbittorrent
