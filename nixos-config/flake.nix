@@ -12,6 +12,11 @@
 
     apple-fonts.url = "github:ostmarco/apple-fonts.nix";
     catppuccin.url = "github:catppuccin/nix";
+
+    # rust-overlay = {
+    #   url = "github:oxalica/rust-overlay";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
   };
 
   outputs = inputs @ {
@@ -21,6 +26,7 @@
     flake-utils,
     apple-fonts,
     catppuccin,
+    # rust-overlay,
     ...
   }: let
     systems = with flake-utils.lib.system; [
@@ -34,6 +40,7 @@
 
       overlays = [
         (import overlays/electron.nix)
+        # (rust-overlay.overlays.default)
       ];
 
       lib = pkgs.lib.extend (self: super: {

@@ -1,22 +1,19 @@
 {
   "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
   "palette": {
-        "os": "#ACB0BE",
-        "closer": "p:os",
-        "pink": "#F5C2E7",
-        "lavender": "#B4BEFE",
-        "blue":  "#89B4FA"
+    "os": "#ACB0BE",
+    "closer": "p:os",
+    "pink": "#F5C2E7",
+    "lavender": "#B4BEFE",
+    "blue": "#89B4FA",
+    "red": "#f38ba8",
+    "peach": "#fab387"
   },
   "blocks": [
     {
       "alignment": "left",
+      "newline": true,
       "segments": [
-        {
-          "foreground": "p:os",
-          "style": "plain",
-          "template": "{{.Icon}} ",
-          "type": "os"
-        },
         {
           "foreground": "p:blue",
           "style": "plain",
@@ -48,20 +45,57 @@
             "revert_icon": "\uf0e2 ",
             "tag_icon": "\uf412 "
           },
-          "template": "{{ .HEAD }} ",
+          "template": "{{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }}",
           "style": "plain",
           "type": "git"
-        },
-        {
-          "style": "plain",
-          "foreground": "p:closer",
-          "template": "\uf105",
-          "type": "text"
         }
       ],
       "type": "prompt"
+    },
+    {
+      "alignment": "right",
+      "segments": [
+        {
+          "style": "plain",
+          "type": "shell",
+          "template": "{{ .Env.IN_NIX_SHELL }}"
+        },
+        {
+          "style": "plain",
+          "type": "executiontime",
+          "foreground": "p:peach",
+          "properties": {
+            "threshold": 2000
+          }
+        }
+      ],
+      "type": "rprompt"
+    },
+    {
+      "alignment": "left",
+      "type": "prompt",
+      "newline": true,
+      "segments": [
+        {
+          "style": "plain",
+          "foreground_templates": [
+            "{{if gt .Code 0}}p:red{{end}}",
+            "{{if eq .Code 0}}p:closer{{end}}"
+          ],
+          "template": "\uf105",
+          "type": "text"
+        }
+      ]
     }
   ],
+  "transient_prompt": {
+    "background": "transparent",
+    "foreground_templates": [
+      "{{if gt .Code 0}}p:red{{end}}",
+      "{{if eq .Code 0}}p:closer{{end}}"
+    ],
+    "template": "\uf105 "
+  },
   "final_space": true,
   "version": 2
 }
