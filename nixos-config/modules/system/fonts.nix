@@ -35,9 +35,6 @@
       noto-fonts
       noto-fonts-cjk
       noto-fonts-emoji
-      ny
-      sf-mono
-      sf-pro
       source-han-sans
       source-han-sans-japanese
       source-han-serif-japanese
@@ -52,7 +49,7 @@
       enable = true;
       defaultFonts = {
         monospace = ["Zed Mono" "Noto Sans Mono"];
-        serif = ["New York" "Noto Serif" "Source Han Serif"];
+        serif = ["Noto Serif" "Source Han Serif"];
         sansSerif = ["Iosevka Comfy Motion" "Noto Sans" "Source Han Sans"];
       };
     };
