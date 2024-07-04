@@ -26,7 +26,7 @@ autoload -Uz compinit && compinit
 
 zinit cdreplay -q
 
-eval "$(oh-my-posh init zsh --config $HOME/.dotfiles/.ohmyposh.json)"
+eval "$(oh-my-posh init zsh --config $HOME/dotfiles/.ohmyposh.json)"
 
 # Keybindings
 bindkey -e
