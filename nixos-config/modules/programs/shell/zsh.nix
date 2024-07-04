@@ -23,7 +23,7 @@ in {
     user.home.programs.zsh = {
       inherit (cfg) enable;
 
-      initExtra = "source /home/${config.user.name}/.dotfiles/.zshrc";
+      initExtra = "source /home/${config.user.name}/dotfiles/.zshrc";
 
       completionInit = ''
         ${
