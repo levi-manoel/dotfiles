@@ -16,6 +16,10 @@ in {
       inherit (cfg) enable;
 
       extraConfig = {
+        user = {
+          name = "levi-manoel";
+          email = "levimanoel.deob@gmail.com";
+        };
         branch.autosetuprebase = "always";
         color.ui = true;
         core.eol = "lf";
