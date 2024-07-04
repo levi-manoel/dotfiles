@@ -27,6 +27,7 @@
     eza
     fastfetch
     fzf
+    gcc
     git
     git-crypt
     gparted
