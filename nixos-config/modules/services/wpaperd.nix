@@ -2,11 +2,11 @@
   user.home = {
     programs = {
       wpaperd = {
-        enable = true;
+        enable = false;
         settings = {
           default = {
             duration = "2m";
-            path = "/home/${config.user.name}/dotfiles/nixos-config/wallpapers";
+            path = "/home/${config.user.name}/dotfiles/wallpapers";
             sorting = "ascending";
             apply-shadow = false;
           };

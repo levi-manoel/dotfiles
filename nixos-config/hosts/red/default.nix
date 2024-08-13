@@ -1,119 +1,92 @@
 {
-  pkgs,
   lib,
-  config,
-  inputs,
-  system,
+  pkgs,
   ...
 }: {
-  imports = [./hardware.nix];
+  imports = [
+    ./hardware.nix
+  ];
 
-  # Programs
-  programs.command-not-found.enable = true;
-
-  programs.steam = {
-    enable = false;
-    remotePlay.openFirewall = true;
-    dedicatedServer.openFirewall = true;
-  };
-
-  # Packages
   environment.systemPackages = with pkgs; [
+    arion
     bat
+    bintools
+    bottom
     btop
-    cifs-utils
     coreutils
     curl
+    exfat
     eza
     fastfetch
+    file
     fzf
-    gcc
     git
-    git-crypt
-    gparted
+    glib
+    jq
     libnotify
     mpv
-    nano
-    nmap
-    nomacs
-    oh-my-posh
+    # oh-my-posh
+    openssl
     p7zip
-    parted
-    pavucontrol
-    playerctl
-    # rust-bin.stable.latest.default
-    rustup
+    ripgrep
     tldr
+    toybox
     unrar
     unzip
-    xclip
     wget
-    wine
     zip
-    zoxide
   ];
 
   # Services
-  services.devmon.enable = true;
-  services.gvfs.enable = true;
-  services.udisks2.enable = true;
+  services = {
+    gnome.gnome-keyring.enable = true;
 
-  # need to change driver via cups after reboot (todo?)
-  services.printing = {
-    enable = true;
-    drivers = [pkgs.epson_201207w];
-    browsing = true;
-    defaultShared = true;
-  };
+    mysql = {
+      enable = false;
+      package = pkgs.mariadb;
+    };
 
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    publish.enable = true;
-    publish.addresses = true;
-    publish.userServices = true;
-  };
-
-  hardware.sane = {
-    enable = true;
-    extraBackends = [pkgs.epson_201207w];
-  };
-
-  services.redis.servers = {
-    "redis" = {
+    redis.servers."redis" = {
       enable = true;
       port = 6379;
     };
   };
 
-  services.mysql = {
-    enable = false;
-    package = pkgs.mariadb;
+  programs = {
+    adb.enable = true;
+    command-not-found.enable = true;
   };
 
-  services.gnome.gnome-keyring.enable = true;
+  modules = {
+    programs = {
+      fish.enable = true;
+      zsh.enable = false;
+      git.enable = true;
+      kitty.enable = true;
 
-  programs.adb.enable = true;
+      nixvim = {
+        enable = true;
 
-  modules.programs = {
-    zsh.enable = true;
-    kitty.enable = true;
-    # fish.enable = true;
-    # starship.enable = true;
+        viAlias = true;
+        vimAlias = true;
+      };
 
-    git.enable = true;
-    neovim = {
-      enable = true;
-      defaultEditor = false;
-
-      viAlias = true;
-      vimAlias = true;
+      zed.enable = true;
     };
-  };
 
-  catppuccin = {
-    enable = true;
-    flavor = "mocha";
+    services = {
+      docker = {
+        enable = true;
+        compose = true;
+      };
+
+      lgtm.enable = true;
+
+      stylix = {
+        enable = true;
+        wallpaper = wallpapers/bat1.png;
+      };
+    };
   };
 
   # User Account
@@ -121,118 +94,65 @@
     name = "levi";
     description = "Levi Manoel";
 
-    groups = ["adbusers" "avahi" "plugdev" "networking" "video" "wheel"];
+    groups = ["adbusers" "docker" "networking" "video" "wheel" "kvm" "dialout"];
 
     shellAliases = {
       ls = "exa";
       cat = "bat";
-
-      gst = "git status";
-      ga = "git add";
-      gcmsg = "git commit -m";
-      gp = "git push";
-      gl = "git pull";
-      gun = "git restore --staged";
-      gcp = "git cherry-pick";
-      gd = "git diff";
-      gds = "git diff --staged";
-      gsw = "git switch";
-
-      irShell = "cd /home/levi/dev/irancho/sistema-irancho && nix develop --impure";
-
-      scDev = "export NODE_ENV=dev && cd /home/levi/dev/irancho/sistema-irancho/src/client && git restore config/dev.firebase.js && npm run dev";
-      ssDev = "export NODE_ENV=development && cd /home/levi/dev/irancho/sistema-irancho/src/server && npm run debug";
-
-      scQa = "export NODE_ENV=dev && cd /home/levi/dev/irancho/sistema-irancho/src/client && echo \"$(<config/prod.firebase.js)\" > config/dev.firebase.js && npm run dev";
-      ssQa = "export NODE_ENV=test && cd /home/levi/dev/irancho/sistema-irancho/src/server && npm run debug";
-
-      scProd = "export NODE_ENV=dev && cd /home/levi/dev/irancho/sistema-irancho/src/client && echo \"$(<config/prod.firebase.js)\" > config/dev.firebase.js && npm run dev";
-      ssProd = "export NODE_ENV=production && cd /home/levi/dev/irancho/sistema-irancho/src/server && npm run debug";
     };
 
-    packages = with pkgs; [
+    packages = with pkgs; let
+      gcloud = google-cloud-sdk.withExtraComponents (with google-cloud-sdk.components; [
+        gke-gcloud-auth-plugin
+        kubectl
+      ]);
+    in [
+      (discord.override {withOpenASAR = true;})
       alejandra
+      anydesk
       beekeeper-studio
-      dbeaver-bin
-      discord
-      google-cloud-sdk
+      d2
+      # dbeaver-bin
+      devenv
+      dotnet-sdk_8
+      gcloud
       gimp
-      google-chrome
-      gource
-      gtk-engine-murrine
+      gh
       kooha
       libreoffice-fresh
+      minikube
       nil
+      webcord
+      nixd
       obsidian
-      qbittorrent
+      onlyoffice-bin
+      shfmt
+      signal-desktop
       spotify
       stremio
-      terraform
+      tor-browser-bundle-bin
       ventoy-full
-      vesktop
-      vscode
-      wpsoffice
-      zed-editor
+      # vscode.fhs
+      zx
     ];
 
     home = {
+      services.flameshot.enable = true;
+
       programs = {
-        vscode.enable = true;
-      };
-
-      services = {
-        flameshot.enable = true;
-      };
-    };
-
-    sessionVariables = {
-      GTK_THEME = "Catppuccin-Mocha-Compact-Lavender-Dark";
-    };
-
-    home.extraConfig = {
-      xsession = {
-        pointerCursor = {
-          name = "phinger-cursors-dark";
-          package = pkgs.phinger-cursors;
-          size = 24;
-        };
-      };
-
-      gtk = {
-        enable = true;
-
-        font = {
-          name = "Iosevka Comfy Motion";
-          size = 10;
+        direnv = {
+          enable = false;
+          nix-direnv.enable = false;
         };
 
-        theme = {
-          name = "Catppuccin-Mocha-Compact-Lavender-Dark";
-          package = pkgs.catppuccin-gtk.override {
-            accents = ["lavender"];
-            size = "compact";
-            tweaks = ["rimless"];
-            variant = "mocha";
-          };
-        };
+        google-chrome.enable = true;
 
-        iconTheme = {
-          name = "Papirus-Dark";
-          package = pkgs.catppuccin-papirus-folders;
-        };
+        vscode = {
+          enable = true;
+          package = pkgs.vscode.fhs;
 
-        cursorTheme = {
-          name = "phinger-cursors-dark";
-          package = pkgs.phinger-cursors;
-          size = 24;
-        };
-
-        gtk3.extraConfig = {
-          gtk-application-prefer-dark-theme = true;
-        };
-
-        gtk4.extraConfig = {
-          gtk-application-prefer-dark-theme = true;
+          extensions = lib.mkForce [];
+          userSettings = lib.mkForce {};
         };
       };
     };
