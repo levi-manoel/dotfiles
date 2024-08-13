@@ -41,6 +41,7 @@
 
       iosevka-comfy.comfy
       iosevka-comfy.comfy-motion
+
       zed-mono
       zed-sans
     ];
@@ -48,7 +49,7 @@
     fontconfig = {
       enable = true;
       defaultFonts = {
-        monospace = ["Zed Mono" "Noto Sans Mono"];
+        monospace = ["Iosevka Comfy Motion" "Noto Sans Mono"];
         serif = ["Noto Serif" "Source Han Serif"];
         sansSerif = ["Iosevka Comfy Motion" "Noto Sans" "Source Han Sans"];
       };

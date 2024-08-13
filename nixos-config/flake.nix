@@ -3,30 +3,31 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
+    flake-utils.url = "github:numtide/flake-utils";
 
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    flake-utils.url = "github:numtide/flake-utils";
+    nixvim.url = "github:nix-community/nixvim/main";
+    nixvim.inputs.nixpkgs.follows = "nixpkgs";
+
+    stylix.url = "github:danth/stylix";
+    stylix.inputs.nixpkgs.follows = "nixpkgs";
 
     apple-fonts.url = "github:ostmarco/apple-fonts.nix";
-    catppuccin.url = "github:catppuccin/nix";
-
-    # rust-overlay = {
-    #   url = "github:oxalica/rust-overlay";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
   };
 
   outputs = inputs @ {
     self,
     nixpkgs,
-    home-manager,
     flake-utils,
+    home-manager,
+    nixvim,
+    stylix,
     apple-fonts,
-    catppuccin,
-    # rust-overlay,
     ...
   }: let
     systems = with flake-utils.lib.system; [
@@ -40,7 +41,6 @@
 
       overlays = [
         (import overlays/electron.nix)
-        # (rust-overlay.overlays.default)
       ];
 
       lib = pkgs.lib.extend (self: super: {
@@ -80,7 +80,8 @@
               }
 
               home-manager.nixosModule
-              catppuccin.nixosModules.catppuccin
+              nixvim.nixosModules.nixvim
+              stylix.nixosModules.stylix
 
               (import path)
             ]

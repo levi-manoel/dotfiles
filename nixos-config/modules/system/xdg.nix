@@ -18,6 +18,5 @@
     };
   };
 
-  # required by xdg-desktop-portal
   environment.systemPackages = [pkgs.xdg-user-dirs pkgs.xdg-utils];
 }

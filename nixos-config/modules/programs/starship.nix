@@ -7,7 +7,6 @@
   inherit (lib.extra) mkEnableOption;
 
   fish = config.modules.programs.fish;
-  zsh = config.modules.programs.zsh;
   cfg = config.modules.programs.starship;
 in {
   options.modules.programs.starship = {
@@ -18,7 +17,6 @@ in {
     user.home.programs.starship = {
       enable = cfg.enable;
       enableFishIntegration = fish.enable;
-      enableZshIntegration = zsh.enable;
 
       settings =
         {
