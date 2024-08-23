@@ -127,6 +127,7 @@
       gcloud
       gimp
       gh
+      klavaro
       kooha
       libreoffice-fresh
       minikube

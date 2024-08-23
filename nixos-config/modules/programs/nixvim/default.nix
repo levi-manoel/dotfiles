@@ -23,7 +23,7 @@ in {
 
       clipboard.providers.wl-copy.enable = true;
 
-      plugins = { btw };
+      plugins = {};
 
       colorschemes.catppuccin = {
         enable = true;
