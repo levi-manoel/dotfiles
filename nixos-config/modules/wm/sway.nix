@@ -77,6 +77,7 @@ in {
     dbus-sway-environment
     grim
     pcmanfm
+    playerctl
     shotman
     slurp
     swaybg
@@ -278,6 +279,9 @@ in {
         text-color=#cdd6f4
         border-color=#b4befe
         progress-color=over #313244
+        
+        height=300
+        width=400
 
         [urgency=high]
         border-color=#fab387

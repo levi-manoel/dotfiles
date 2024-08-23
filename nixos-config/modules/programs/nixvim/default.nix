@@ -23,22 +23,7 @@ in {
 
       clipboard.providers.wl-copy.enable = true;
 
-      plugins = {
-        comment.enable = true;
-        crates-nvim.enable = true;
-        gitsigns.enable = true;
-        lualine.enable = true;
-        luasnip.enable = true;
-        markdown-preview.enable = true;
-        nvim-autopairs.enable = true;
-        schemastore.enable = true;
-        toggleterm.enable = true;
-        transparent.enable = true;
-        treesitter-context.enable = true;
-        treesitter.enable = true;
-        trouble.enable = true;
-        which-key.enable = true;
-      };
+      plugins = { };
 
       colorschemes.catppuccin = {
         enable = true;

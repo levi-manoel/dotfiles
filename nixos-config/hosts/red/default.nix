@@ -80,8 +80,6 @@
         compose = true;
       };
 
-      lgtm.enable = true;
-
       stylix = {
         enable = true;
         wallpaper = wallpapers/bat1.png;
@@ -99,6 +97,17 @@
     shellAliases = {
       ls = "exa";
       cat = "bat";
+
+      gst = "git status";
+      gsw = "git switch";
+      gco = "git checkout";
+      ga = "git add";
+      gc = "git commit";
+      gcm = "git commit -m";
+      gd = "git diff";
+      gds = "git diff --staged";
+      gl = "git pull";
+      gp = "git push";
     };
 
     packages = with pkgs; let
@@ -112,7 +121,7 @@
       anydesk
       beekeeper-studio
       d2
-      # dbeaver-bin
+      dbeaver-bin
       devenv
       dotnet-sdk_8
       gcloud
