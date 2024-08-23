@@ -89,7 +89,7 @@
         };
     in {
       nixosConfigurations = {
-        red = mkHost ./hosts/red;
+        batcomputer = mkHost ./hosts/batcomputer;
       };
     });
 
