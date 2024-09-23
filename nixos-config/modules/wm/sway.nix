@@ -50,6 +50,8 @@
         ${gsettings} set org.gnome.desktop.interface font-name "$FONT_NAME"
 
         ${gsettings} set org.gnome.desktop.interface color-scheme prefer-dark
+
+        ${gsettings} set org.gnome.desktop.peripherals.keyboard remember-numlock-state true
       '';
     };
 in {
@@ -221,7 +223,7 @@ in {
         ignore-empty-password = true;
 
         font-size = 24;
-        font = "Iosevka Comfy Motion";
+        font = "VictorMono NF";
 
         clock = true;
 
@@ -240,15 +242,27 @@ in {
             {
               block = "memory";
               format = " $icon $mem_used_percents ";
-              format_alt = " $icon $swap_used_percents ";
+              format_alt = " SWAP $swap_used_percents ";
             }
             {
               block = "cpu";
               interval = 1;
-              format = " $barchart $utilization $frequency ";
+              format = " $barchart $utilization ";
             }
             {
               block = "sound";
+              format = " $icon {$volume.eng(w:2) |}";
+            }
+            {
+              block = "custom";
+              command = "wpctl get-volume @DEFAULT_SOURCE@ | grep -q MUTED && echo [X] || echo [O]";
+              interval = 1;
+              click = [
+                {
+                  button = "left";
+                  cmd = "wpctl set-mute @DEFAULT_SOURCE@ toggle";
+                }
+              ];
             }
             {
               block = "battery";
@@ -257,8 +271,19 @@ in {
             }
             {
               block = "net";
-              format = " $icon $ssid $signal_strength $ip ↓$speed_down ↑$speed_up ";
+              format = " $icon $ssid $signal_strength ";
               interval = 2;
+            }
+            {
+              block = "custom";
+              command = "warp-cli status | grep -q Connected && echo '>>' || echo '><'";
+              interval = 1;
+              click = [
+                {
+                  button = "left";
+                  cmd = "warp-cli status | grep -q Connected && warp-cli disconnect || warp-cli connect";
+                }
+              ];
             }
             {
               block = "time";
@@ -279,7 +304,7 @@ in {
         text-color=#cdd6f4
         border-color=#b4befe
         progress-color=over #313244
-        
+
         height=300
         width=400
 
@@ -319,7 +344,7 @@ in {
       };
     in {
       enable = true;
-      package = pkgs.swayfx-unwrapped;
+      package = pkgs.swayfx;
 
       checkConfig = false;
 
@@ -376,18 +401,16 @@ in {
 
         input = {
           "1:1:AT_Translated_Set_2_keyboard" = {
-            "xkb_layout" = "br";
-            "xkb_variant" = "abnt2";
+            "xkb_layout" = "br,us";
+            "xkb_variant" = "abnt2,dvorak";
+            "xkb_options" = "grp:alt_space_toggle";
           };
 
-          "1133:50504:Logitech_USB_Receiver" = {
-            "xkb_layout" = "us";
-            "xkb_variant" = "alt-intl";
-          };
-
+          # swaymsg input type:touchpad events enabled/disabled
           "type:touchpad" = {
             "tap" = "enabled";
             "natural_scroll" = "enabled";
+            "events" = "disabled_on_external_mouse";
           };
         };
 
@@ -487,6 +510,7 @@ in {
 
           "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_SINK@ toggle";
           "XF86AudioMicMute" = "exec wpctl set-mute @DEFAULT_SOURCE@ toggle";
+          "Alt+f5" = "exec wpctl set-mute @DEFAULT_SOURCE@ toggle";
         };
       };
 
@@ -495,12 +519,12 @@ in {
       '';
 
       extraConfig = ''
-        blur enable
-        corner_radius 6
-        shadows enable
-        default_dim_inactive 0.05
-        dim_inactive_colors.unfocused #000000FF
-        dim_inactive_colors.urgent ${theme.lavender}
+        # blur enable
+        # corner_radius 6
+        # shadows enable
+        # default_dim_inactive 0.05
+        # dim_inactive_colors.unfocused #000000FF
+        # dim_inactive_colors.urgent ${theme.lavender}
 
         client.focused           ${theme.lavender} ${theme.base} ${theme.text}  ${theme.rosewater} ${theme.lavender}
         client.focused_inactive  ${theme.overlay0} ${theme.base} ${theme.text}  ${theme.rosewater} ${theme.overlay0}

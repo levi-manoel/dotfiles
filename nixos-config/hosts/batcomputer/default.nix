@@ -13,6 +13,7 @@
     bintools
     bottom
     btop
+    cloudflare-warp
     coreutils
     curl
     exfat
@@ -23,9 +24,9 @@
     git
     glib
     jq
+    libinput
     libnotify
     mpv
-    # oh-my-posh
     openssl
     p7zip
     ripgrep
@@ -34,6 +35,8 @@
     unrar
     unzip
     wget
+    xclicker
+    zen-browser
     zip
   ];
 
@@ -60,15 +63,15 @@
   modules = {
     programs = {
       fish.enable = true;
-      zsh.enable = false;
       git.enable = true;
       kitty.enable = true;
 
-      nixvim = {
+      neovim = {
         enable = true;
 
         viAlias = true;
         vimAlias = true;
+        vimdiffAlias = true;
       };
 
       zed.enable = true;
@@ -120,6 +123,7 @@
       alejandra
       anydesk
       beekeeper-studio
+      chromium
       d2
       dbeaver-bin
       devenv
@@ -132,17 +136,19 @@
       libreoffice-fresh
       minikube
       nil
-      webcord
       nixd
       obsidian
+      obs-studio
       onlyoffice-bin
+      qbittorrent
       shfmt
       signal-desktop
       spotify
       stremio
       tor-browser-bundle-bin
       ventoy-full
-      # vscode.fhs
+      vesktop
+      warp-terminal
       zx
     ];
 
@@ -151,8 +157,8 @@
 
       programs = {
         direnv = {
-          enable = false;
-          nix-direnv.enable = false;
+          enable = true;
+          nix-direnv.enable = true;
         };
 
         google-chrome.enable = true;
