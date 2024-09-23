@@ -11,13 +11,11 @@
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixvim.url = "github:nix-community/nixvim/main";
-    nixvim.inputs.nixpkgs.follows = "nixpkgs";
-
     stylix.url = "github:danth/stylix";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
 
     apple-fonts.url = "github:ostmarco/apple-fonts.nix";
+    zen-browser.url = "github:MarceColl/zen-browser-flake";
   };
 
   outputs = inputs @ {
@@ -25,9 +23,9 @@
     nixpkgs,
     flake-utils,
     home-manager,
-    nixvim,
     stylix,
     apple-fonts,
+    zen-browser,
     ...
   }: let
     systems = with flake-utils.lib.system; [
@@ -62,6 +60,9 @@
           overlays
           ++ [
             (final: prev: apple-fonts.packages.${system})
+            (final: prev: {
+              zen-browser = inputs.zen-browser.packages.${system}.default;
+            })
           ];
       };
 
@@ -80,7 +81,6 @@
               }
 
               home-manager.nixosModule
-              nixvim.nixosModules.nixvim
               stylix.nixosModules.stylix
 
               (import path)

@@ -39,17 +39,22 @@ in {
           name = "Iosevka Comfy Motion";
           package = pkgs.iosevka-comfy.comfy-motion;
         };
+
+        victor-mono = {
+          name = "VictorMono NF";
+          package = pkgs.nerdfonts;
+        };
       in {
         sizes = {
-          applications = 11;
-          desktop = 11;
-          popups = 11;
-          terminal = 11;
+          applications = 10;
+          desktop = 10;
+          popups = 10;
+          terminal = 10;
         };
 
         serif = noto-fonts;
-        sansSerif = iosevka;
-        monospace = iosevka;
+        sansSerif = victor-mono;
+        monospace = victor-mono;
       };
 
       opacity = {
