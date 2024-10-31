@@ -23,6 +23,7 @@
     fzf
     git
     glib
+    gnumake
     jq
     libinput
     libnotify
@@ -30,6 +31,7 @@
     openssl
     p7zip
     ripgrep
+    stow
     tldr
     toybox
     unrar
