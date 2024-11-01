@@ -25,6 +25,7 @@
     git
     glib
     gnumake
+    gparted
     jq
     libinput
     libnotify
@@ -39,11 +40,9 @@
     unzip
     wget
     xclicker
-    zen-browser
     zip
   ];
 
-  # Services
   services = {
     gnome.gnome-keyring.enable = true;
 
@@ -56,6 +55,11 @@
   programs = {
     adb.enable = true;
     command-not-found.enable = true;
+
+    steam = {
+      enable = true;
+      gamescopeSession.enable = true;
+    };
   };
 
   modules = {
@@ -63,13 +67,6 @@
       fish.enable = true;
       git.enable = true;
       kitty.enable = true;
-
-      neovim = {
-        enable = true;
-        viAlias = true;
-        vimAlias = true;
-        vimdiffAlias = true;
-      };
 
       zed.enable = true;
     };
@@ -87,7 +84,6 @@
     };
   };
 
-  # User Account
   user = {
     name = "levi";
     description = "Levi Manoel";
@@ -137,6 +133,8 @@
       obsidian
       obs-studio
       onlyoffice-bin
+      prismlauncher
+      protonup
       qbittorrent
       shfmt
       signal-desktop
@@ -151,8 +149,6 @@
     ];
 
     home = {
-      services.flameshot.enable = true;
-
       programs = {
         direnv = {
           enable = true;

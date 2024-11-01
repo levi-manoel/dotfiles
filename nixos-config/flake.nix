@@ -15,7 +15,6 @@
     stylix.inputs.nixpkgs.follows = "nixpkgs";
 
     apple-fonts.url = "github:ostmarco/apple-fonts.nix";
-    zen-browser.url = "github:MarceColl/zen-browser-flake";
   };
 
   outputs = inputs @ {
@@ -25,7 +24,6 @@
     home-manager,
     stylix,
     apple-fonts,
-    zen-browser,
     ...
   }: let
     systems = with flake-utils.lib.system; [
@@ -60,9 +58,6 @@
           overlays
           ++ [
             (final: prev: apple-fonts.packages.${system})
-            (final: prev: {
-              zen-browser = inputs.zen-browser.packages.${system}.default;
-            })
           ];
       };
 
