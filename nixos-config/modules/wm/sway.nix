@@ -61,6 +61,8 @@ in {
   programs.wshowkeys.enable = true;
 
   user.sessionVariables = {
+    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\\\${HOME}/.steam/root/compatibilitytools.d";
+
     XDG_SESSION_TYPE = "wayland";
     XDG_SESSION_DESKTOP = "sway";
     XDG_CURRENT_DESKTOP = "sway";

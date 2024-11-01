@@ -33,7 +33,7 @@
       font-awesome
       nerdfonts
       noto-fonts
-      noto-fonts-cjk
+      noto-fonts-cjk-sans
       noto-fonts-emoji
       source-han-sans
       source-han-sans-japanese
