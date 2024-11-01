@@ -21,6 +21,7 @@
     fastfetch
     file
     fzf
+    gcc
     git
     glib
     gnumake
@@ -46,11 +47,6 @@
   services = {
     gnome.gnome-keyring.enable = true;
 
-    mysql = {
-      enable = false;
-      package = pkgs.mariadb;
-    };
-
     redis.servers."redis" = {
       enable = true;
       port = 6379;
@@ -70,7 +66,6 @@
 
       neovim = {
         enable = true;
-
         viAlias = true;
         vimAlias = true;
         vimdiffAlias = true;
@@ -145,6 +140,7 @@
       qbittorrent
       shfmt
       signal-desktop
+      slack
       spotify
       stremio
       tor-browser-bundle-bin
