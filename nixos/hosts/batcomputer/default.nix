@@ -147,11 +147,8 @@
       warp-terminal
       zx
     ];
-    
 
     home = {
-      
-
       programs = {
         direnv = {
           enable = true;
@@ -159,10 +156,6 @@
         };
 
         google-chrome.enable = true;
-
-        neovim = {
-          enable = true;
-        };
 
         vscode = {
           enable = true;
