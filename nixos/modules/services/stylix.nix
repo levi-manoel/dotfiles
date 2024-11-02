@@ -63,6 +63,7 @@ in {
 
       targets = {
         chromium.enable = false;
+        # neovim.enable = false;
       };
     };
 
