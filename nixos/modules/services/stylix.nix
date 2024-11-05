@@ -35,11 +35,6 @@ in {
           package = pkgs.noto-fonts;
         };
 
-        iosevka = {
-          name = "Iosevka Comfy Motion";
-          package = pkgs.iosevka-comfy.comfy-motion;
-        };
-
         victor-mono = {
           name = "VictorMono NF";
           package = pkgs.nerdfonts;
@@ -63,7 +58,6 @@ in {
 
       targets = {
         chromium.enable = false;
-        # neovim.enable = false;
       };
     };
 

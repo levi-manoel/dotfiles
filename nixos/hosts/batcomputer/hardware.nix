@@ -4,6 +4,7 @@
 {
   config,
   lib,
+  pkgs,
   modulesPath,
   ...
 }: {
@@ -11,7 +12,7 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = ["xhci_pci" "ahci" "nvme" "usbhid"];
+  boot.initrd.availableKernelModules = ["xhci_pci" "ahci" "nvme"];
   boot.initrd.kernelModules = [];
   boot.kernelModules = ["kvm-intel"];
   boot.extraModulePackages = [];
@@ -25,6 +26,11 @@
     device = "/dev/disk/by-uuid/2169-0EA1";
     fsType = "vfat";
     options = ["fmask=0022" "dmask=0022"];
+  };
+
+  fileSystems."/home/levi/another" = {
+    device = "/dev/disk/by-uuid/726afaed-3a68-42f3-9383-d231efd5a1b5";
+    fsType = "ext4";
   };
 
   swapDevices = [
