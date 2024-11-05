@@ -133,6 +133,7 @@
       obsidian
       obs-studio
       onlyoffice-bin
+      presenterm
       prismlauncher
       protonup
       qbittorrent

@@ -4,7 +4,7 @@
     enable32Bit = true;
   };
 
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = ["noveau"];
 
   hardware.nvidia = {
     open = false;
