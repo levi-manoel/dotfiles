@@ -4,14 +4,7 @@
   pkgs,
   ...
 }: let
-  modifier = "Mod4";
   terminal = "${pkgs.kitty}/bin/kitty";
-  menu = "${pkgs.rofi}/bin/rofi";
-
-  left = "h";
-  down = "j";
-  up = "k";
-  right = "l";
 
   dbus-sway-environment = pkgs.writeTextFile {
     name = "dbus-sway-environment";
@@ -55,6 +48,11 @@
       '';
     };
 in {
+  imports = [
+    ./keybindings.nix
+    ./swaybar.nix
+  ];
+
   security.polkit.enable = true;
 
   programs.light.enable = true;
@@ -235,68 +233,6 @@ in {
       };
     };
 
-    programs.i3status-rust = {
-      enable = true;
-      bars = {
-        bottom = {
-          theme = "native";
-          blocks = [
-            {
-              block = "memory";
-              format = " $icon $mem_used_percents ";
-              format_alt = " SWAP $swap_used_percents ";
-            }
-            {
-              block = "cpu";
-              interval = 1;
-              format = " $barchart $utilization ";
-            }
-            {
-              block = "sound";
-              format = " $icon {$volume.eng(w:2) |}";
-            }
-            {
-              block = "custom";
-              command = "wpctl get-volume @DEFAULT_SOURCE@ | grep -q MUTED && echo [X] || echo [O]";
-              interval = 1;
-              click = [
-                {
-                  button = "left";
-                  cmd = "wpctl set-mute @DEFAULT_SOURCE@ toggle";
-                }
-              ];
-            }
-            {
-              block = "battery";
-              device = "BAT0";
-              format = " $icon $percentage $time $power ";
-            }
-            {
-              block = "net";
-              format = " $icon $ssid $signal_strength ";
-              interval = 2;
-            }
-            {
-              block = "custom";
-              command = "warp-cli status | grep -q Connected && echo '>>' || echo '><'";
-              interval = 1;
-              click = [
-                {
-                  button = "left";
-                  cmd = "warp-cli status | grep -q Connected && warp-cli disconnect || warp-cli connect";
-                }
-              ];
-            }
-            {
-              block = "time";
-              interval = 1;
-              format = " $timestamp.datetime(f:'%F %T') ";
-            }
-          ];
-        };
-      };
-    };
-
     services.mako = {
       enable = true;
       defaultTimeout = 10000;
@@ -353,9 +289,6 @@ in {
       wrapperFeatures.gtk = true;
 
       config = {
-        modifier = modifier;
-        terminal = terminal;
-
         startup = [
           {command = "bluetoothctl power on";}
         ];
@@ -424,95 +357,6 @@ in {
         ];
 
         keybindings = {
-          "${modifier}+Return" = "exec ${terminal}";
-          "${modifier}+q" = "kill";
-          "${modifier}+space" = "exec ${menu} -show drun";
-          "XF86Search" = "exec pcmanfm";
-
-          "${modifier}+Shift+s" = "exec ${pkgs.shotman}/bin/shotman --capture region";
-
-          "${modifier}+${left}" = "focus left";
-          "${modifier}+${down}" = "focus down";
-          "${modifier}+${up}" = "focus up";
-          "${modifier}+${right}" = "focus right";
-
-          "${modifier}+Left" = "focus left";
-          "${modifier}+Down" = "focus down";
-          "${modifier}+Up" = "focus up";
-          "${modifier}+Right" = "focus right";
-
-          "${modifier}+Shift+${left}" = "move left";
-          "${modifier}+Shift+${down}" = "move down";
-          "${modifier}+Shift+${up}" = "move up";
-          "${modifier}+Shift+${right}" = "move right";
-
-          "${modifier}+Shift+Left" = "move left";
-          "${modifier}+Shift+Down" = "move down";
-          "${modifier}+Shift+Up" = "move up";
-          "${modifier}+Shift+Right" = "move right";
-
-          "${modifier}+b" = "splith";
-          "${modifier}+v" = "splitv";
-          "${modifier}+f" = "fullscreen toggle";
-          "${modifier}+a" = "focus parent";
-
-          "${modifier}+s" = "layout stacking";
-          "${modifier}+w" = "layout tabbed";
-          "${modifier}+e" = "layout toggle split";
-
-          "${modifier}+Shift+space" = "floating toggle";
-          # "${modifier}+space" = "focus mode_toggle";
-
-          "${modifier}+period" = "workspace next";
-          "${modifier}+comma" = "workspace prev";
-
-          "${modifier}+1" = "workspace number 1";
-          "${modifier}+2" = "workspace number 2";
-          "${modifier}+3" = "workspace number 3";
-          "${modifier}+4" = "workspace number 4";
-          "${modifier}+5" = "workspace number 5";
-          "${modifier}+6" = "workspace number 6";
-          "${modifier}+7" = "workspace number 7";
-          "${modifier}+8" = "workspace number 8";
-          "${modifier}+9" = "workspace number 9";
-
-          "${modifier}+Shift+period" = "move container to workspace next; workspace next";
-          "${modifier}+Shift+comma" = "move container to workspace prev; workspace prev";
-
-          "${modifier}+tab" = "workspace next_on_output";
-          "Alt+tab" = "workspace back_and_forth";
-
-          "${modifier}+Shift+1" = "move container to workspace number 1";
-          "${modifier}+Shift+2" = "move container to workspace number 2";
-          "${modifier}+Shift+3" = "move container to workspace number 3";
-          "${modifier}+Shift+4" = "move container to workspace number 4";
-          "${modifier}+Shift+5" = "move container to workspace number 5";
-          "${modifier}+Shift+6" = "move container to workspace number 6";
-          "${modifier}+Shift+7" = "move container to workspace number 7";
-          "${modifier}+Shift+8" = "move container to workspace number 8";
-          "${modifier}+Shift+9" = "move container to workspace number 9";
-
-          "${modifier}+Shift+minus" = "move scratchpad";
-          "${modifier}+minus" = "scratchpad show";
-
-          "${modifier}+Shift+c" = "reload";
-          "${modifier}+Shift+e" = "exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'";
-
-          "${modifier}+r" = "mode resize";
-
-          "XF86MonBrightnessDown" = "exec light -U 10";
-          "XF86MonBrightnessUp" = "exec light -A 10";
-
-          "XF86AudioPlay" = "exec playerctl play-pause";
-          "XF86AudioNext" = "exec playerctl next";
-          "XF86AudioPrev" = "exec playerctl previous";
-
-          "XF86AudioRaiseVolume" = "exec wpctl set-volume -l 1 @DEFAULT_SINK@ 5%+";
-          "XF86AudioLowerVolume" = "exec wpctl set-volume -l 1 @DEFAULT_SINK@ 5%-";
-
-          "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_SINK@ toggle";
-          "XF86AudioMicMute" = "exec wpctl set-mute @DEFAULT_SOURCE@ toggle";
-          "Alt+f5" = "exec wpctl set-mute @DEFAULT_SOURCE@ toggle";
         };
       };
 
