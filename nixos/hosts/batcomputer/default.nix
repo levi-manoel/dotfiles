@@ -29,6 +29,7 @@
     jq
     libinput
     libnotify
+    mangohud
     mpv
     openssl
     p7zip
@@ -43,22 +44,16 @@
     zip
   ];
 
+  # programs.steam.enable = true;
+  # programs.steam.gamescopeSession.enable = true; 
+  # programs.gamemode.enable = true;
+
   services = {
     gnome.gnome-keyring.enable = true;
 
     redis.servers."redis" = {
       enable = true;
       port = 6379;
-    };
-  };
-
-  programs = {
-    adb.enable = true;
-    command-not-found.enable = true;
-
-    steam = {
-      enable = true;
-      gamescopeSession.enable = true;
     };
   };
 
