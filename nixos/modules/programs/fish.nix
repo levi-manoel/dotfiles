@@ -9,7 +9,6 @@
 
   cfg = config.modules.programs.fish;
   kitty = config.modules.programs.kitty;
-  starship = config.modules.programs.starship;
   user = config.user;
 in {
   options.modules.programs.fish = {
@@ -26,7 +25,6 @@ in {
     user.home.programs.fish = {
       inherit (cfg) enable;
 
-      # TODO: move starship command
       interactiveShellInit = ''
         set -g fish_cursor_default block;
         set -g fish_cursor_insert line;
@@ -36,12 +34,6 @@ in {
         ${
           if kitty.enable
           then "set -g TERM xterm"
-          else ""
-        }
-
-        ${
-          if starship.enable
-          then "starship init fish | source"
           else ""
         }
       '';

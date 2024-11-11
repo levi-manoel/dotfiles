@@ -317,32 +317,18 @@ in {
 
     extraConfig.wayland.windowManager.sway = let
       theme = {
-        rosewater = "#f5e0dc";
-        flamingo = "#f2cdcd";
-        pink = "#f5c2e7";
-        mauve = "#cba6f7";
-        red = "#f38ba8";
-        maroon = "#eba0ac";
-        peach = "#fab387";
-        yellow = "#f9e2af";
-        green = "#a6e3a1";
-        teal = "#94e2d5";
-        sky = "#89dceb";
-        sapphire = "#74c7ec";
-        blue = "#b4befe";
-        lavender = "#b4befe";
-        text = "#cdd6f4";
-        subtext1 = "#bac2de";
-        subtext0 = "#a6adc8";
-        overlay2 = "#9399b2";
-        overlay1 = "#7f849c";
-        overlay0 = "#6c7086";
-        surface2 = "#585b70";
-        surface1 = "#45475a";
-        surface0 = "#313244";
-        base = "#1e1e2e";
-        mantle = "#181825";
-        crust = "#11111b";
+        base = "#0d1117"; # darkest bg
+        surface0 = "#161b22"; # darker bg
+        surface1 = "#21262d"; # dark bg
+        text = "#89929b"; # muted text
+        subtext0 = "#c6cdd5"; # bright text
+        subtext1 = "#ecf2f8"; # brightest text
+        red = "#fa7970"; # error, deletion
+        orange = "#faa356"; # warnings, changes
+        green = "#7ce38b"; # success, addition
+        blue = "#77bdfb"; # info, links
+        lightblue = "#a2d2fb"; # selections
+        purple = "#cea5fb"; # keywords, special
       };
     in {
       enable = true;
@@ -369,9 +355,9 @@ in {
               background = theme.base;
               statusline = theme.text;
               focusedStatusline = theme.text;
-              focusedSeparator = theme.overlay0;
-              focusedWorkspace = mkColorSet theme.base theme.base theme.lavender;
-              activeWorkspace = mkColorSet theme.base theme.base theme.lavender;
+              focusedSeparator = theme.surface1;
+              focusedWorkspace = mkColorSet theme.base theme.base theme.blue;
+              activeWorkspace = mkColorSet theme.base theme.base theme.blue;
               inactiveWorkspace = mkColorSet theme.base theme.base theme.surface1;
               urgentWorkspace = mkColorSet theme.base theme.base theme.surface1;
               bindingMode = mkColorSet theme.base theme.base theme.surface1;
@@ -526,14 +512,15 @@ in {
         # shadows enable
         # default_dim_inactive 0.05
         # dim_inactive_colors.unfocused #000000FF
-        # dim_inactive_colors.urgent ${theme.lavender}
+        # dim_inactive_colors.urgent ${theme.blue}
 
-        client.focused           ${theme.lavender} ${theme.base} ${theme.text}  ${theme.rosewater} ${theme.lavender}
-        client.focused_inactive  ${theme.overlay0} ${theme.base} ${theme.text}  ${theme.rosewater} ${theme.overlay0}
-        client.unfocused         ${theme.overlay0} ${theme.base} ${theme.text}  ${theme.rosewater} ${theme.overlay0}
-        client.urgent            ${theme.peach}    ${theme.base} ${theme.peach} ${theme.overlay0}  ${theme.peach}
-        client.placeholder       ${theme.overlay0} ${theme.base} ${theme.text}  ${theme.overlay0}  ${theme.overlay0}
-        client.background        ${theme.base}
+        client.focused          ${theme.blue}     ${theme.base} ${theme.subtext0}  ${theme.subtext0} ${theme.blue}
+        client.focused_inactive ${theme.surface1} ${theme.base} ${theme.text}      ${theme.text}     ${theme.surface1}
+        client.unfocused        ${theme.surface1} ${theme.base} ${theme.text}      ${theme.text}     ${theme.surface1}
+        client.urgent           ${theme.orange}   ${theme.base} ${theme.orange}    ${theme.surface1} ${theme.orange}
+        client.placeholder      ${theme.surface1} ${theme.base} ${theme.text}      ${theme.surface1} ${theme.surface1}
+        client.background       ${theme.base}
+
 
         # Monitors
         set $PRIMARY "eDP-1"

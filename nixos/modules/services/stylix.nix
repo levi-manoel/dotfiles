@@ -27,7 +27,7 @@ in {
         size = 24;
       };
 
-      base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+      base16Scheme = ./github-dark.yaml;
 
       fonts = let
         noto-fonts = {

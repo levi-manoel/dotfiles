@@ -6,24 +6,24 @@
     };
   };
 
-  # services.xserver.videoDrivers = ["noveau"];
+  services.xserver.videoDrivers = ["nvidia"];
 
-  # hardware.nvidia = {
-  #   modesetting.enable = true;
-  #   nvidiaSettings = true;
-  #   package = config.boot.kernelPackages.nvidiaPackages.stable;
+  hardware.nvidia = {
+    modesetting.enable = true;
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
 
-  #   open = false;
-  #   prime = {
-  #     sync.enable = true;
+    open = false;
+    prime = {
+      sync.enable = true;
 
-  #     # offload = {
-  #     #   enable = true;
-  #     #   enableOffloadCmd = true;
-  #     # };
+      # offload = {
+      #   enable = true;
+      #   enableOffloadCmd = true;
+      # };
 
-  #     intelBusId = "PCI:0:2:0";
-  #     nvidiaBusId = "PCI:1:0:0";
-  #   };
-  # };
+      intelBusId = "PCI:0:2:0";
+      nvidiaBusId = "PCI:1:0:0";
+    };
+  };
 }
