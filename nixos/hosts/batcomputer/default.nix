@@ -26,6 +26,7 @@
     glib
     gnumake
     gparted
+    jdk8
     jq
     libinput
     libnotify
@@ -74,7 +75,7 @@
 
       stylix = {
         enable = true;
-        wallpaper = wallpapers/bat1.png;
+        wallpaper = wallpapers/bat2.png;
       };
     };
   };
