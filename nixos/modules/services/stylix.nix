@@ -30,14 +30,14 @@ in {
       base16Scheme = ./github-dark.yaml;
 
       fonts = let
-        noto-fonts = {
-          name = "Noto Sans";
-          package = pkgs.noto-fonts;
+        monaspace-krypton = {
+          name = "Monaspace Krypton";
+          package = pkgs.monaspace;
         };
 
-        victor-mono = {
-          name = "VictorMono NF";
-          package = pkgs.nerdfonts;
+        monaspace-xenon = {
+          name = "Monaspace Xenon";
+          package = pkgs.monaspace;
         };
       in {
         sizes = {
@@ -47,9 +47,9 @@ in {
           terminal = 10;
         };
 
-        serif = noto-fonts;
-        sansSerif = victor-mono;
-        monospace = victor-mono;
+        serif = monaspace-xenon;
+        sansSerif = monaspace-krypton;
+        monospace = monaspace-krypton;
       };
 
       opacity = {

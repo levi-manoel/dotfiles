@@ -6,7 +6,7 @@
     };
   };
 
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = ["noveau"];
 
   hardware.nvidia = {
     modesetting.enable = true;

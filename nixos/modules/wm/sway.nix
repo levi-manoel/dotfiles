@@ -225,7 +225,7 @@ in {
         ignore-empty-password = true;
 
         font-size = 24;
-        font = "VictorMono NF";
+        font = "Monaspace Krypton";
 
         clock = true;
 
@@ -302,16 +302,16 @@ in {
       defaultTimeout = 10000;
 
       extraConfig = lib.mkForce ''
-        background-color=#1e1e2e
-        text-color=#cdd6f4
-        border-color=#b4befe
+        background-color=#0d1117
+        text-color=#c6cdd5
+        border-color=#77bdfb
         progress-color=over #313244
 
         height=300
         width=400
 
         [urgency=high]
-        border-color=#fab387
+        border-color=#faa356
       '';
     };
 
@@ -322,7 +322,7 @@ in {
         surface1 = "#21262d"; # dark bg
         text = "#89929b"; # muted text
         subtext0 = "#c6cdd5"; # bright text
-        subtext1 = "#ecf2f8"; # brightest text
+        subtext1 = "#161b22"; # brightest text
         red = "#fa7970"; # error, deletion
         orange = "#faa356"; # warnings, changes
         green = "#7ce38b"; # success, addition
@@ -394,6 +394,12 @@ in {
             "xkb_options" = "grp:alt_space_toggle";
           };
 
+          "1133:49995:Logitech_USB_Keyboard" = {
+            "xkb_layout" = "br,us";
+            "xkb_variant" = "abnt2,dvorak";
+            "xkb_options" = "grp:alt_space_toggle";
+          };
+
           # swaymsg input type:touchpad events enabled/disabled
           "type:touchpad" = {
             "tap" = "enabled";
@@ -437,7 +443,6 @@ in {
           "${modifier}+Shift+Up" = "move up";
           "${modifier}+Shift+Right" = "move right";
 
-          "${modifier}+b" = "splith";
           "${modifier}+v" = "splitv";
           "${modifier}+f" = "fullscreen toggle";
           "${modifier}+a" = "focus parent";
@@ -486,6 +491,8 @@ in {
 
           "${modifier}+r" = "mode resize";
 
+          "${modifier}+b" = "exec playerctl pause && exec swaylock";
+
           "XF86MonBrightnessDown" = "exec light -U 10";
           "XF86MonBrightnessUp" = "exec light -A 10";
 
@@ -523,18 +530,19 @@ in {
 
 
         # Monitors
-        set $PRIMARY "eDP-1"
-        set $FALLBACK "HDMI-A-1"
+        set $PRIMARY "HDMI-A-1"
+        set $FALLBACK "eDP-1"
+        set $FALLBACKFALLBACK "eDP-2"
 
-        workspace 1 output $PRIMARY $FALLBACK
-        workspace 2 output $PRIMARY $FALLBACK
-        workspace 3 output $PRIMARY $FALLBACK
-        workspace 4 output $PRIMARY $FALLBACK
-        workspace 5 output $PRIMARY $FALLBACK
-        workspace 6 output $PRIMARY $FALLBACK
-        workspace 7 output $PRIMARY $FALLBACK
-        workspace 8 output $PRIMARY $FALLBACK
-        workspace 9 output $PRIMARY $FALLBACK
+        workspace 1 output $PRIMARY $FALLBACK $FALLBACKFALLBACK
+        workspace 2 output $PRIMARY $FALLBACK $FALLBACKFALLBACK
+        workspace 3 output $PRIMARY $FALLBACK $FALLBACKFALLBACK
+        workspace 4 output $PRIMARY $FALLBACK $FALLBACKFALLBACK
+        workspace 5 output $FALLBACK $FALLBACKFALLBACK $PRIMARY
+        workspace 6 output $PRIMARY $FALLBACK $FALLBACKFALLBACK
+        workspace 7 output $PRIMARY $FALLBACK $FALLBACKFALLBACK
+        workspace 8 output $PRIMARY $FALLBACK $FALLBACKFALLBACK
+        workspace 9 output $FALLBACK $FALLBACKFALLBACK $PRIMARY
 
         # for_window [app_id="flameshot"] border pixel 0, floating enable, fullscreen disable, move absolute position 0 0
 

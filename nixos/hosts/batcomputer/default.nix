@@ -46,7 +46,7 @@
   ];
 
   # programs.steam.enable = true;
-  # programs.steam.gamescopeSession.enable = true; 
+  # programs.steam.gamescopeSession.enable = true;
   # programs.gamemode.enable = true;
 
   services = {
@@ -56,7 +56,19 @@
       enable = true;
       port = 6379;
     };
+
+    # xserver.enable = true;
+    # xserver.displayManager.gdm.enable = true;
+    # xserver.desktopManager.gnome.enable = true;
   };
+
+  # environment.gnome.excludePackages = with pkgs; [
+  #   gnome-tour
+  #   gnome-connections
+  #   epiphany
+  #   geary
+  #   evince
+  # ];
 
   modules = {
     programs = {
@@ -75,7 +87,7 @@
 
       stylix = {
         enable = true;
-        wallpaper = wallpapers/bat2.png;
+        wallpaper = wallpapers/bat1.jpg;
       };
     };
   };
@@ -122,12 +134,11 @@
       gh
       klavaro
       kooha
-      libreoffice-fresh
+      # libreoffice-fresh
       minikube
       nil
       nixd
       obsidian
-      obs-studio
       onlyoffice-bin
       presenterm
       prismlauncher
@@ -142,6 +153,7 @@
       ventoy-full
       vesktop
       warp-terminal
+      wpsoffice
       zx
     ];
 
@@ -153,6 +165,28 @@
         };
 
         google-chrome.enable = true;
+
+        obs-studio = {
+          enable = true;
+          plugins = with pkgs.obs-studio-plugins; [
+            wlrobs
+            obs-backgroundremoval
+            obs-pipewire-audio-capture
+          ];
+        };
+
+        tmux = {
+          enable = true;
+
+          mouse = true;
+          extraConfig = ''
+            set -g history-limit 50000
+            set -g display-time 4000
+            set -g status-interval 5
+            set -g focus-events on
+            set -g aggressive-resize on
+          '';
+        };
 
         vscode = {
           enable = true;
