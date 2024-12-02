@@ -4,31 +4,7 @@
 
     enableDefaultPackages = true;
 
-    packages = with pkgs; let
-      mkZedFont = name: hash:
-        stdenv.mkDerivation rec {
-          inherit name;
-          version = "1.2.0";
-
-          src = fetchzip {
-            inherit hash;
-
-            url = "https://github.com/zed-industries/zed-fonts/releases/download/${version}/${name}-${version}.zip";
-            stripRoot = false;
-          };
-
-          installPhase = ''
-            runHook preInstall
-
-            install -Dm644 *.ttf -t $out/share/fonts/truetype
-
-            runHook postInstall
-          '';
-        };
-
-      zed-mono = mkZedFont "zed-mono" "sha256-k9N9kWK2JvdDlGWgIKbRTcRLMyDfYdf3d3QTlA1iIEQ=";
-      zed-sans = mkZedFont "zed-sans" "sha256-BF18dD0UE8Q4oDEcCf/mBkbmP6vCcB2vAodW6t+tocs=";
-    in [
+    packages = with pkgs; [
       corefonts
       font-awesome
       nerdfonts
@@ -36,22 +12,16 @@
       noto-fonts-cjk-sans
       noto-fonts-emoji
       source-han-sans
-      source-han-sans-japanese
-      source-han-serif-japanese
 
-      iosevka-comfy.comfy
-      iosevka-comfy.comfy-motion
-
-      zed-mono
-      zed-sans
+      monaspace
     ];
 
     fontconfig = {
       enable = true;
       defaultFonts = {
-        monospace = ["VictorMono NF" "Noto Sans Mono"];
-        serif = ["Noto Serif" "Source Han Serif"];
-        sansSerif = ["VictorMono NF" "Noto Sans" "Source Han Sans"];
+        monospace = ["Monaspace Krypton" "VictorMono NF" "Noto Sans Mono"];
+        serif = ["Monaspace Xenon" "Source Han Serif"];
+        sansSerif = ["Monaspace Krypton" "VictorMono NF" "Noto Sans" "Source Han Sans"];
       };
     };
   };

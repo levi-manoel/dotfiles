@@ -3,18 +3,12 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-
     flake-utils.url = "github:numtide/flake-utils";
-
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
     stylix.url = "github:danth/stylix";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
-
-    apple-fonts.url = "github:ostmarco/apple-fonts.nix";
   };
 
   outputs = inputs @ {
@@ -23,7 +17,6 @@
     flake-utils,
     home-manager,
     stylix,
-    apple-fonts,
     ...
   }: let
     systems = with flake-utils.lib.system; [
@@ -53,12 +46,6 @@
 
         config.allowUnfree = true;
         config.permittedInsecurePackages = ["electron-25.9.0"];
-
-        overlays =
-          overlays
-          ++ [
-            (final: prev: apple-fonts.packages.${system})
-          ];
       };
 
       mkHost = path: let
