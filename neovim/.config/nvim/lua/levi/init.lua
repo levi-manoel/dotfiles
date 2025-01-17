@@ -1,6 +1,6 @@
-require("levim.set")
-require("levim.remap")
-require("levim.lazy_init")
+require("levi.set")
+require("levi.remap")
+require("levi.lazy_init")
 
 -- DO.not
 -- DO NOT INCLUDE THIS
@@ -14,7 +14,7 @@ require("levim.lazy_init")
 -- DO.not
 
 local augroup = vim.api.nvim_create_augroup
-local LeviMGroup = augroup('LeviM', {})
+local LeviGroup = augroup('Levi', {})
 
 local autocmd = vim.api.nvim_create_autocmd
 local yank_group = augroup('HighlightYank', {})
@@ -41,13 +41,13 @@ autocmd('TextYankPost', {
 })
 
 autocmd({"BufWritePre"}, {
-    group = LeviMGroup,
+    group = LeviGroup,
     pattern = "*",
     command = [[%s/\s\+$//e]],
 })
 
 autocmd('LspAttach', {
-    group = LeviMGroup,
+    group = LeviGroup,
     callback = function(e)
         local opts = { buffer = e.buf }
         vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
