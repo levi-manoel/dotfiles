@@ -3,11 +3,11 @@ return {
     config = function() 
         vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
 
-        local LeviMFugitive = vim.api.nvim_create_augroup("LeviMFugitive", {})
+        local LeviFugitive = vim.api.nvim_create_augroup("LeviFugitive", {})
 
         local autocmd = vim.api.nvim_create_autocmd
         autocmd("BufWinEnter", {
-            group = LeviMFugitive,
+            group = LeviFugitive,
             pattern = "*",
             callback = function()
                 if vim.bo.ft ~= "fugitive" then
