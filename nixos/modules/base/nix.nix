@@ -16,7 +16,7 @@
 in {
   config = {
     nix = {
-      package = pkgs.nixVersions.nix_2_23;
+      package = pkgs.nixVersions.latest;
 
       settings = {
         substituters = cachesUrls;

@@ -342,10 +342,6 @@ in {
         modifier = modifier;
         terminal = terminal;
 
-        startup = [
-          {command = "bluetoothctl power on";}
-        ];
-
         bars = [
           {
             statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs $HOME/.config/i3status-rust/config-bottom.toml";
@@ -541,7 +537,7 @@ in {
         workspace 5 output $FALLBACK $FALLBACKFALLBACK $PRIMARY
         workspace 6 output $PRIMARY $FALLBACK $FALLBACKFALLBACK
         workspace 7 output $PRIMARY $FALLBACK $FALLBACKFALLBACK
-        workspace 8 output $PRIMARY $FALLBACK $FALLBACKFALLBACK
+        workspace 8 output $FALLBACK $FALLBACKFALLBACK $PRIMARY
         workspace 9 output $FALLBACK $FALLBACKFALLBACK $PRIMARY
 
         # for_window [app_id="flameshot"] border pixel 0, floating enable, fullscreen disable, move absolute position 0 0
