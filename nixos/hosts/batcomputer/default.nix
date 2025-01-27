@@ -75,8 +75,6 @@
       fish.enable = true;
       git.enable = true;
       kitty.enable = true;
-
-      zed.enable = true;
     };
 
     services = {
@@ -120,7 +118,6 @@
         kubectl
       ]);
     in [
-      (discord.override {withOpenASAR = true;})
       alejandra
       anydesk
       beekeeper-studio
@@ -185,6 +182,8 @@
             set -g status-interval 5
             set -g focus-events on
             set -g aggressive-resize on
+            set -g base-index 1
+            setw -g pane-base-index 1
           '';
         };
 

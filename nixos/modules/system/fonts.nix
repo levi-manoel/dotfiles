@@ -7,7 +7,7 @@
     packages = with pkgs; [
       corefonts
       font-awesome
-      nerdfonts
+      nerd-fonts.victor-mono
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-emoji

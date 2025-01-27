@@ -28,11 +28,7 @@
     systemsFlakes = flake-utils.lib.eachSystem systems (system: let
       inherit (lib.extra) mapModulesRec';
 
-      overlays = [
-        (import overlays/electron.nix)
-      ];
-
-      lib = pkgs.lib.extend (self: super: {
+      lib = nixpkgs.lib.extend (self: super: {
         extra = import ./lib {
           inherit inputs;
 
@@ -54,12 +50,11 @@
       in
         nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = {inherit pkgs lib inputs system;};
+          specialArgs = {inherit inputs system lib;};
           modules =
             [
               {
                 nixpkgs.pkgs = pkgs;
-                networking.hostName = mkDefault (removeSuffix ".nix" (baseNameOf path));
               }
 
               home-manager.nixosModule
