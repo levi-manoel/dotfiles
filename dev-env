@@ -55,7 +55,6 @@ copy() {
 }
 
 update_files $HOME/dev/personal/dotfiles/env/.config $XDG_CONFIG_HOME
-# update_files $HOME/dev/personal/dotfiles/env/.local $HOME/.local
 
-# copy $HOME/dev/personal/dotfiles/env/.zsh_profile $HOME/.zsh_profile
+copy $HOME/dev/personal/dotfiles/env/.tmux.conf $HOME/.tmux.conf
 copy $HOME/dev/personal/dotfiles/env/.zshrc $HOME/.zshrc
