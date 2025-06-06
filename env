@@ -10,6 +10,7 @@ fi
 
 if [[ $1 == "--dry" ]]; then
     dry_run="1"
+    shift
 fi
 
 log() {
@@ -20,41 +21,59 @@ log() {
     fi
 }
 
+# Recursively copies files and directories from source to destination,
+# overwriting existing ones but not deleting others in destination.
 update_files() {
-    log "copying over files from: $1"
-    pushd $1 &> /dev/null
-    (
-        configs=`find . -mindepth 1 -maxdepth 1 -type d`
-        for c in $configs; do
-            directory=${2%/}/${c#./}
-            log "    removing: rm -rf $directory"
+    local source_dir="$1"
+    local dest_dir="$2"
 
+    log "Updating files from: $source_dir to: $dest_dir"
+
+    if [[ ! -d "$dest_dir" ]]; then
+        log "Creating destination directory: $dest_dir"
+        if [[ $dry_run == "0" ]]; then
+            mkdir -p "$dest_dir"
+        fi
+    fi
+
+    pushd "$source_dir" &> /dev/null || { log "Error: Cannot change to source directory $source_dir"; exit 1; }
+
+    find . -mindepth 1 -maxdepth 1 | while read -r item; do
+        item_name="${item#./}"
+        source_path="$source_dir/$item_name"
+        dest_path="$dest_dir/$item_name"
+
+        if [[ -d "$source_path" ]]; then
+            log "    Updating directory: $dest_path"
             if [[ $dry_run == "0" ]]; then
-                rm -rf $directory
+                rsync -av "${source_path}/" "$dest_path"
             fi
-
-            log "    copying env: cp $c $2"
+        elif [[ -f "$source_path" ]]; then
+            log "    Copying file: $source_path to $dest_path"
             if [[ $dry_run == "0" ]]; then
-                cp -r ./$c $2
+                cp "$source_path" "$dest_path"
             fi
-        done
+        fi
+    done
 
-    )
     popd &> /dev/null
 }
 
 copy() {
-    log "removing: $2"
-    if [[ $dry_run == "0" ]]; then
-        rm $2
+    log "Attempting to copy: $1 to $2"
+    if [[ -f "$2" || -d "$2" ]]; then
+        log "    Removing existing: $2"
+        if [[ $dry_run == "0" ]]; then
+            rm -rf "$2"
+        fi
     fi
-    log "copying: $1 to $2"
+    log "    Copying: $1 to $2"
     if [[ $dry_run == "0" ]]; then
-        cp $1 $2
+        cp "$1" "$2"
     fi
 }
 
-update_files $HOME/dev/personal/dotfiles/env/.config $XDG_CONFIG_HOME
+update_files "$HOME/dev/personal/dotfiles/envs/.config" "$XDG_CONFIG_HOME"
 
-copy $HOME/dev/personal/dotfiles/env/.tmux.conf $HOME/.tmux.conf
-copy $HOME/dev/personal/dotfiles/env/.zshrc $HOME/.zshrc
+copy "$HOME/dev/personal/dotfiles/envs/.tmux.conf" "$HOME/.tmux.conf"
+copy "$HOME/dev/personal/dotfiles/envs/.zshrc" "$HOME/.zshrc"
