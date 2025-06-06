@@ -26,3 +26,4 @@ cd /tmp/luarocks-3.11.0
 ./configure && make && sudo make install
 
 luarocks install luacheck
+
