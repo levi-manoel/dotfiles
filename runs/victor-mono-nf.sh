@@ -7,3 +7,4 @@ unzip /tmp/victor-nomo.zip -d /tmp/unzipede-vm
 sudo mv /tmp/unzipede-vm/*.ttf /usr/local/share/fonts/ 
 
 fc-cache -fv
+
