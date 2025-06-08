@@ -1,0 +1,18 @@
+[user]
+	name = levi-manoel
+	email = levimanoel.deob@gmail.com
+
+[core]
+	compression = 9
+	whitespace = error
+
+[status]
+	branch = true
+	showStash = true
+
+[push]
+	autoSetupRemote = true
+
+[pull]
+	rebase = true
+
