@@ -76,7 +76,11 @@ eval "$(direnv hook zsh)"
 
 source $ZSH/oh-my-zsh.sh
 
+alias gst="git status --short"
 alias gcm="git commit -m"
+alias gds="git diff --staged"
+alias grs="git restore --staged"
+alias gap="git add --patch"
 
 # User configuration
 
