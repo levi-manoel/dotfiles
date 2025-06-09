@@ -1,12 +1,6 @@
 #!/usr/bin/env bash
 
-sudo apt -y install git redis-server tmux tldr
-
-git config --global user.email "levimanoel.deob@gmail.com"
-git config --global user.name "levi-manoel"
-
-sudo systemctl start redis-server
-sudo systemctl enable redis-server
+sudo apt -y install git tmux tldr
 
 tldr --update
 
