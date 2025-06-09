@@ -28,6 +28,7 @@ vim.g.maplocalleader = "\\"
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
+vim.opt.mouse=""
 vim.opt.relativenumber = true
 vim.opt.number = true
 vim.opt.signcolumn = "number"
