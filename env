@@ -46,7 +46,7 @@ update_files() {
         if [[ -d "$source_path" ]]; then
             log "    Updating directory: $dest_path"
             if [[ $dry_run == "0" ]]; then
-                rsync -av "${source_path}/" "$dest_path"
+                rsync -av --delete --exclude=lazy-lock.json "${source_path}/" "$dest_path"
             fi
         elif [[ -f "$source_path" ]]; then
             log "    Copying file: $source_path to $dest_path"
