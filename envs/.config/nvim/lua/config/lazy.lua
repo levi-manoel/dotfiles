@@ -25,8 +25,11 @@ vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
-vim.opt.number = true
+vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+vim.keymap.set("i", "<C-c>", "<Esc>")
+
 vim.opt.relativenumber = true
+vim.opt.number = true
 vim.opt.signcolumn = "number"
 
 -- Setup lazy.nvim
