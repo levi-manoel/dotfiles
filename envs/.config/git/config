@@ -5,6 +5,7 @@
 [core]
 	compression = 9
 	whitespace = error
+	editor = nvim
 
 [status]
 	branch = true

@@ -16,3 +16,5 @@ nix-env --install --attr devenv -f https://github.com/NixOS/nixpkgs/tarball/nixp
 sudo echo "trusted-users = root $USER" >> /etc/nix/nix.conf
 sudo systemctl restart nix-daemon
 
+ sudo usermod -aG video $USER
+
