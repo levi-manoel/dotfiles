@@ -79,6 +79,7 @@ source $ZSH/oh-my-zsh.sh
 alias gst="git status --short"
 alias gcm="git commit -m"
 alias gds="git diff --staged"
+alias gr="git restore" 
 alias grs="git restore --staged"
 alias gap="git add --patch"
 
