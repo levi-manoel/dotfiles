@@ -25,6 +25,11 @@ vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
+vim.o.tabstop = 4
+vim.o.expandtab = true
+vim.o.softtabstop = 4
+vim.o.shiftwidth = 4
+
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
@@ -45,3 +50,4 @@ require("lazy").setup({
     -- automatically check for plugin updates
     checker = { enabled = true },
 })
+
