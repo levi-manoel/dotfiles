@@ -37,6 +37,7 @@ vim.opt.mouse=""
 vim.opt.relativenumber = true
 vim.opt.number = true
 vim.opt.signcolumn = "number"
+vim.opt.clipboard = 'unnamedplus'
 
 -- Setup lazy.nvim
 require("lazy").setup({

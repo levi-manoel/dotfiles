@@ -6,6 +6,7 @@
 #
 exec --no-startup-id feh --bg-fill /home/levi/Pictures/wallpaper.jpg
 exec_always for id in $(xinput list | grep "pointer" | cut -d '=' -f 2 | cut -f 1); do xinput --set-prop $id 'libinput Accel Profile Enabled' 0, 1; done
+exec --no-startup-id xinput set-prop "VEN_27C6:00 27C6:0D43" "libinput Disable While Typing Enabled" 1
 exec_always xmousepasteblock
 # i3 config file (v4)
 #
@@ -65,7 +66,7 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id dmenu_run
+bindsym $mod+d exec --no-startup-id rofi -show drun
 # A more modern dmenu replacement is rofi:
 # bindcode $mod+40 exec "rofi -modi drun,run -show drun"
 # There also is i3-dmenu-desktop which only displays applications shipping a
