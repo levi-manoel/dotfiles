@@ -14,27 +14,31 @@ while [[ $# -gt 0 ]]; do
 done
 
 log() {
-    if [[ $dry_run == "1" ]]; then
+    if [[ "$dry_run" == "1" ]]; then
         echo "[DRY_RUN]: $1"
     else
         echo "$1"
     fi
 }
 
-log "RUN: env: $env -- grep: $grep"
+log "RUN: grep=\"$grep\" dry_run=$dry_run"
 
-runs_dir=`find $HOME/dev/personal/dotfiles/runs -mindepth 1 -maxdepth 1 -executable`
+runs_dir="./runs"
 
-for s in $runs_dir; do
-    if basename $s | grep -vq "$grep"; then
-        log "grep \"$grep\" filtered out $s"
+scripts=$(find "$runs_dir" -mindepth 1 -maxdepth 1 -type f -executable | sort)
+
+for s in $scripts; do
+    script_name="$(basename "$s")"
+
+    if [[ -n "$grep" ]] && ! echo "$script_name" | grep -q "$grep"; then
+        log "grep \"$grep\" filtered out $script_name"
         continue
     fi
 
-    log "running script: $s"
+    log "running script: $script_name"
 
-    if [[ $dry_run == "0" ]]; then
-        $s
+    if [[ "$dry_run" == "0" ]]; then
+        "$s"
     fi
 done
 
