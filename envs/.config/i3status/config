@@ -6,6 +6,7 @@ general {
 
 order += "battery 0"
 order += "time"
+order += "volume master"
 
 battery 0 {
     format = "%status %percentage %remaining %emptytime"
@@ -22,3 +23,11 @@ battery 0 {
 time {
     format = "%Y-%m-%d %H:%M:%S"
 }
+
+volume master {
+    format = "VOL %volume"
+    device = "default"
+    mixer = "Master"
+    mixer_idx = 0
+}
+
