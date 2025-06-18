@@ -2,18 +2,18 @@ export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
 source $ZSH/oh-my-zsh.sh
 
-plugins=(git gcloud)
-
 eval "$(direnv hook zsh)"
 
 alias src="source $HOME/.zshrc"
-alias ga="git add"
 alias gst="git status --short"
+alias ga="git add"
+alias gap="git add --patch"
 alias gcm="git commit -m"
 alias gds="git diff --staged"
 alias gr="git restore" 
 alias grs="git restore --staged"
-alias gap="git add --patch"
+alias gp="git push"
+alias gl="git pull"
 
 # bun completions
 [ -s "/home/levi/.bun/_bun" ] && source "/home/levi/.bun/_bun"
