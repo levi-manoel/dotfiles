@@ -7,6 +7,7 @@ plugins=(git gcloud)
 eval "$(direnv hook zsh)"
 
 alias src="source $HOME/.zshrc"
+alias ga="git add"
 alias gst="git status --short"
 alias gcm="git commit -m"
 alias gds="git diff --staged"
