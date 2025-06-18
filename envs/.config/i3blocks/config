@@ -1,0 +1,19 @@
+interval=5
+color=1
+
+[battery]
+interval=5
+command=sh -c '. /sys/class/power_supply/BAT0/uevent; case "$POWER_SUPPLY_STATUS" in Charging) echo "CHR $POWER_SUPPLY_CAPACITY%";; Discharging) echo "BAT $POWER_SUPPLY_CAPACITY%";; Full) echo "FULL $POWER_SUPPLY_CAPACITY%";; *) echo "UNK $POWER_SUPPLY_CAPACITY%";; esac'
+
+[volume]
+interval=1
+command=sh -c 'amixer -M get Master | awk -F"[][]" '\''/%/ { print $2 }'\'' | awk -F"%" '\''BEGIN {tot=0; i=0} {i++; tot+=$1} END {printf("VOL %s%%\n", tot/i)}'\'''
+
+[mic]
+interval=1
+command=sh -c 'amixer get Capture | grep "\\[off\\]" >/dev/null && echo "[X]" || echo "[O]"'
+
+[time]
+interval=5
+command=sh -c 'date "+%Y-%m-%d %H:%M:%S"'
+
