@@ -1,22 +1,18 @@
-### ───── ENVIRONMENT VARIABLES ─────
-exec --no-startup-id export GTK_THEME=Adwaita:dark
-exec --no-startup-id export QT_STYLE_OVERRIDE=Adwaita-Dark
-
 ### ───── WALLPAPER ─────
-exec --no-startup-id feh --bg-fill /home/levi/Pictures/wallpaper.jpg
+exec_always --no-startup-id feh --bg-fill /home/levi/Pictures/wallpaper.jpg
 
 ### ───── INPUT DEVICES ─────
-exec_always for id in $(xinput list | grep "pointer" | cut -d '=' -f 2 | cut -f 1); do xinput --set-prop $id 'libinput Accel Profile Enabled' 0, 1; done
+exec_always --no-startup-id bash -c 'for id in $(xinput list | grep "pointer" | cut -d "=" -f2 | cut -f1); do xinput --set-prop $id "libinput Accel Profile Enabled" 0, 1; done'
 exec --no-startup-id xinput set-prop "VEN_27C6:00 27C6:0D43" "libinput Disable While Typing Enabled" 1
-exec_always xmousepasteblock
+exec_always --no-startup-id xmousepasteblock
 
 ### ───── FONT ─────
 font pango:VictorMonoNerdFont 10
 
 ### ───── AUTOSTART APPS ─────
-exec --no-startup-id dex --autostart --environment i3
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-exec --no-startup-id nm-applet
+exec_always --no-startup-id dex --autostart --environment i3
+exec_always --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec_always --no-startup-id bash -c 'pgrep nm-applet || nm-applet'
 
 ### ───── MOD KEY ─────
 set $mod Mod1
@@ -32,10 +28,10 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 bindsym $mod+Shift+m exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
 ### ───── MEDIA CONTROLS ─────
-bindsym XF86AudioPlay exec playerctl play-pause
-bindsym XF86AudioPause exec playerctl play-pause
-bindsym XF86AudioNext exec playerctl next
-bindsym XF86AudioPrev exec playerctl previous
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86AudioPause exec --no-startup-id playerctl play-pause
+bindsym XF86AudioNext exec --no-startup-id playerctl next
+bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 
 ### ───── BRIGHTNESS CONTROLS ─────
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5%
@@ -47,15 +43,15 @@ floating_modifier $mod
 ### ───── DRAG TILING WINDOWS ─────
 tiling_drag modifier titlebar
 
-### ───── BASIC BINDINGS ─────
-# Start terminal
-bindsym $mod+Return exec ghostty
+### ───── BASIC APPLICATION BINDINGS ─────
+# Terminal
+bindsym $mod+Return exec --no-startup-id ghostty
 
 # Kill focused window
 bindsym $mod+Shift+q kill
 
 # Screenshot
-bindsym $mod+Shift+s exec "flameshot gui"
+bindsym $mod+Shift+s exec --no-startup-id flameshot gui
 
 # Launcher
 bindsym $mod+d exec --no-startup-id rofi -show drun
@@ -66,7 +62,6 @@ bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
-# Arrow keys alternative
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
@@ -78,7 +73,6 @@ bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
-# Arrow keys alternative
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
@@ -88,7 +82,7 @@ bindsym $mod+Shift+Right move right
 # Fullscreen
 bindsym $mod+f fullscreen toggle
 
-# Layout
+# Layouts
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
@@ -102,11 +96,7 @@ bindsym $mod+space focus mode_toggle
 # Focus parent
 bindsym $mod+a focus parent
 
-# Child focus
-# bindsym $mod+d focus child
-
 ### ───── WORKSPACES ─────
-# Define workspace names
 set $ws1 "1"
 set $ws2 "2"
 set $ws3 "3"
@@ -130,22 +120,30 @@ bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9
 bindsym $mod+0 workspace number $ws10
 
-# Move container to workspace
-bindsym $mod+Shift+1 move container to workspace number $ws1
-bindsym $mod+Shift+2 move container to workspace number $ws2
-bindsym $mod+Shift+3 move container to workspace number $ws3
-bindsym $mod+Shift+4 move container to workspace number $ws4
-bindsym $mod+Shift+5 move container to workspace number $ws5
-bindsym $mod+Shift+6 move container to workspace number $ws6
-bindsym $mod+Shift+7 move container to workspace number $ws7
-bindsym $mod+Shift+8 move container to workspace number $ws8
-bindsym $mod+Shift+9 move container to workspace number $ws9
-bindsym $mod+Shift+0 move container to workspace number $ws10
+# Move container to workspace (and follow it)
+bindsym $mod+Shift+1 move container to workspace number $ws1; workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2; workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3; workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4; workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5; workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6; workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7; workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8; workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9; workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10; workspace number $ws10
+
+# Toggle between last 2 workspaces
+bindsym $mod+Tab workspace back_and_forth
+
+### ───── SCRATCHPAD ─────
+# Quick hide/show for floating apps like terminal or music player
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
 
 ### ───── RELOAD / RESTART / EXIT ─────
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'you will quit einn' -B 'jump out' 'i3-msg exit'"
+bindsym $mod+Shift+e exec --no-startup-id "i3-nagbar -t warning -m 'if i were you, i wouldnt quit ein' -B 'calaboca cabeça de melão' 'i3-msg exit'"
 
 ### ───── RESIZE MODE ─────
 mode "resize" {
