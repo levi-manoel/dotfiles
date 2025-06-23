@@ -9,7 +9,7 @@ client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 client.background       #ffffff
 
 ### ----- WALLPAPER -----
-exec_always --no-startup-id feh --bg-fill $HOME/dev/dotfiles/wallpaper.png
+exec_always --no-startup-id feh --bg-fill $HOME/dev/personal/dotfiles/wallpaper.png
 
 ### ----- INPUT DEVICES -----
 exec_always --no-startup-id bash -c 'for id in $(xinput list | grep "pointer" | cut -d "=" -f2 | cut -f1); do xinput --set-prop $id "libinput Accel Profile Enabled" 0, 1; done'
@@ -21,7 +21,7 @@ font pango:VictorMonoNerdFont 10
 
 ### ----- AUTOSTART APPS -----
 exec_always --no-startup-id dex --autostart --environment i3
-exec_always --no-startup-id xss-lock --transfer-sleep-lock -- i3lock -i $HOME/dev/dotfiles/wallpaper.png --nofork
+exec_always --no-startup-id xss-lock --transfer-sleep-lock -- i3lock -i $HOME/dev/personal/dotfiles/wallpaper.png --nofork
 exec_always --no-startup-id bash -c 'pgrep nm-applet || nm-applet'
 
 ### ----- MOD KEY -----
