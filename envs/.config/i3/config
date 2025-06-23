@@ -54,7 +54,7 @@ floating_modifier $mod
 
 ### ----- BASIC APPLICATION BINDINGS -----
 # Terminal
-bindsym $mod+Return exec --no-startup-id ghostty
+bindsym $mod+Return exec --no-startup-id wezterm
 
 # Kill focused window
 bindsym $mod+Shift+q kill
