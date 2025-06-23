@@ -3,7 +3,7 @@ local wezterm = require 'wezterm'
 return {
   -- Font
   font = wezterm.font("Victor Mono NF"),
-  font_size = 18.0,
+  font_size = 16.0,
 
   -- Colors
   color_scheme = "Custom Ghostty Style",
