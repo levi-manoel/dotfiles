@@ -4,6 +4,7 @@ source $ZSH/oh-my-zsh.sh
 
 eval "$(direnv hook zsh)"
 
+alias lock="i3lock -i $HOME/dev/personal/dotfiles/wallpaper.png"
 alias src="source $HOME/.zshrc"
 alias gsw="git switch"
 alias gst="git status --short"
