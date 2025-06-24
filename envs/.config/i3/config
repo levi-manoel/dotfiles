@@ -25,7 +25,7 @@ exec_always --no-startup-id xss-lock --transfer-sleep-lock -- i3lock -i $HOME/de
 exec_always --no-startup-id bash -c 'pgrep nm-applet || nm-applet'
 
 ### ----- MOD KEY -----
-set $mod Mod1
+set $mod Mod4
 
 ### ----- REFRESH STATUS -----
 set $refresh_i3status killall -SIGUSR1 i3status
