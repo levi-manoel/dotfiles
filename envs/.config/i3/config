@@ -12,8 +12,9 @@ client.background       #ffffff
 exec_always --no-startup-id feh --bg-fill $HOME/dev/personal/dotfiles/wallpaper.png
 
 ### ----- INPUT DEVICES -----
-exec_always --no-startup-id bash -c 'for id in $(xinput list | grep "pointer" | cut -d "=" -f2 | cut -f1); do xinput --set-prop $id "libinput Accel Profile Enabled" 0, 1; done'
-exec --no-startup-id xinput set-prop "VEN_27C6:00 27C6:0D43" "libinput Disable While Typing Enabled" 1
+exec_always --no-startup-id 'for id in $(xinput list | grep "pointer" | cut -d "=" -f2 | cut -f1); do xinput --set-prop $id "libinput Accel Profile Enabled" 0, 1; done'
+exec_always --no-startup-id xinput set-prop "VEN_04F3:00 04F3:3259 Touchpad" "libinput Natural Scrolling Enabled" 1
+exec_always --no-startup-id xinput set-prop "VEN_04F3:00 04F3:3259 Touchpad" "libinput Tapping Enabled" 1
 exec_always --no-startup-id xmousepasteblock
 
 ### ----- FONT -----
@@ -21,7 +22,7 @@ font pango:VictorMonoNerdFont 10
 
 ### ----- AUTOSTART APPS -----
 exec_always --no-startup-id dex --autostart --environment i3
-exec_always --no-startup-id xss-lock --transfer-sleep-lock -- i3lock -i $HOME/dev/personal/dotfiles/wallpaper.png --nofork
+exec_always --no-startup-id xss-lock --transfer-sleep-lock -- 'i3lock -i $HOME/dev/personal/dotfiles/wallpaper.png' --nofork
 exec_always --no-startup-id bash -c 'pgrep nm-applet || nm-applet'
 
 ### ----- MOD KEY -----
