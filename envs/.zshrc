@@ -18,6 +18,8 @@ alias grs="git restore --staged"
 alias gp="git push"
 alias gl="git pull"
 
+export PATH=$HOME/dev/personal/dotfiles/bin:$PATH
+
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
@@ -25,11 +27,11 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # bun completions
 [ -s "/home/levi/.bun/_bun" ] && source "/home/levi/.bun/_bun"
 
+# nvm
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
-export PATH=$HOME/dev/personal/dotfiles/bin:$PATH
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/home/levi/dev/irancho/google-cloud-sdk/path.zsh.inc' ]; then . '/home/levi/dev/irancho/google-cloud-sdk/path.zsh.inc'; fi
