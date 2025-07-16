@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-sudo apt -y install redis-server direnv
+sudo apt -y install redis-server direnv eslint
 
 sudo systemctl start redis-server
 sudo systemctl enable redis-server

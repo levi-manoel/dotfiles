@@ -6,7 +6,7 @@ return {
   font_size = 16.0,
 
   -- Colors
-  color_scheme = "Custom Ghostty Style",
+  color_scheme = "aiiiii",
   colors = {
     foreground = "#B0B0B0",
     background = "#000000",

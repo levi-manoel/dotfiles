@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-sudo apt -y install git tmux tldr xclip fzf ripgrep brightnessctl playerctl
+sudo apt -y install git tmux tldr xclip fzf ripgrep brightnessctl playerctl flameshot
 
 tldr --update
 
