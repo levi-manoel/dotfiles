@@ -6,17 +6,6 @@ eval "$(direnv hook zsh)"
 
 alias lock="i3lock -i $HOME/dev/personal/dotfiles/wallpaper.png"
 alias src="source $HOME/.zshrc"
-alias gsw="git switch"
-alias gst="git status --short"
-alias ga="git add"
-alias gap="git add --patch"
-alias gcm="git commit -m"
-alias gd="git diff"
-alias gds="git diff --staged"
-alias gr="git restore" 
-alias grs="git restore --staged"
-alias gp="git push"
-alias gl="git pull"
 
 export PATH=$HOME/dev/personal/dotfiles/bin:$PATH
 
@@ -32,10 +21,21 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
-
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/home/levi/dev/irancho/google-cloud-sdk/path.zsh.inc' ]; then . '/home/levi/dev/irancho/google-cloud-sdk/path.zsh.inc'; fi
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/levi/dev/irancho/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/levi/dev/irancho/google-cloud-sdk/completion.zsh.inc'; fi
+
+# vim
+bindkey -v
+function zle-keymap-select {
+  case $KEYMAP in
+    vicmd)      echo -ne '\e[1 q';;
+    viins|main) echo -ne '\e[5 q';;
+  esac
+}
+zle -N zle-keymap-select
+
+echo -ne '\e[5 q'
 
