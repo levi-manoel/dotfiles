@@ -27,15 +27,3 @@ if [ -f '/home/levi/dev/irancho/google-cloud-sdk/path.zsh.inc' ]; then . '/home/
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/levi/dev/irancho/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/levi/dev/irancho/google-cloud-sdk/completion.zsh.inc'; fi
 
-# vim
-bindkey -v
-function zle-keymap-select {
-  case $KEYMAP in
-    vicmd)      echo -ne '\e[1 q';;
-    viins|main) echo -ne '\e[5 q';;
-  esac
-}
-zle -N zle-keymap-select
-
-echo -ne '\e[5 q'
-

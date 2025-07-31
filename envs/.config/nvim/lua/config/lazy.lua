@@ -32,6 +32,7 @@ vim.o.shiftwidth = 4
 
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 vim.keymap.set("i", "<C-c>", "<Esc>")
+vim.api.nvim_set_keymap('t', '<Esc>', [[<C-\><C-n>]], { noremap = true, silent = true })
 
 vim.opt.mouse=""
 vim.opt.relativenumber = true
