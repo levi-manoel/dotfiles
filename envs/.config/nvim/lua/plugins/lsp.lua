@@ -1,14 +1,3 @@
-local root_files = {
-  '.luarc.json',
-  '.luarc.jsonc',
-  '.luacheckrc',
-  '.stylua.toml',
-  'stylua.toml',
-  'selene.toml',
-  'selene.yml',
-  '.git',
-}
-
 return {
     "neovim/nvim-lspconfig",
     dependencies = {
@@ -26,8 +15,6 @@ return {
     },
 
     config = function()
-        vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
-
         require("conform").setup({
             formatters_by_ft = {
             }
@@ -125,17 +112,17 @@ return {
             })
         })
 
-        -- vim.diagnostic.config({
-        --     -- update_in_insert = true,
-        --     float = {
-        --         focusable = false,
-        --         style = "minimal",
-        --         border = "rounded",
-        --         source = "always",
-        --         header = "",
-        --         prefix = "",
-        --     },
-        -- })
+        vim.diagnostic.config({
+            -- update_in_insert = true,
+            float = {
+                focusable = false,
+                style = "minimal",
+                border = "rounded",
+                source = "always",
+                header = "",
+                prefix = "",
+            },
+        })
     end
 }
 
