@@ -15,31 +15,6 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-pcall(vim.cmd, 'colorscheme rose-pine-moon')
-vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-
--- Make sure to setup `mapleader` and `maplocalleader` before
--- loading lazy.nvim so that mappings are correct.
--- This is also a good place to setup other settings (vim.opt)
-vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
-
-vim.o.tabstop = 4
-vim.o.expandtab = true
-vim.o.softtabstop = 4
-vim.o.shiftwidth = 4
-
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
-vim.keymap.set("i", "<C-c>", "<Esc>")
-vim.api.nvim_set_keymap('t', '<Esc>', [[<C-\><C-n>]], { noremap = true, silent = true })
-
-vim.opt.mouse=""
-vim.opt.relativenumber = true
-vim.opt.number = true
-vim.opt.signcolumn = "number"
-vim.opt.clipboard = 'unnamedplus'
-
 -- Setup lazy.nvim
 require("lazy").setup({
     spec = {
