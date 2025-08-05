@@ -1,7 +1,7 @@
 require("config.lazy")
 
 vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
+vim.g.maplocalleader = " "
 
 vim.o.tabstop = 4
 vim.o.expandtab = true
