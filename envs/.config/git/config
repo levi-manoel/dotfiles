@@ -11,6 +11,9 @@
 	branch = true
 	showStash = true
 
+[commit]
+    verbose = true
+
 [push]
 	autoSetupRemote = true
 
