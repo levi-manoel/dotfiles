@@ -12,11 +12,11 @@ return {
         local cmp = require("cmp")
         local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-        require("fidget").setup({})
+        require("fidget").setup()
         require("mason").setup()
 
         require("mason-lspconfig").setup({
-            ensure_installed = { "vue_ls", "ts_ls" },
+            ensure_installed = { "ts_ls" },
             handlers = {
                 function(server_name)
                     require("lspconfig")[server_name].setup({
