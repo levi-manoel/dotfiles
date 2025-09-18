@@ -164,6 +164,17 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+workspace 4 output eDP-1
+workspace 9 output eDP-1
+workspace 1 output HDMI-1
+workspace 2 output HDMI-1
+workspace 3 output HDMI-1
+workspace 5 output HDMI-1
+workspace 6 output HDMI-1
+workspace 7 output HDMI-1
+workspace 8 output HDMI-1
+workspace 10 output HDMI-1
+
 ### ----- STATUS BAR -----
 bar {
     status_command i3blocks
