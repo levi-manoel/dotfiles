@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
-sudo apt -y install git tmux tldr xclip fzf ripgrep brightnessctl playerctl flameshot blueman
+# Update system and install packages using yay
+yay -Syu --noconfirm \
+  git tmux tldr xclip fzf ripgrep brightnessctl playerctl flameshot blueman
 
+# Update tldr cache
 tldr --update
-
-sudo usermod -aG video $USER
 
