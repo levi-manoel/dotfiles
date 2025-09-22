@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-# Update system and install packages using yay
 yay -Syu --noconfirm \
-  git tmux tldr xclip fzf ripgrep rsync
+  git tmux tldr xclip fzf ripgrep rsync wget rsync
 
-# Update tldr cache
 tldr --update
+
+curl -fsSL https://bun.sh/install | bash
 
