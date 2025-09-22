@@ -8,6 +8,11 @@ alias src="source $HOME/.zshrc"
 
 export PATH=$HOME/dev/personal/dotfiles/bin:$PATH
 
+# nix
+if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
+    source /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+fi
+
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
