@@ -2,7 +2,7 @@
 
 # Update system and install packages using yay
 yay -Syu --noconfirm \
-  git tmux tldr xclip fzf ripgrep brightnessctl playerctl flameshot blueman
+  git tmux tldr xclip fzf ripgrep rsync
 
 # Update tldr cache
 tldr --update

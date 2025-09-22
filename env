@@ -77,6 +77,4 @@ update_files "$HOME/dev/personal/dotfiles/envs/.config" "$XDG_CONFIG_HOME"
 
 copy "$HOME/dev/personal/dotfiles/envs/.tmux.conf" "$HOME/.tmux.conf"
 copy "$HOME/dev/personal/dotfiles/envs/.zshrc" "$HOME/.zshrc"
-copy "$HOME/dev/personal/dotfiles/envs/.profile" "$HOME/.profile"
-copy "$HOME/dev/personal/dotfiles/envs/.wezterm.lua" "$HOME/.wezterm.lua"
 
