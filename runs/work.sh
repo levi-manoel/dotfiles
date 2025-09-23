@@ -3,7 +3,7 @@
 yay -S --noconfirm redis direnv npm nix
 sudo npm install -g eslint
 
-sudo systemctl enable --now redis
+sudo systemctl enable --now valkey
 
 yay -S --noconfirm slack-desktop
 
