@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 yay -Syu --noconfirm \
-  git tmux tldr xclip fzf ripgrep rsync wget rsync meson cpio cmake beekeeper-studio
+  git tmux tldr xclip fzf ripgrep rsync wget rsync meson cpio cmake beekeeper-studio xsettingsd
 
 hyprpm update
 hyprpm add https://github.com/outfoxxed/hy3

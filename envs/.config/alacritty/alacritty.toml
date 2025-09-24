@@ -18,3 +18,4 @@ decorations = "None"
 bindings = [
     { key = "F11", action = "ToggleFullscreen" }
 ]
+
