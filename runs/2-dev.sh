@@ -11,3 +11,5 @@ tldr --update
 
 curl -fsSL https://bun.sh/install | bash
 
+sudo npm install -g @vue/language-server @vue/typescript-plugin
+
