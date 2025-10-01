@@ -11,7 +11,6 @@ return {
     config = function()
         local cmp = require("cmp")
         local capabilities = require("cmp_nvim_lsp").default_capabilities()
-        local lspconfig = require("lspconfig")
 
         require("fidget").setup()
         require("mason").setup()
@@ -27,33 +26,41 @@ return {
             },
         })
 
-        -- TypeScript + Vue setup
-        lspconfig.ts_ls.setup({
+        -- Define server configs
+        vim.lsp.config.ts_ls = {
             capabilities = capabilities,
             init_options = {
                 plugins = {
                     {
                         name = "@vue/typescript-plugin",
-                        -- ⚠️ Adjust this path depending on your system / npm prefix
-                        location = "/usr/lib/node_modules/@vue/language-server",
+                        location = "/usr/lib/node_modules/@vue/language-server", -- adjust if needed
                         languages = { "vue" },
                     },
                 },
             },
             filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
-        })
+        }
 
-        lspconfig.volar.setup({
+        vim.lsp.config.volar = {
             capabilities = capabilities,
-        })
+        }
 
-        -- Default servers
         local servers = { "html", "cssls", "eslint", "clangd" }
         for _, server in ipairs(servers) do
-            lspconfig[server].setup({
+            vim.lsp.config[server] = {
                 capabilities = capabilities,
-            })
+            }
         end
+
+        -- Start servers automatically for installed ones
+        require("mason-lspconfig").setup({
+            handlers = {
+                function(server_name)
+                    local config = vim.lsp.config[server_name] or {}
+                    vim.lsp.start(config)
+                end,
+            },
+        })
 
         -- nvim-cmp setup
         cmp.setup({
