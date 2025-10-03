@@ -1,5 +1,7 @@
 #! /usr/bin/env bash
 
+mkdir -p $HOME/dev/irancho
+
 sudo apt -y install redis-server direnv eslint
 
 sudo systemctl start redis-server

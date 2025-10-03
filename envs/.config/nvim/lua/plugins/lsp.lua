@@ -33,7 +33,7 @@ return {
                 plugins = {
                     {
                         name = "@vue/typescript-plugin",
-                        location = "/usr/lib/node_modules/@vue/language-server", -- adjust if needed
+                        location = "/home/levi/.nvm/versions/node/v22.20.0/lib/node_modules/@vue/language-server", -- adjust if needed
                         languages = { "vue" },
                     },
                 },
