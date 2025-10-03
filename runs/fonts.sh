@@ -3,7 +3,10 @@
 wget --output-document /tmp/victor-nomo.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/VictorMono.zip
 wget --output-document /tmp/mona.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/Monaspace.zip
 
-mkdir -p /tmp/unziped-sources
+mkdir $HOME/tmp
+
+sudo mkdir -p /tmp/unziped-sources
+sudo mkdir -p /usr/local/share/fonts
 
 unzip /tmp/victor-nomo.zip -d /tmp/unziped-sources
 unzip /tmp/mona.zip -d /tmp/unziped-sources
