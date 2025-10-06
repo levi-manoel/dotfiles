@@ -26,4 +26,3 @@ popd
 
 curl "https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.17.1/cloud-sql-proxy.linux.amd64" -o $HOME/dev/irancho/cloud-sql-proxy
 chmod +x $HOME/dev/irancho/cloud-sql-proxy
-

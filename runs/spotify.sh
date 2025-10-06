@@ -5,4 +5,3 @@ echo "deb https://repository.spotify.com stable non-free" | sudo tee /etc/apt/so
 
 sudo apt -y update
 sudo apt -y install spotify-client
-

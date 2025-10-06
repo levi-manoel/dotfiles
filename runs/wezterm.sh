@@ -6,4 +6,3 @@ sudo chmod 644 /usr/share/keyrings/wezterm-fury.gpg
 
 sudo apt -y update
 sudo apt -y install wezterm
-
