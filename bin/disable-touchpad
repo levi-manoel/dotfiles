@@ -1,3 +1,0 @@
-#! /usr/bin/env bash
-
-xinput set-prop 'VEN_04F3:00 04F3:3259 Touchpad' 'Device Enabled' 0
