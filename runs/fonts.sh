@@ -13,4 +13,3 @@ sudo unzip /tmp/mona.zip -d /tmp/unziped-sources
 
 sudo mv /tmp/unziped-sources/*.ttf /usr/local/share/fonts/ 
 fc-cache -fv
-
