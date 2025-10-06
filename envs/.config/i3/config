@@ -65,7 +65,7 @@ bindsym $mod+Shift+q kill
 bindsym $mod+Shift+s exec --no-startup-id flameshot gui
 
 # Launcher
-bindsym $mod+d exec --no-startup-id rofi -show drun
+bindsym $mod+space exec --no-startup-id rofi -show drun
 
 ### ----- FOCUS MOVEMENT -----
 bindsym $mod+h focus left
@@ -100,9 +100,6 @@ bindsym $mod+e layout toggle split
 
 # Floating toggle
 bindsym $mod+Shift+space floating toggle
-
-# Focus mode toggle (tiling/floating)
-bindsym $mod+space focus mode_toggle
 
 ### ----- WORKSPACES -----
 set $ws1 "1"
