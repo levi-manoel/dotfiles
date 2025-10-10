@@ -10,16 +10,16 @@ if [[ "$1" != "both" && "$1" != "hdmi" && "$1" != "integrated" ]]; then
 fi
 
 if [[ "$1" == "both" ]]; then
-    xrandr --output eDP-1 --auto --right-of HDMI-1
-    xrandr --output HDMI-1 --primary --auto
+    xrandr --output eDP-1 --auto --right-of HDMI-1 -r 60
+    xrandr --output HDMI-1 --primary --auto -r 60
 fi
 
 if [[ "$1" == "hdmi" ]]; then
-    xrandr --output HDMI-1 --primary --auto
+    xrandr --output HDMI-1 --primary --auto -r 60
     xrandr --output eDP-1 --off
 fi
 
 if [[ "$1" == "integrated" ]]; then
     xrandr --output HDMI-1 --off
-    xrandr --output eDP-1 --primary --auto
+    xrandr --output eDP-1 --primary --auto -r 60
 fi
