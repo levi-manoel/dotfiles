@@ -13,6 +13,9 @@ export PATH=$HOME/dev/personal/dotfiles/bin:$PATH
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
+# go
+export PATH="$PATH:/usr/local/go/bin"
+
 # bun completions
 [ -s "/home/levi/.bun/_bun" ] && source "/home/levi/.bun/_bun"
 
