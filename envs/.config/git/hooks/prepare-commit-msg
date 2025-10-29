@@ -1,7 +1,12 @@
 #!/bin/sh
 
 if [ -z "$2" ]; then
-  echo "" >> "$1"
-  echo "# --- Staged Diff ---" >> "$1"
-  git diff --cached >> "$1"
+  {
+    echo ""
+    echo "### Write your commit message above this line ###"
+    echo ""
+    echo "--- STAGED DIFF (for context, do not edit below) ---"
+    git diff --cached
+  } >> "$1"
 fi
+
