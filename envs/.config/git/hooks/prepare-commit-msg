@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [ -z "$2" ]; then
+  echo "" >> "$1"
+  echo "# --- Staged Diff ---" >> "$1"
+  git diff --cached >> "$1"
+fi
