@@ -6,6 +6,7 @@ return {
         "hrsh7th/nvim-cmp",
         "hrsh7th/cmp-nvim-lsp",
         "j-hui/fidget.nvim",
+        "nanotee/sqls.nvim",
     },
 
     config = function()
@@ -44,6 +45,20 @@ return {
         vim.lsp.config.volar = {
             capabilities = capabilities,
         }
+
+        vim.lsp.config('sqls', {
+            settings = {
+                sqls = {
+                    connections = {
+                        {
+                            driver = 'mysql',
+                            dataSourceName = 'levi.manoel@tcp(127.0.0.1:3307)/irancho_production',
+                        },
+                    },
+                },
+            },
+        })
+        vim.lsp.enable('sqls')
 
         local servers = { "html", "cssls", "eslint", "clangd" }
         for _, server in ipairs(servers) do
