@@ -10,6 +10,8 @@
 
 export GTK_THEME=Adwaita:dark
 export QT_STYLE_OVERRIDE=Adwaita-Dark
+# export GTK_THEME=Adwaita
+# export QT_STYLE_OVERRIDE=Adwaita
 
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
