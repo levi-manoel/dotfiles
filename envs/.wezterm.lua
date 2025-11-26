@@ -56,7 +56,7 @@ end
 
 return {
   font = wezterm.font("Victor Mono NF"),
-  font_size = 18.0,
+  font_size = 17.0,
   harfbuzz_features = { 'calt = 0', 'clig = 0', 'liga = 0' },
 
   colors = get_color_scheme(),
