@@ -35,7 +35,7 @@ return {
 
         vim.api.nvim_create_user_command('PrettierNpx', run_prettier_npx, {})
 
-        vim.keymap.set('n', '<leader>p', run_prettier_npx, { desc = 'Run npx prettier --write' })
+        vim.keymap.set('n', '<leader>pt', run_prettier_npx, { desc = 'Run npx prettier --write' })
     end,
 }
 
