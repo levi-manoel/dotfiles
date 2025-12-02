@@ -8,8 +8,6 @@ return {
             pattern = { "*.ts", "*.js", "*.vue" },
             callback = function()
                 vim.cmd("Neoformat")
-
-
             end,
         })
 
