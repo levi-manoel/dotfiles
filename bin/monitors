@@ -23,3 +23,4 @@ if [[ "$1" == "integrated" ]]; then
     xrandr --output HDMI-1 --off
     xrandr --output eDP-1 --primary --auto -r 60
 fi
+
