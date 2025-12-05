@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+DEFAULT_SOURCE=$(pactl get-default-source)
+IS_MUTED=$(pactl get-source-mute "$DEFAULT_SOURCE" | awk '{print $2}')
+
+if [ "$IS_MUTED" = "yes" ]; then
+    TARGET_STATE=0
+else
+    TARGET_STATE=1
+fi
+
+pactl list short sources | grep -v "monitor" | awk '{print $1}' | xargs -I{} pactl set-source-mute {} $TARGET_STATE
+

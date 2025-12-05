@@ -1,19 +1,8 @@
-### ----- THEME -----
-# class                 border  backgr. text    indicator child_border
-client.focused          #4c7899 #285577 #ffffff #2e9ef4   #285577
-client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
-client.unfocused        #333333 #222222 #888888 #292d2e   #222222
-client.urgent           #2f343a #900000 #ffffff #900000   #900000
-client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
-
-client.background       #ffffff
-
 ### ----- WALLPAPER -----
 exec_always --no-startup-id feh --bg-fill $HOME/dev/personal/dotfiles/wallpaper.png
 
 ### ----- INPUT DEVICES -----
 exec --no-startup-id xinput --set-prop 'Logitech G502 HERO Gaming Mouse' 'libinput Accel Profile Enabled' 0, 1
-# exec_always --no-startup-id xinput --set-prop 'Logitech G502 HERO Gaming Mouse' 'libinput Accel Profile Enabled' 0, 1"
 exec_always --no-startup-id xinput --set-prop "VEN_04F3:00 04F3:3259 Touchpad" "libinput Natural Scrolling Enabled" 1
 exec_always --no-startup-id xinput --set-prop "VEN_04F3:00 04F3:3259 Touchpad" "libinput Tapping Enabled" 1
 exec_always --no-startup-id xmousepasteblock
@@ -36,8 +25,8 @@ set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
-bindsym $mod+Shift+m exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute exec --no-startup-id $HOME/dev/personal/dotfiles/bin/toggle-mic && $refresh_i3status
+bindsym $mod+Shift+m exec --no-startup-id $HOME/dev/personal/dotfiles/bin/toggle-mic && $refresh_i3status
 
 ### ----- MEDIA CONTROLS -----
 bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
