@@ -1,12 +1,9 @@
 ZSH_THEME="robbyrussell"
 export ZSH="$HOME/.oh-my-zsh"
 source $ZSH/oh-my-zsh.sh
-
 eval "$(direnv hook zsh)"
 
-alias lock="i3lock -i $HOME/dev/personal/dotfiles/wallpaper.png"
 alias src="source $HOME/.zshrc"
-
 export PATH=$HOME/dev/personal/dotfiles/bin:$PATH
 
 # bun
