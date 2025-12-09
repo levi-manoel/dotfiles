@@ -25,13 +25,14 @@ local function get_color_scheme()
     local gtk_theme = os.getenv("GTK_THEME")
 
     if gtk_theme and gtk_theme:lower():find("dark") then
-        return 'colorscheme rose-pine-moon'
+        return 'rose-pine-moon'
     else
-        return 'colorscheme rose-pine-dawn'
+        return 'rose-pine-dawn'
     end
 end
 
-pcall(vim.cmd, get_color_scheme())
-vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+ColorMyPencils(get_color_scheme())
+
+-- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+-- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 
