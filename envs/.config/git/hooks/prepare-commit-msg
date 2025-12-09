@@ -3,8 +3,6 @@
 if [ -z "$2" ]; then
   {
     echo ""
-    echo "### Write your commit message above this line ###"
-    echo ""
     echo "--- STAGED DIFF (for context, do not edit below) ---"
     git diff --cached
   } >> "$1"
