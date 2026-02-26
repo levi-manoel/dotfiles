@@ -40,6 +40,10 @@ bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
 
 bindsym $mod+b exec --no-startup-id i3lock -i $HOME/dev/personal/dotfiles/wallpaper.png
 
+### ----- NOTIFICATIONS -----
+bindsym $mod+comma exec --no-startup-id dunstctl action
+bindsym $mod+period exec --no-startup-id dunstctl close
+
 ### ----- FLOATING MODIFIER -----
 floating_modifier $mod
 
