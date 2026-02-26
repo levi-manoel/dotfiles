@@ -2,7 +2,7 @@ local wezterm = require 'wezterm'
 
 local colors_dark = {
   foreground = "#B0B0B0",
-  background = "#232136",
+  background = "#000000",
   cursor_bg = "#E0E0E0",
   cursor_border = "#E0E0E0",
   cursor_fg = "#000000",
