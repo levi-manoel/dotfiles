@@ -27,11 +27,16 @@ if [ -f '/home/levi/dev/irancho/google-cloud-sdk/path.zsh.inc' ]; then . '/home/
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/levi/dev/irancho/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/levi/dev/irancho/google-cloud-sdk/completion.zsh.inc'; fi
 
-aic() {
+dalepapai() {
+  if git diff --staged --quiet; then
+    echo "Error: No staged changes found. Run 'git add' first."
+    return 1
+  fi
+
   echo "Generating commit message..."
   
   local raw_output
-  raw_output=$(copilot --model "claude-haiku-4.5" -p "Review the git changes. Write a concise, conventional git commit message (feat, fix, chore, etc.). Output ONLY the raw commit string. Do not output usage stats, markdown, or conversational text.")
+  raw_output=$(copilot --model "gpt-4.1" -p "Review ONLY the STAGED git changes (e.g., via git diff --staged). Completely ignore unstaged files. Write a concise, conventional git commit message (feat, fix, chore, etc.) for the staged changes. Output ONLY the raw commit string. Do not output usage stats, markdown, or conversational text.")
 
   if [ -z "$raw_output" ]; then
     echo "Failed to generate message. The AI tool returned nothing."
@@ -56,7 +61,7 @@ aic() {
   read -r confirm
   
   if [[ "$confirm" == [yY] || "$confirm" == [yY][eE][sS] ]]; then
-    git commit -am "$msg"
+    git commit -m "$msg"
   else
     echo "Commit aborted."
   fi
