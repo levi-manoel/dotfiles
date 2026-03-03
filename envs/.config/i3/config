@@ -2,10 +2,24 @@
 exec_always --no-startup-id feh --bg-fill $HOME/dev/personal/dotfiles/wallpaper.png
 
 ### ----- INPUT DEVICES -----
-exec --no-startup-id xinput --set-prop 'Logitech G502 HERO Gaming Mouse' 'libinput Accel Profile Enabled' 0, 1
-exec_always --no-startup-id xinput --set-prop "VEN_04F3:00 04F3:3259 Touchpad" "libinput Natural Scrolling Enabled" 1
-exec_always --no-startup-id xinput --set-prop "VEN_04F3:00 04F3:3259 Touchpad" "libinput Tapping Enabled" 1
-exec_always --no-startup-id xmousepasteblock
+
+# config in /etc/X11/xorg.conf.d/90-custom-input.conf
+# Generic Mouse Configuration (Disable Acceleration / Flat Profile)
+# Section "InputClass"
+#     Identifier "generic mouse catchall"
+#     MatchIsPointer "on"
+#     Driver "libinput"
+#     Option "AccelProfile" "flat"
+# EndSection
+#
+# # Generic Touchpad Configuration (Tap to click & Natural Scrolling)
+# Section "InputClass"
+#     Identifier "generic touchpad catchall"
+#     MatchIsTouchpad "on"
+#     Driver "libinput"
+#     Option "Tapping" "on"
+#     Option "NaturalScrolling" "true"
+# EndSection
 
 ### ----- FONT -----
 font pango:VictorMonoNerdFont 10
