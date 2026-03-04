@@ -1,0 +1,1 @@
+-- cellular-automaton.nvim and skifree.nvim (no config needed; SkiFree via :SkiFree)
