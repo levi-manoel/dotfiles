@@ -1,0 +1,5 @@
+-- grug-far.nvim (find and replace)
+require("grug-far").setup({})
+vim.keymap.set({ "n", "v" }, "<leader>fr", function()
+    require("grug-far").open({ transient = true })
+end)

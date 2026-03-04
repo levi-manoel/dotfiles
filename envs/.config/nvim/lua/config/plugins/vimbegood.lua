@@ -1,0 +1,1 @@
+-- vim-be-good (depends on plenary; no extra config)
