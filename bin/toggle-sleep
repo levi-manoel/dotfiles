@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# for this to work, this is mandatory:
+# sudo visudo -f /etc/sudoers.d/sleep-toggle
+# content:
+# levi ALL=(root) NOPASSWD: /usr/bin/systemctl mask sleep.target suspend.target, /usr/bin/systemctl unmask sleep.target suspend.target
+
 if systemctl is-enabled sleep.target | grep -q "masked"; then
     sudo systemctl unmask sleep.target suspend.target
 else
