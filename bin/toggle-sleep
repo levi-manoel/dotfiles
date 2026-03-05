@@ -1,12 +1,12 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # for this to work, this is mandatory:
 # sudo visudo -f /etc/sudoers.d/sleep-toggle
 # content:
-# levi ALL=(root) NOPASSWD: /usr/bin/systemctl mask sleep.target suspend.target, /usr/bin/systemctl unmask sleep.target suspend.target
+# levi ALL=(root) NOPASSWD: /usr/bin/systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target, /usr/bin/systemctl unmask sleep.target suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target
 
-if systemctl is-enabled sleep.target | grep -q "masked"; then
-    sudo systemctl unmask sleep.target suspend.target
+if systemctl is-enabled sleep.target 2>/dev/null | grep -q "masked"; then
+    sudo systemctl unmask sleep.target suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target
 else
-    sudo systemctl mask sleep.target suspend.target
+    sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target
 fi
