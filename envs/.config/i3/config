@@ -29,6 +29,7 @@ font pango:VictorMonoNerdFont 10
 exec_always --no-startup-id dex --autostart --environment i3
 # exec_always --no-startup-id xss-lock --transfer-sleep-lock -- 'i3lock -i $HOME/dev/personal/dotfiles/wallpaper.png' --nofork
 exec_always --no-startup-id bash -c 'pgrep nm-applet || nm-applet'
+exec --no-startup-id xset s off -dpms
 
 ### ----- MOD KEY -----
 set $mod Mod4
