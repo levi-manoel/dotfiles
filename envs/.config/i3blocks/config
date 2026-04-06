@@ -3,11 +3,15 @@ color=1
 
 [battery]
 interval=1
-command=sh -c '. /sys/class/power_supply/BAT0/uevent; case "$POWER_SUPPLY_STATUS" in Charging) echo "CHR $POWER_SUPPLY_CAPACITY%";; Discharging) echo "BAT $POWER_SUPPLY_CAPACITY%";; Full) echo "FULL $POWER_SUPPLY_CAPACITY%";; *) echo "UNK $POWER_SUPPLY_CAPACITY%";; esac'
+command=sh -c 'BAT_DIR=$(find /sys/class/power_supply -maxdepth 1 -name "BAT*" -o -name "BATT*" | head -n 1); if [ -z "$BAT_DIR" ]; then echo "ERR"; exit 0; fi; STATUS=$(cat "$BAT_DIR/status"); CAP=$(cat "$BAT_DIR/capacity"); case "$STATUS" in Charging) echo "CHR $CAP%";; Discharging) echo "BAT $CAP%";; Full|"Not charging") echo "FULL $CAP%";; *) echo "UNK $CAP%";; esac'
 
 [volume]
 interval=1
 command=sh -c 'amixer -M get Master | awk -F"[][]" '\''/%/ { print $2 }'\'' | awk -F"%" '\''BEGIN {tot=0; i=0} {i++; tot+=$1} END {printf("VOL %s%%\n", tot/i)}'\'''
+
+[sleep_mask]
+interval=2
+command=sh -c 'if systemctl is-enabled sleep.target 2>/dev/null | grep -q "masked"; then echo "O_O"; else echo "-_-"; fi'
 
 [mic]
 interval=1

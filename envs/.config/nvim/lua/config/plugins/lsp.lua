@@ -22,7 +22,13 @@ vim.lsp.config.ts_ls = {
         plugins = {
             {
                 name = "@vue/typescript-plugin",
-                location = "/home/levi/.nvm/versions/node/v22.20.0/lib/node_modules/@vue/language-server",
+                location = (function()
+                    local npm_root = vim.fn.trim(vim.fn.system("npm root -g 2>/dev/null"))
+                    if npm_root ~= "" then
+                        return npm_root .. "/@vue/language-server"
+                    end
+                    return "/usr/local/lib/node_modules/@vue/language-server"
+                end)(),
                 languages = { "vue" },
             },
         },
