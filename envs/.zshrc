@@ -3,6 +3,14 @@ export ZSH="$HOME/.oh-my-zsh"
 source $ZSH/oh-my-zsh.sh
 eval "$(direnv hook zsh)"
 
+if [[ -z "$XDG_CONFIG_HOME" ]]; then
+  export XDG_CONFIG_HOME="$HOME/.config"
+fi
+
+if [[ -f "$XDG_CONFIG_HOME/theme.env" ]]; then
+  source "$XDG_CONFIG_HOME/theme.env"
+fi
+
 alias src="source $HOME/.zshrc"
 export PATH=$HOME/dev/personal/dotfiles/bin:$PATH
 

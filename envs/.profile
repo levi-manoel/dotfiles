@@ -8,10 +8,13 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
-export GTK_THEME=Adwaita:dark
-export QT_STYLE_OVERRIDE=Adwaita-Dark
-# export GTK_THEME=Adwaita
-# export QT_STYLE_OVERRIDE=Adwaita
+if [ -z "$XDG_CONFIG_HOME" ]; then
+    XDG_CONFIG_HOME="$HOME/.config"
+fi
+
+if [ -f "$XDG_CONFIG_HOME/theme.env" ]; then
+    . "$XDG_CONFIG_HOME/theme.env"
+fi
 
 # if running bash
 if [ -n "$BASH_VERSION" ]; then

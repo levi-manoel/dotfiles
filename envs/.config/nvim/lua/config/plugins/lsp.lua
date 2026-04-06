@@ -2,19 +2,20 @@
 local cmp = require("cmp")
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-require("fidget").setup()
-require("mason").setup()
-
-require("mason-lspconfig").setup({
-    ensure_installed = {
-        "ts_ls",
-        "volar",
-        "html",
-        "cssls",
-        "eslint",
-        "clangd",
+require("fidget").setup({
+    notification = {
+        window = {
+            winblend = 0,
+            border = "single",
+            normal_hl = "FidgetNotifyNormal",
+            group_style = "FidgetNotifyGroup",
+            icon_style = "FidgetNotifyIcon",
+            annote_style = "FidgetNotifyAnnote",
+            border_hl = "FloatBorder",
+        },
     },
 })
+require("mason").setup()
 
 vim.lsp.config.ts_ls = {
     capabilities = capabilities,
@@ -34,10 +35,6 @@ vim.lsp.config.ts_ls = {
         },
     },
     filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
-}
-
-vim.lsp.config.volar = {
-    capabilities = capabilities,
 }
 
 vim.lsp.config.lua_ls = {
@@ -74,7 +71,15 @@ for _, server in ipairs(servers) do
     }
 end
 
+-- Vue: ts_ls + @vue/typescript-plugin above (no separate volar package).
 require("mason-lspconfig").setup({
+    ensure_installed = {
+        "ts_ls",
+        "html",
+        "cssls",
+        "eslint",
+        "clangd",
+    },
     handlers = {
         function(server_name)
             local config = vim.lsp.config[server_name] or {}
