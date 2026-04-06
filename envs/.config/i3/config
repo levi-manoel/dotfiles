@@ -28,14 +28,16 @@ font pango:VictorMonoNerdFont 10
 ### ----- AUTOSTART APPS -----
 exec_always --no-startup-id dex --autostart --environment i3
 # exec_always --no-startup-id xss-lock --transfer-sleep-lock -- 'i3lock -i $HOME/dev/personal/dotfiles/wallpaper.png' --nofork
-exec_always --no-startup-id bash -c 'pgrep nm-applet || nm-applet'
-exec --no-startup-id xset s off -dpms
+exec_always --no-startup-id blueman-applet
+exec_always --no-startup-id nm-applet
 
 ### ----- MOD KEY -----
 set $mod Mod4
 
 ### ----- REFRESH STATUS -----
 set $refresh_i3status killall -SIGUSR1 i3status
+
+bindsym $mod+Shift+n exec --no-startup-id $HOME/dev/personal/dotfiles/bin/toggle-sleep
 
 ### ----- AUDIO CONTROLS -----
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
@@ -54,7 +56,7 @@ bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5%
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
 
-bindsym $mod+b exec --no-startup-id i3lock -i $HOME/dev/personal/dotfiles/wallpaper.png
+bindsym $mod+b exec --no-startup-id i3lock -i $HOME/wallpaper.png
 
 ### ----- NOTIFICATIONS -----
 bindsym $mod+comma exec --no-startup-id dunstctl action
@@ -65,7 +67,7 @@ floating_modifier $mod
 
 ### ----- BASIC APPLICATION BINDINGS -----
 # Terminal
-bindsym $mod+Return exec --no-startup-id wezterm
+bindsym $mod+Return exec --no-startup-id ghostty
 
 # Kill focused window
 bindsym $mod+Shift+q kill
@@ -170,16 +172,16 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-workspace 4 output eDP-1
-workspace 9 output eDP-1
-workspace 1 output HDMI-1
-workspace 2 output HDMI-1
-workspace 3 output HDMI-1
-workspace 5 output HDMI-1
-workspace 6 output HDMI-1
-workspace 7 output HDMI-1
-workspace 8 output HDMI-1
-workspace 10 output HDMI-1
+workspace 4 output DP-0
+workspace 9 output DP-0
+workspace 1 output HDMI-0
+workspace 2 output HDMI-0
+workspace 3 output HDMI-0
+workspace 5 output HDMI-0
+workspace 6 output HDMI-0
+workspace 7 output HDMI-0
+workspace 8 output HDMI-0
+workspace 10 output HDMI-0
 
 ### ----- STATUS BAR -----
 bar {

@@ -37,7 +37,7 @@ clone "nvim-lua/plenary.nvim"
 clone "rose-pine/neovim" "neovim"
 
 # Editing / navigation
-clone "nvim-telescope/telescope.nvim" "telescope.nvim" "" "0.1.5"
+clone "nvim-telescope/telescope.nvim" "telescope.nvim" ""
 clone "ThePrimeagen/harpoon" "harpoon" "harpoon2"
 clone "MagicDuck/grug-far.nvim"
 clone "mbbill/undotree"
