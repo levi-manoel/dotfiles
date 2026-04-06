@@ -44,13 +44,4 @@ require("config.plugins.trouble")
 require("config.plugins.treesitter")
 require("config.plugins.telescope")
 
-local function get_color_scheme()
-    local gtk_theme = os.getenv("GTK_THEME")
-    if gtk_theme and gtk_theme:lower():find("dark") then
-        return "rose-pine-moon"
-    else
-        return "rose-pine-dawn"
-    end
-end
-
-ColorMyPencils(get_color_scheme())
+require("config.plugins.colors").apply_theme_from_env()

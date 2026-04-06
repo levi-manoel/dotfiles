@@ -33,7 +33,8 @@ echo "Installing plugins to $PACK_START"
 # Dependencies (load first by naming / order)
 clone "nvim-lua/plenary.nvim"
 
-# UI / colors
+# UI / colors (syncs with ~/.config/theme.env via lua/config/plugins/colors.lua)
+# Remove pack/plugins/start/nightfox.nvim if you still have it from an older dotfiles revision.
 clone "rose-pine/neovim" "neovim"
 
 # Editing / navigation

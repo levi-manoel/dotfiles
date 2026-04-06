@@ -46,7 +46,12 @@ update_files() {
         if [[ -d "$source_path" ]]; then
             log "    Updating directory: $dest_path"
             if [[ $dry_run == "0" ]]; then
-                rsync -av --delete --exclude=lazy-lock.json "${source_path}/" "$dest_path"
+                # Keep native pack plugins (git clones) — not stored in envs/
+                rsync_opts=(-av --delete --exclude=lazy-lock.json)
+                if [[ "$item_name" == "nvim" ]]; then
+                    rsync_opts+=(--exclude=pack/plugins/start/)
+                fi
+                rsync "${rsync_opts[@]}" "${source_path}/" "$dest_path"
             fi
         elif [[ -f "$source_path" ]]; then
             log "    Copying file: $source_path to $dest_path"
@@ -78,5 +83,4 @@ update_files "$HOME/dev/personal/dotfiles/envs/.config" "$XDG_CONFIG_HOME"
 copy "$HOME/dev/personal/dotfiles/envs/.tmux.conf" "$HOME/.tmux.conf"
 copy "$HOME/dev/personal/dotfiles/envs/.zshrc" "$HOME/.zshrc"
 copy "$HOME/dev/personal/dotfiles/envs/.profile" "$HOME/.profile"
-copy "$HOME/dev/personal/dotfiles/envs/.wezterm.lua" "$HOME/.wezterm.lua"
 
