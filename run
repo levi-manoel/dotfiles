@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 grep=""
 dry_run="0"
+skip_reboot="0"
 
 while [[ $# -gt 0 ]]; do
-    echo "ARG: \"$1\""
     if [[ "$1" == "--dry" ]]; then
         dry_run="1"
+    elif [[ "$1" == "--no-reboot" ]]; then
+        skip_reboot="1"
     else
         grep="$1"
     fi
@@ -23,9 +27,11 @@ log() {
 
 log "RUN: grep=\"$grep\" dry_run=$dry_run"
 
-runs_dir="./runs"
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+runs_dir="${ROOT_DIR}/runs"
+env_script="${ROOT_DIR}/env"
 
-scripts=$(find "$runs_dir" -mindepth 1 -maxdepth 1 -type f -executable | sort)
+scripts="$(find "$runs_dir" -mindepth 1 -maxdepth 1 -type f -executable -print0 | sort -z | xargs -0 -n 1 echo)"
 
 for s in $scripts; do
     script_name="$(basename "$s")"
@@ -41,4 +47,22 @@ for s in $scripts; do
         "$s"
     fi
 done
+
+log "All run scripts completed."
+
+if [[ -x "$env_script" ]]; then
+    log "Applying dotfiles via env..."
+    if [[ "$dry_run" == "0" ]]; then
+        "$env_script"
+    else
+        "$env_script" --dry
+    fi
+fi
+
+if [[ "$dry_run" == "0" && "$skip_reboot" == "0" && -z "$grep" ]]; then
+    echo ""
+    echo "press enter to reboot (or Ctrl+C to cancel)"
+    read -r
+    sudo systemctl reboot
+fi
 

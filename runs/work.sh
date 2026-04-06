@@ -1,14 +1,18 @@
 #! /usr/bin/env bash
 
+set -euo pipefail
+
 mkdir -p $HOME/dev/irancho
 
-sudo apt -y install redis-server direnv eslint
+sudo dnf -y install redis direnv
+if command -v npm >/dev/null 2>&1; then
+  sudo npm install -g eslint
+fi
 
-sudo systemctl start redis-server
-sudo systemctl enable redis-server
+sudo systemctl enable --now redis
 
-curl -L -o /tmp/slack.deb "https://slack.com/intl/pt-br/downloads/instructions/linux?ddl=1&build=deb"
-sudo apt install /tmp/slack.deb
+curl -fsSL https://packagecloud.io/install/repositories/slacktechnologies/slack/script.rpm.sh | sudo bash
+sudo dnf install -y slack
 
 sh <(curl -L https://nixos.org/nix/install) --daemon
 echo "trusted-users = root $USER" | sudo tee -a /etc/nix/nix.conf

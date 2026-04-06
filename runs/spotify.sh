@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-curl -sS https://download.spotify.com/debian/pubkey_C85668DF69375001.gpg | sudo gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/spotify.gpg
-echo "deb https://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
+set -euo pipefail
 
-sudo apt -y update
-sudo apt -y install spotify-client
+sudo dnf install -y dnf-plugins-core
+sudo dnf config-manager addrepo --from-repofile=https://negativo17.org/repos/fedora-spotify.repo
+
+sudo dnf install -y spotify-client spotify-ffmpeg

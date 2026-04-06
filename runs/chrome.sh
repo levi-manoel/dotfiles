@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+set -euo pipefail
 
-sudo apt -y update
-sudo apt -y install google-chrome-stable
+sudo dnf install -y fedora-workstation-repositories dnf-plugins-core
+sudo dnf config-manager setopt google-chrome.enabled=1
+sudo dnf install -y google-chrome-stable
 

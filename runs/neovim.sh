@@ -11,7 +11,14 @@ if [ ! -d $HOME/neovim ]; then
     git clone https://github.com/neovim/neovim.git $HOME/neovim
 fi
 
-sudo apt -y install cmake gettext lua5.1 liblua5.1-0-dev
+set -euo pipefail
+
+sudo dnf install -y \
+  git make gcc cmake gettext \
+  lua lua-devel \
+  ninja-build \
+  ncurses-devel \
+  wget tar
 
 git -C ~/neovim fetch --all
 git -C ~/neovim checkout $version
