@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
 
-wget -O /tmp/discord.deb "https://discord.com/api/download?platform=linux&format=deb"
-sudo apt install /tmp/discord.deb
+set -euo pipefail
+
+sudo dnf install -y \
+  "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm" \
+  "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
+
+sudo dnf install -y discord

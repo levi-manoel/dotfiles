@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
-sudo add-apt-repository ppa:serge-rider/dbeaver-ce
-sudo apt -y update
-sudo apt -y install dbeaver-ce
+set -euo pipefail
+
+sudo dnf install -y dnf-plugins-core
+sudo dnf copr enable -y copart/dbeaver
+sudo dnf install -y dbeaver-ce

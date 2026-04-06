@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-sudo apt -y install i3 rofi i3blocks
+set -euo pipefail
+
+sudo dnf install -y i3 i3blocks rofi dex i3lock

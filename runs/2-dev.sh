@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-sudo apt -y install git tmux tldr xclip fzf ripgrep brightnessctl playerctl flameshot blueman feh
+set -euo pipefail
+
+sudo dnf install -y git tmux tldr xclip fzf ripgrep brightnessctl playerctl flameshot blueman feh
 
 tldr --update
 
