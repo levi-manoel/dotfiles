@@ -1,0 +1,85 @@
+# i3status-rust (i3status-rs) config
+# Replaces i3blocks and supports mouse interaction.
+
+icons_format = " {icon} "
+invert_scrolling = false
+
+[icons]
+icons = "material-nf"
+
+[[block]]
+block = "music"
+format = " {$player.str(max_w:18) $play |} "
+
+[[block]]
+block = "cpu"
+interval = 1
+format = " CPU $utilization "
+
+[[block]]
+block = "memory"
+interval = 1
+format = " MEM $mem_used_percents "
+
+[[block]]
+block = "custom"
+interval = 5
+json = true
+command = '''sh -c '
+BAT_DIR=$(find /sys/class/power_supply -maxdepth 1 -name "BAT*" -o -name "BATT*" | head -n 1)
+if [ -z "$BAT_DIR" ]; then
+  echo "{\"text\":\"BAT ?\"}"
+  exit 0
+fi
+STATUS=$(cat "$BAT_DIR/status" 2>/dev/null || echo "Unknown")
+CAP=$(cat "$BAT_DIR/capacity" 2>/dev/null || echo "?")
+
+case "$STATUS" in
+  Charging) LABEL="CHR" ;;
+  Discharging) LABEL="BAT" ;;
+  Full|"Not charging") LABEL="FULL" ;;
+  *) LABEL="UNK" ;;
+esac
+
+echo "{\"text\":\"${LABEL} ${CAP}%\"}"
+' '''
+
+[[block]]
+block = "sound"
+driver = "auto"
+device_kind = "sink"
+step_width = 3
+format = " { $volume|MUT } "
+
+[[block.click]]
+button = "left"
+action = "toggle_mute"
+update = true
+
+[[block]]
+block = "custom"
+interval = 1
+command = '''sh -c 'amixer get Capture | grep "\\[off\\]" >/dev/null && echo "{\"text\":\"[X]\"}" || echo "{\"text\":\"[O]\"}"' '''
+json = true
+
+[[block.click]]
+button = "left"
+cmd = "bash -lc '$HOME/dev/personal/dotfiles/bin/toggle-mic'"
+update = true
+
+[[block]]
+block = "custom"
+interval = 2
+command = '''sh -c 'if systemctl is-enabled sleep.target 2>/dev/null | grep -q "masked"; then echo "{\"text\":\"O_O\"}"; else echo "{\"text\":\"-_-\"}"; fi' '''
+json = true
+
+[[block.click]]
+button = "left"
+cmd = "bash -lc '$HOME/dev/personal/dotfiles/bin/toggle-sleep'"
+update = true
+
+[[block]]
+block = "time"
+interval = 1
+format = " $timestamp.datetime(f:'%Y-%m-%d %H:%M:%S') "
+
