@@ -185,7 +185,7 @@ workspace 10 output HDMI-0
 
 ### ----- STATUS BAR -----
 bar {
-    status_command i3blocks
+    status_command i3status-rs "$HOME/.config/i3status-rust/config.toml"
     # status_command i3status
 }
 
