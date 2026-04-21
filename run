@@ -1,21 +1,51 @@
 #!/usr/bin/env bash
+#
+# Usage: ./run [--dry] [--no-reboot] [--no-display|--headless] [grep]
+#   --no-display / --headless  Omit GUI-only installs (WM, browsers, desktop apps).
+#                              Exports RUN_NO_DISPLAY=1 for scripts that split packages.
+#   On SSH/servers, consider: ./run --no-display --no-reboot
 
 set -euo pipefail
 
 grep=""
 dry_run="0"
 skip_reboot="0"
+no_display="0"
 
 while [[ $# -gt 0 ]]; do
     if [[ "$1" == "--dry" ]]; then
         dry_run="1"
     elif [[ "$1" == "--no-reboot" ]]; then
         skip_reboot="1"
+    elif [[ "$1" == "--no-display" || "$1" == "--headless" ]]; then
+        no_display="1"
     else
         grep="$1"
     fi
     shift
 done
+
+if [[ "$no_display" == "1" ]]; then
+    export RUN_NO_DISPLAY=1
+fi
+
+# Scripts that only make sense with a graphical session (WM, desktop apps).
+no_display_skip=(
+    "chrome.sh"
+    "dbeaver.sh"
+    "discord.sh"
+    "i3.sh"
+)
+
+should_skip_for_no_display() {
+    local name="$1"
+    [[ "$no_display" == "1" ]] || return 1
+    local s
+    for s in "${no_display_skip[@]}"; do
+        [[ "$name" == "$s" ]] && return 0
+    done
+    return 1
+}
 
 log() {
     if [[ "$dry_run" == "1" ]]; then
@@ -25,7 +55,7 @@ log() {
     fi
 }
 
-log "RUN: grep=\"$grep\" dry_run=$dry_run"
+log "RUN: grep=\"$grep\" dry_run=$dry_run no_display=$no_display"
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 runs_dir="${ROOT_DIR}/runs"
@@ -38,6 +68,11 @@ for s in $scripts; do
 
     if [[ -n "$grep" ]] && ! echo "$script_name" | grep -q "$grep"; then
         log "grep \"$grep\" filtered out $script_name"
+        continue
+    fi
+
+    if should_skip_for_no_display "$script_name"; then
+        log "no-display: skipping $script_name"
         continue
     fi
 

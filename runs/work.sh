@@ -11,8 +11,10 @@ fi
 
 sudo systemctl enable --now redis
 
-curl -fsSL https://packagecloud.io/install/repositories/slacktechnologies/slack/script.rpm.sh | sudo bash
-sudo dnf install -y slack
+if [[ "${RUN_NO_DISPLAY:-0}" != "1" ]]; then
+    curl -fsSL https://packagecloud.io/install/repositories/slacktechnologies/slack/script.rpm.sh | sudo bash
+    sudo dnf install -y slack
+fi
 
 sh <(curl -L https://nixos.org/nix/install) --daemon
 echo "trusted-users = root $USER" | sudo tee -a /etc/nix/nix.conf

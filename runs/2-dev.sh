@@ -2,7 +2,11 @@
 
 set -euo pipefail
 
-sudo dnf install -y git tmux tldr xclip fzf ripgrep brightnessctl playerctl flameshot blueman feh
+sudo dnf install -y git tmux tldr fzf ripgrep
+
+if [[ "${RUN_NO_DISPLAY:-0}" != "1" ]]; then
+    sudo dnf install -y xclip brightnessctl playerctl flameshot blueman feh
+fi
 
 tldr --update
 
