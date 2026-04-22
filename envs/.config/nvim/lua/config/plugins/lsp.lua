@@ -17,19 +17,32 @@ require("fidget").setup({
 })
 require("mason").setup()
 
+-- ts_ls must load @vue/typescript-plugin for .vue SFCs. `location` is the plugin
+-- package root (folder named typescript-plugin), not @vue/language-server.
+-- Global `npm i -g @vue/language-server` nests it under language-server/node_modules.
+local function vue_typescript_plugin_dir()
+    local npm_root = vim.fn.trim(vim.fn.system("npm root -g 2>/dev/null"))
+    local candidates = {
+        npm_root ~= "" and (npm_root .. "/@vue/typescript-plugin") or nil,
+        npm_root ~= "" and (npm_root .. "/@vue/language-server/node_modules/@vue/typescript-plugin") or nil,
+        "/usr/local/lib/node_modules/@vue/typescript-plugin",
+        "/usr/local/lib/node_modules/@vue/language-server/node_modules/@vue/typescript-plugin",
+    }
+    for _, p in ipairs(candidates) do
+        if p and vim.fn.isdirectory(p) == 1 then
+            return p
+        end
+    end
+    return candidates[4] or "/usr/local/lib/node_modules/@vue/language-server/node_modules/@vue/typescript-plugin"
+end
+
 vim.lsp.config.ts_ls = {
     capabilities = capabilities,
     init_options = {
         plugins = {
             {
                 name = "@vue/typescript-plugin",
-                location = (function()
-                    local npm_root = vim.fn.trim(vim.fn.system("npm root -g 2>/dev/null"))
-                    if npm_root ~= "" then
-                        return npm_root .. "/@vue/language-server"
-                    end
-                    return "/usr/local/lib/node_modules/@vue/language-server"
-                end)(),
+                location = vue_typescript_plugin_dir(),
                 languages = { "vue" },
             },
         },
