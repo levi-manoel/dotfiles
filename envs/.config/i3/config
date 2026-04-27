@@ -1,5 +1,6 @@
 ### ----- WALLPAPER -----
 exec_always --no-startup-id feh --bg-fill $HOME/dev/personal/dotfiles/wallpaper.png
+exec_always --no-startup-id picom --backend glx
 
 ### ----- INPUT DEVICES -----
 
