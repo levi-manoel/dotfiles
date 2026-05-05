@@ -93,13 +93,9 @@ require("mason-lspconfig").setup({
         "eslint",
         "clangd",
     },
-    handlers = {
-        function(server_name)
-            local config = vim.lsp.config[server_name] or {}
-            vim.lsp.start(config)
-        end,
-    },
 })
+
+vim.lsp.enable({ "ts_ls", "lua_ls", "html", "cssls", "eslint", "clangd" })
 
 cmp.setup({
     mapping = cmp.mapping.preset.insert({
