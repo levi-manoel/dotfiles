@@ -9,4 +9,6 @@ sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf /tmp/go.tar.gz
 
 nvm install 22
 
+sudo npm i -g @vue/language-server
+
 curl -fsSL https://bun.sh/install | bash
