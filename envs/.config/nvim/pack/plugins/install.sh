@@ -65,6 +65,9 @@ clone "eandrju/cellular-automaton.nvim"
 clone "piersolenski/skifree.nvim"
 clone "theprimeagen/vim-be-good" "vim-be-good"
 
+# Markdown preview
+clone "OXY2DEV/markview.nvim"
+
 # Copilot
 clone "github/copilot.vim" "copilot.vim"
 

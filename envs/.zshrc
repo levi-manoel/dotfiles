@@ -14,6 +14,9 @@ fi
 alias src="source $HOME/.zshrc"
 export PATH=$HOME/dev/personal/dotfiles/bin:$PATH
 
+# pulumi
+export PATH="$HOME/.pulumi/bin:$PATH"
+
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"

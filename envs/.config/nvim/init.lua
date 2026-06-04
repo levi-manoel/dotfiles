@@ -43,5 +43,6 @@ require("config.plugins.undotree")
 require("config.plugins.trouble")
 require("config.plugins.treesitter")
 require("config.plugins.telescope")
+require("config.plugins.markview")
 
 require("config.plugins.colors").apply_theme_from_env()
