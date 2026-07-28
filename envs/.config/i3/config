@@ -29,8 +29,11 @@ exec --no-startup-id easyeffects --gapplication-service
 font pango:VictorMonoNerdFont 10
 
 ### ----- AUTOSTART APPS -----
-exec_always --no-startup-id dex --autostart --environment i3
-# exec_always --no-startup-id xss-lock --transfer-sleep-lock -- 'i3lock -i $HOME/dev/personal/dotfiles/wallpaper.png' --nofork
+# Once per login only — exec_always + dex re-launches XDG apps (incl. a 2nd
+# picom) on every reload and can blank the session to wallpaper+cursor.
+exec --no-startup-id dex-autostart --autostart --environment i3
+exec_always --no-startup-id sh -c 'pkill -x xss-lock; exec $HOME/dev/personal/dotfiles/bin/xss-lock-i3lock'
+exec --no-startup-id systemctl --user start clipmenud.service
 exec_always --no-startup-id blueman-applet
 exec_always --no-startup-id nm-applet
 
@@ -59,7 +62,7 @@ bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5%
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
 
-bindsym $mod+b exec --no-startup-id i3lock -i $HOME/wallpaper.png
+bindsym $mod+b exec --no-startup-id i3lock -i $HOME/dev/personal/dotfiles/wallpaper.png
 
 ### ----- NOTIFICATIONS -----
 bindsym $mod+comma exec --no-startup-id dunstctl action
@@ -77,6 +80,9 @@ bindsym $mod+Shift+q kill
 
 # Screenshot
 bindsym $mod+Shift+s exec --no-startup-id flameshot gui
+
+# Clipboard history (Win+V)
+bindsym $mod+v exec --no-startup-id env CM_LAUNCHER=rofi CM_HISTLENGTH=12 clipmenu
 
 # Launcher
 bindsym $mod+space exec --no-startup-id rofi -show drun
