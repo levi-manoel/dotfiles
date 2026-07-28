@@ -1,6 +1,6 @@
 ### ----- WALLPAPER -----
 exec_always --no-startup-id feh --bg-fill $HOME/dev/personal/dotfiles/wallpaper.png
-exec_always --no-startup-id picom --backend glx
+exec_always --no-startup-id sh -c 'pkill -x picom; picom -b'
 
 ### ----- INPUT DEVICES -----
 
@@ -22,6 +22,8 @@ exec_always --no-startup-id picom --backend glx
 #     Option "Tapping" "on"
 #     Option "NaturalScrolling" "true"
 # EndSection
+
+exec --no-startup-id easyeffects --gapplication-service
 
 ### ----- FONT -----
 font pango:VictorMonoNerdFont 10
