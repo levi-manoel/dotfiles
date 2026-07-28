@@ -3,6 +3,18 @@
 set -euo pipefail
 
 sudo dnf copr enable -y alternateved/i3status-rust
+sudo dnf copr enable -y skidnik/clipmenu
 
-# sudo dnf install -y i3 i3blocks rofi dex i3lock i3status-rust
-sudo dnf install -y i3status-rust picom
+sudo dnf install -y \
+  i3 \
+  rofi \
+  i3lock \
+  xss-lock \
+  dunst \
+  dex-autostart \
+  network-manager-applet \
+  picom \
+  i3status-rust \
+  clipmenu
+
+systemctl --user enable clipmenud.service

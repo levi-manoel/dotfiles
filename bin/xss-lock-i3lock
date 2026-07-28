@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Wrapper so i3 config does not see a bare `--` (breaks i3's lexer).
+set -euo pipefail
+exec xss-lock --transfer-sleep-lock -- \
+  i3lock --nofork -i "$HOME/dev/personal/dotfiles/wallpaper.png"

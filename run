@@ -33,8 +33,9 @@ fi
 no_display_skip=(
     "chrome.sh"
     "dbeaver.sh"
-    "discord.sh"
+    "ghostty.sh"
     "i3.sh"
+    "vesktop.sh"
 )
 
 should_skip_for_no_display() {
