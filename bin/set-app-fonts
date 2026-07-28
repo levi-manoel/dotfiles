@@ -1,0 +1,124 @@
+#!/usr/bin/env bash
+# Apply VictorMono Nerd Font to Chrome (Preferences) and Slack (user-local asar CSS inject).
+# Quit Chrome fully before running so Preferences are not overwritten on exit.
+# Slack: maintains a patched copy under ~/.local/opt/slack + desktop override (no root).
+set -euo pipefail
+
+FONT="VictorMono Nerd Font"
+SLACK_SRC="/usr/lib/slack"
+SLACK_DST="${XDG_DATA_HOME:-$HOME/.local}/opt/slack"
+DESKTOP_DST="${XDG_DATA_HOME:-$HOME/.local}/share/applications/slack.desktop"
+
+apply_chrome() {
+  if pgrep -x chrome >/dev/null 2>&1 || pgrep -f '/opt/google/chrome/chrome|/usr/bin/google-chrome' >/dev/null 2>&1; then
+    echo "chrome: running — skip Preferences write (quit Chrome and re-run to apply)"
+    return 0
+  fi
+
+  python3 - "$FONT" <<'PY'
+import json, sys
+from pathlib import Path
+
+font = sys.argv[1]
+fonts = {
+    k: {"Zyyy": font}
+    for k in ("standard", "fixed", "sansserif", "serif", "cursive", "fantasy", "pictograph")
+}
+
+base = Path.home() / ".config/google-chrome"
+if not base.is_dir():
+    print("chrome: no config dir")
+    raise SystemExit(0)
+
+for prefs in base.glob("*/Preferences"):
+    if prefs.parent.name in ("Crash Reports", "Safe Browsing", "ShaderCache", "GrShaderCache"):
+        continue
+    if not (prefs.parent / "Preferences").exists():
+        continue
+    # only real profiles
+    if prefs.parent.name not in {"Default"} and not prefs.parent.name.startswith("Profile"):
+        continue
+    try:
+        data = json.loads(prefs.read_text())
+    except Exception as e:
+        print(f"chrome: skip {prefs}: {e}")
+        continue
+    webprefs = data.setdefault("webkit", {}).setdefault("webprefs", {})
+    webprefs["fonts"] = fonts
+    prefs.write_text(json.dumps(data, separators=(",", ":")))
+    print(f"chrome: updated {prefs}")
+PY
+}
+
+apply_slack() {
+  if [[ ! -d "$SLACK_SRC" ]]; then
+    echo "slack: $SLACK_SRC missing — skip"
+    return 0
+  fi
+  if ! command -v npx >/dev/null 2>&1; then
+    echo "slack: npx missing — skip"
+    return 0
+  fi
+
+  mkdir -p "$(dirname "$SLACK_DST")"
+  echo "slack: syncing install to $SLACK_DST ..."
+  rsync -a --delete --exclude='resources/app.asar' "$SLACK_SRC/" "$SLACK_DST/"
+
+  local work
+  work="$(mktemp -d)"
+  # shellcheck disable=SC2064
+  trap "rm -rf '$work'" RETURN
+
+  npx --yes @electron/asar extract "$SLACK_SRC/resources/app.asar" "$work/app"
+  local preload="$work/app/dist/preload.bundle.js"
+  if [[ ! -f "$preload" ]]; then
+    echo "slack: preload.bundle.js missing — skip"
+    return 0
+  fi
+
+  python3 - "$preload" "$FONT" <<'PY'
+import pathlib, re, sys
+path = pathlib.Path(sys.argv[1])
+font = sys.argv[2]
+text = path.read_text(errors="ignore")
+text = re.sub(
+    r"/\* victor-mono-dotfiles \*/[\s\S]*?/\* end-victor-mono-dotfiles \*/",
+    "",
+    text,
+)
+snippet = f"""
+/* victor-mono-dotfiles */
+;(()=>{{try{{const css='*,*::before,*::after{{font-family:\"{font}\",monospace!important}}';const inject=()=>{{if(!document.documentElement)return;let s=document.getElementById(\"victor-mono-dotfiles\");if(!s){{s=document.createElement(\"style\");s.id=\"victor-mono-dotfiles\";(document.head||document.documentElement).appendChild(s)}}s.textContent=css}};if(document.readyState===\"loading\")document.addEventListener(\"DOMContentLoaded\",inject);else inject();setInterval(inject,2000)}}catch(e){{}}}})();
+/* end-victor-mono-dotfiles */
+"""
+path.write_text(text + snippet)
+print("slack: CSS inject ready in preload")
+PY
+
+  mkdir -p "$SLACK_DST/resources"
+  npx --yes @electron/asar pack "$work/app" "$SLACK_DST/resources/app.asar"
+
+  mkdir -p "$(dirname "$DESKTOP_DST")"
+  cat > "$DESKTOP_DST" <<EOF
+[Desktop Entry]
+Name=Slack
+Comment=Slack Desktop (Victor Mono)
+GenericName=Slack Client
+Exec=${SLACK_DST}/slack %U
+Icon=slack
+Type=Application
+StartupNotify=true
+Categories=GNOME;GTK;Network;InstantMessaging;
+MimeType=x-scheme-handler/slack;
+EOF
+
+  # Prefer user desktop entry
+  update-desktop-database "${XDG_DATA_HOME:-$HOME/.local}/share/applications" 2>/dev/null || true
+  echo "slack: patched copy ready — launch via desktop entry or ${SLACK_DST}/slack"
+}
+
+apply_chrome
+apply_slack
+
+echo "done. Restart Chrome/Slack to see Victor Mono."
+echo "tip: if Chrome was open, quit it fully and re-run: $HOME/dev/personal/dotfiles/bin/set-app-fonts"

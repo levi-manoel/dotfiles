@@ -26,7 +26,7 @@ exec_always --no-startup-id sh -c 'pkill -x picom; picom -b'
 exec --no-startup-id easyeffects --gapplication-service
 
 ### ----- FONT -----
-font pango:VictorMonoNerdFont 10
+font pango:VictorMono Nerd Font 10
 
 ### ----- AUTOSTART APPS -----
 # Once per login only — exec_always + dex re-launches XDG apps (incl. a 2nd

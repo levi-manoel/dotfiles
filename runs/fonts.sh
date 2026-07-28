@@ -16,3 +16,6 @@ unzip -o /tmp/mona.zip -d /tmp/unziped-sources
 
 mv /tmp/unziped-sources/*.ttf "$HOME/.local/share/fonts/"
 fc-cache -fv
+
+# Chrome Preferences + Slack CSS inject (best-effort; Slack needs re-run after updates)
+"$HOME/dev/personal/dotfiles/bin/set-app-fonts" || true
