@@ -34,6 +34,8 @@ font pango:VictorMono Nerd Font 10
 exec --no-startup-id dex-autostart --autostart --environment i3
 exec_always --no-startup-id sh -c 'pkill -x xss-lock; exec $HOME/dev/personal/dotfiles/bin/xss-lock-i3lock'
 exec --no-startup-id systemctl --user start clipmenud.service
+exec --no-startup-id /usr/libexec/lxqt-policykit-agent
+exec --no-startup-id udiskie --tray --notify --automount
 exec_always --no-startup-id blueman-applet
 exec_always --no-startup-id nm-applet
 
@@ -44,6 +46,7 @@ set $mod Mod4
 set $refresh_i3status killall -SIGUSR1 i3status
 
 bindsym $mod+Shift+n exec --no-startup-id $HOME/dev/personal/dotfiles/bin/toggle-sleep
+bindsym $mod+Shift+p exec --no-startup-id $HOME/dev/personal/dotfiles/bin/toggle-power-profile
 
 ### ----- AUDIO CONTROLS -----
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status

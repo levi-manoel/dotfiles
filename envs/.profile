@@ -16,6 +16,10 @@ if [ -f "$XDG_CONFIG_HOME/theme.env" ]; then
     . "$XDG_CONFIG_HOME/theme.env"
 fi
 
+# NVIDIA VAAPI (also in environment.d for systemd --user)
+export LIBVA_DRIVER_NAME="${LIBVA_DRIVER_NAME:-nvidia}"
+export NVD_BACKEND="${NVD_BACKEND:-direct}"
+
 # UI fonts (GNOME/GTK settings used by some apps beyond settings.ini)
 if command -v gsettings >/dev/null 2>&1; then
     gsettings set org.gnome.desktop.interface font-name 'VictorMono Nerd Font 10' 2>/dev/null || true
@@ -39,5 +43,10 @@ fi
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
+fi
+
+# dotfiles helpers / chrome VAAPI wrapper
+if [ -d "$HOME/dev/personal/dotfiles/bin" ]; then
+    PATH="$HOME/dev/personal/dotfiles/bin:$PATH"
 fi
 

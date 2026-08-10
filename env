@@ -80,6 +80,11 @@ copy() {
 
 update_files "$HOME/dev/personal/dotfiles/envs/.config" "$XDG_CONFIG_HOME"
 
+# Desktop entry overrides (Chrome VAAPI wrapper, etc.)
+update_files \
+  "$HOME/dev/personal/dotfiles/envs/.local/share/applications" \
+  "${XDG_DATA_HOME:-$HOME/.local/share}/applications"
+
 copy "$HOME/dev/personal/dotfiles/envs/.tmux.conf" "$HOME/.tmux.conf"
 copy "$HOME/dev/personal/dotfiles/envs/.zshrc" "$HOME/.zshrc"
 copy "$HOME/dev/personal/dotfiles/envs/.profile" "$HOME/.profile"

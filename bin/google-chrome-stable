@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Chrome with NVIDIA VAAPI hints (wrapper used by desktop entry + PATH).
+
+set -euo pipefail
+
+export NVD_BACKEND="${NVD_BACKEND:-direct}"
+export LIBVA_DRIVER_NAME="${LIBVA_DRIVER_NAME:-nvidia}"
+
+exec /usr/bin/google-chrome-stable \
+  --enable-features=VaapiVideoDecoder,VaapiVideoDecodeLinuxGL,VaapiIgnoreDriverChecks \
+  --disable-features=UseChromeOSDirectVideoDecoder \
+  "$@"

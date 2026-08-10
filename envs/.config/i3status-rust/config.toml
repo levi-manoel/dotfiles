@@ -26,6 +26,26 @@ block = "custom"
 interval = 5
 json = true
 command = '''sh -c '
+p=$(powerprofilesctl get 2>/dev/null || echo "?")
+case "$p" in
+  power-saver) label="PWR save" ;;
+  balanced) label="PWR bal" ;;
+  performance) label="PWR perf" ;;
+  *) label="PWR $p" ;;
+esac
+echo "{\"text\":\"${label}\"}"
+' '''
+
+[[block.click]]
+button = "left"
+cmd = "bash -lc '$HOME/dev/personal/dotfiles/bin/toggle-power-profile'"
+update = true
+
+[[block]]
+block = "custom"
+interval = 5
+json = true
+command = '''sh -c '
 BAT_DIR=$(find /sys/class/power_supply -maxdepth 1 -name "BAT*" -o -name "BATT*" | head -n 1)
 if [ -z "$BAT_DIR" ]; then
   echo "{\"text\":\"BAT ?\"}"
