@@ -50,3 +50,9 @@ if [ -d "$HOME/dev/personal/dotfiles/bin" ]; then
     PATH="$HOME/dev/personal/dotfiles/bin:$PATH"
 fi
 
+# rust / cargo
+if [ -f "$HOME/.cargo/env" ]; then
+    . "$HOME/.cargo/env"
+fi
+
+

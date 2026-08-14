@@ -21,6 +21,9 @@ export PATH="$HOME/.pulumi/bin:$PATH"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
+# rust / cargo (spotatui, etc.)
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+
 # go
 export PATH="$PATH:/usr/local/go/bin"
 
