@@ -48,6 +48,14 @@ set $refresh_i3status killall -SIGUSR1 i3status
 bindsym $mod+Shift+n exec --no-startup-id $HOME/dev/personal/dotfiles/bin/toggle-sleep
 bindsym $mod+Shift+p exec --no-startup-id $HOME/dev/personal/dotfiles/bin/toggle-power-profile
 
+### ----- NOTES SCRATCHPAD -----
+# Super+n toggles a floating notepad on the current workspace.
+# Content lives in ~/.local/share/scratch-notes.md (survives restarts).
+bindsym $mod+n exec --no-startup-id $HOME/dev/personal/dotfiles/bin/toggle-notes
+for_window [class="com.scratch.notes"] floating enable
+for_window [class="com.scratch.notes"] border pixel 2
+for_window [class="com.scratch.notes"] move scratchpad
+
 ### ----- AUDIO CONTROLS -----
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
