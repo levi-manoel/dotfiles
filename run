@@ -1,104 +1,156 @@
 #!/usr/bin/env bash
 #
-# Usage: ./run [--dry] [--no-reboot] [--no-display|--headless] [grep]
-#   --no-display / --headless  Omit GUI-only installs (WM, browsers, desktop apps).
-#                              Exports RUN_NO_DISPLAY=1 for scripts that split packages.
-#   On SSH/servers, consider: ./run --no-display --no-reboot
+# Usage: ./run [--dry] [--no-reboot] [--no-display|--headless]
+#   Flags override the matching prompt. Without a TTY, defaults apply:
+#   dry=off, display=on, reboot=on.
+#   On SSH/servers: ./run --no-display --no-reboot
 
 set -euo pipefail
 
-grep=""
-dry_run="0"
-skip_reboot="0"
-no_display="0"
+dry_run=""
+no_display=""
+skip_reboot=""
+dry_set="0"
+display_set="0"
+reboot_set="0"
 
 while [[ $# -gt 0 ]]; do
-    if [[ "$1" == "--dry" ]]; then
-        dry_run="1"
-    elif [[ "$1" == "--no-reboot" ]]; then
-        skip_reboot="1"
-    elif [[ "$1" == "--no-display" || "$1" == "--headless" ]]; then
-        no_display="1"
-    else
-        grep="$1"
-    fi
-    shift
+  case "$1" in
+    --dry)
+      dry_run="1"
+      dry_set="1"
+      ;;
+    --no-reboot)
+      skip_reboot="1"
+      reboot_set="1"
+      ;;
+    --no-display|--headless)
+      no_display="1"
+      display_set="1"
+      ;;
+    -h|--help)
+      sed -n '2,7p' "$0" | sed 's/^# \{0,1\}//'
+      exit 0
+      ;;
+    *)
+      echo "unknown argument: $1 (grep filter was removed; use --help)" >&2
+      exit 1
+      ;;
+  esac
+  shift
 done
 
-if [[ "$no_display" == "1" ]]; then
-    export RUN_NO_DISPLAY=1
+ask_yn() {
+  # ask_yn "prompt" default(y|n) -> sets REPLY to y or n
+  local prompt="$1"
+  local default="$2"
+  local hint
+  if [[ "$default" == "y" ]]; then
+    hint="[Y/n]"
+  else
+    hint="[y/N]"
+  fi
+  while true; do
+    read -r -p "$prompt $hint " answer || true
+    answer="${answer,,}"
+    answer="${answer// /}"
+    if [[ -z "$answer" ]]; then
+      REPLY="$default"
+      return 0
+    fi
+    case "$answer" in
+      y|yes) REPLY=y; return 0 ;;
+      n|no) REPLY=n; return 0 ;;
+    esac
+    echo "please answer y or n"
+  done
+}
+
+if [[ -t 0 ]]; then
+  if [[ "$dry_set" != "1" ]]; then
+    ask_yn "Dry run, only show what would run, without installing?" n
+    if [[ "$REPLY" == "y" ]]; then dry_run="1"; else dry_run="0"; fi
+  fi
+  if [[ "$display_set" != "1" ]]; then
+    ask_yn "Headless, skip WM, browsers, Ghostty, Slack, Vesktop?" n
+    if [[ "$REPLY" == "y" ]]; then no_display="1"; else no_display="0"; fi
+  fi
+  if [[ "$dry_run" != "1" && "$reboot_set" != "1" ]]; then
+    ask_yn "Reboot when finished?" y
+    if [[ "$REPLY" == "y" ]]; then skip_reboot="0"; else skip_reboot="1"; fi
+  fi
 fi
 
-# Scripts that only make sense with a graphical session (WM, desktop apps).
-no_display_skip=(
-    "chrome.sh"
-    "dbeaver.sh"
-    "ghostty.sh"
-    "i3.sh"
-    "vesktop.sh"
-)
+# Defaults when flag/prompt left unset (non-TTY or dry skipped reboot prompt)
+dry_run="${dry_run:-0}"
+no_display="${no_display:-0}"
+skip_reboot="${skip_reboot:-0}"
+if [[ "$dry_run" == "1" ]]; then
+  skip_reboot="1"
+fi
 
-should_skip_for_no_display() {
-    local name="$1"
-    [[ "$no_display" == "1" ]] || return 1
-    local s
-    for s in "${no_display_skip[@]}"; do
-        [[ "$name" == "$s" ]] && return 0
-    done
-    return 1
-}
+if [[ "$no_display" == "1" ]]; then
+  export RUN_NO_DISPLAY=1
+else
+  export RUN_NO_DISPLAY=0
+fi
 
 log() {
-    if [[ "$dry_run" == "1" ]]; then
-        echo "[DRY_RUN]: $1"
-    else
-        echo "$1"
-    fi
+  if [[ "$dry_run" == "1" ]]; then
+    echo "[DRY_RUN]: $1"
+  else
+    echo "$1"
+  fi
 }
 
-log "RUN: grep=\"$grep\" dry_run=$dry_run no_display=$no_display"
+log "RUN: dry_run=$dry_run no_display=$no_display skip_reboot=$skip_reboot"
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 runs_dir="${ROOT_DIR}/runs"
 env_script="${ROOT_DIR}/env"
 
-scripts="$(find "$runs_dir" -mindepth 1 -maxdepth 1 -type f -executable -print0 | sort -z | xargs -0 -n 1 echo)"
+# Explicit order — packages before system/toolchains; nvm before eslint (inside toolchains).
+scripts=(
+  packages.sh
+  system.sh
+  zsh.sh
+  fonts.sh
+  toolchains.sh
+  vesktop.sh
+)
 
-for s in $scripts; do
-    script_name="$(basename "$s")"
+for script_name in "${scripts[@]}"; do
+  if [[ "$no_display" == "1" && "$script_name" == "vesktop.sh" ]]; then
+    log "no-display: skipping $script_name"
+    continue
+  fi
 
-    if [[ -n "$grep" ]] && ! echo "$script_name" | grep -q "$grep"; then
-        log "grep \"$grep\" filtered out $script_name"
-        continue
-    fi
+  s="${runs_dir}/${script_name}"
+  if [[ ! -x "$s" ]]; then
+    echo "missing or not executable: $s" >&2
+    exit 1
+  fi
 
-    if should_skip_for_no_display "$script_name"; then
-        log "no-display: skipping $script_name"
-        continue
-    fi
-
-    log "running script: $script_name"
-
-    if [[ "$dry_run" == "0" ]]; then
-        "$s"
-    fi
+  log "running script: $script_name"
+  if [[ "$dry_run" == "0" ]]; then
+    "$s"
+  fi
 done
 
 log "All run scripts completed."
 
 if [[ -x "$env_script" ]]; then
-    log "Applying dotfiles via env..."
-    if [[ "$dry_run" == "0" ]]; then
-        "$env_script"
-    else
-        "$env_script" --dry
-    fi
+  log "Applying dotfiles via env..."
+  if [[ "$dry_run" == "0" ]]; then
+    "$env_script"
+  else
+    "$env_script" --dry
+  fi
 fi
 
-if [[ "$dry_run" == "0" && "$skip_reboot" == "0" && -z "$grep" ]]; then
-    echo ""
-    echo "press enter to reboot (or Ctrl+C to cancel)"
-    read -r
-    sudo systemctl reboot
+if [[ "$dry_run" == "0" && "$skip_reboot" == "0" ]]; then
+  echo ""
+  echo "press enter to reboot (or Ctrl+C to cancel)"
+  read -r
+  sudo systemctl reboot
 fi
-

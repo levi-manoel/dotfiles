@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
+#
+# Default shell + oh-my-zsh. Package install is in packages.sh.
 
 set -euo pipefail
-
-if ! command -v zsh >/dev/null 2>&1; then
-  sudo dnf install -y zsh util-linux-user
-fi
 
 ZSH_BIN="$(command -v zsh)"
 hash -r || true
@@ -20,4 +18,3 @@ if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
   export KEEP_ZSHRC=yes
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi
-

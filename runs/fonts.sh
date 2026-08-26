@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+#
+# Nerd fonts + app font tweaks. unzip comes from packages.sh.
 
 set -euo pipefail
 
@@ -6,8 +8,6 @@ wget --output-document /tmp/victor-nomo.zip https://github.com/ryanoasis/nerd-fo
 wget --output-document /tmp/mona.zip https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/Monaspace.zip
 
 mkdir -p "$HOME/tmp"
-
-sudo dnf install -y unzip
 mkdir -p /tmp/unziped-sources
 mkdir -p "$HOME/.local/share/fonts"
 
