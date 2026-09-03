@@ -86,15 +86,26 @@ text = re.sub(
     "",
     text,
 )
+# Force Victor Mono on text; keep Slack icon fonts on icon nodes.
+css = (
+    f'body,body *:not(i):not(.c-icon):not(.c-legacy_icon)'
+    f':not([class*="c-icon"]):not([class*="emoji"]):not([class*="Emoji"])'
+    f'{{font-family:"{font}",monospace!important}}'
+    f'.c-icon,.c-icon::before,.c-icon::after,'
+    f'.c-legacy_icon,.c-legacy_icon::before,.c-legacy_icon::after,'
+    f'[class*="c-icon"],[class*="c-icon"]::before,[class*="c-icon"]::after,'
+    f'i,i::before,i::after,'
+    f'[class*="emoji"],[class*="Emoji"]'
+    f'{{font-family:"Slack v2 Lazlo","Slack v2",Slack-Lato,appleLogo,sans-serif!important}}'
+)
 snippet = f"""
 /* victor-mono-dotfiles */
-;(()=>{{try{{const css='*,*::before,*::after{{font-family:\"{font}\",monospace!important}}';const inject=()=>{{if(!document.documentElement)return;let s=document.getElementById(\"victor-mono-dotfiles\");if(!s){{s=document.createElement(\"style\");s.id=\"victor-mono-dotfiles\";(document.head||document.documentElement).appendChild(s)}}s.textContent=css}};if(document.readyState===\"loading\")document.addEventListener(\"DOMContentLoaded\",inject);else inject();setInterval(inject,2000)}}catch(e){{}}}})();
+;(()=>{{try{{const css={css!r};const inject=()=>{{if(!document.documentElement)return;let s=document.getElementById("victor-mono-dotfiles");if(!s){{s=document.createElement("style");s.id="victor-mono-dotfiles";(document.head||document.documentElement).appendChild(s)}}s.textContent=css}};if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",inject);else inject();setInterval(inject,2000)}}catch(e){{}}}})();
 /* end-victor-mono-dotfiles */
 """
 path.write_text(text + snippet)
 print("slack: CSS inject ready in preload")
 PY
-
   mkdir -p "$SLACK_DST/resources"
   npx --yes @electron/asar pack "$work/app" "$SLACK_DST/resources/app.asar"
 
