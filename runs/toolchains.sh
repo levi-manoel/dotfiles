@@ -19,17 +19,13 @@ sudo npm install -g eslint
 
 curl -fsSL https://bun.sh/install | bash
 
-# --- rust / spotatui (needs alsa-lib-devel + gcc from packages.sh) ---
+# --- rust (needs gcc from packages.sh) ---
 if ! command -v rustup >/dev/null 2>&1 && [[ ! -x "$HOME/.cargo/bin/rustup" ]]; then
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 fi
 
 # shellcheck disable=SC1091
 . "$HOME/.cargo/env"
-
-if ! command -v spotatui >/dev/null 2>&1; then
-  cargo install spotatui
-fi
 
 # --- nix / devenv ---
 sh <(curl -L https://nixos.org/nix/install) --daemon

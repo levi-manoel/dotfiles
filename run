@@ -117,10 +117,11 @@ scripts=(
   fonts.sh
   toolchains.sh
   vesktop.sh
+  fastpotify.sh
 )
 
 for script_name in "${scripts[@]}"; do
-  if [[ "$no_display" == "1" && "$script_name" == "vesktop.sh" ]]; then
+  if [[ "$no_display" == "1" && ( "$script_name" == "vesktop.sh" || "$script_name" == "fastpotify.sh" ) ]]; then
     log "no-display: skipping $script_name"
     continue
   fi
