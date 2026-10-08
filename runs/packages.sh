@@ -62,7 +62,6 @@ display=(
   xclip
   xsel
   xinput
-  xdotool
   brightnessctl
   playerctl
   flameshot
