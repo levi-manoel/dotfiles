@@ -34,6 +34,7 @@ base=(
   tldr
   fzf
   ripgrep
+  jq
   neovim
   unzip
   alsa-lib-devel
@@ -61,12 +62,14 @@ display=(
   xclip
   xsel
   xinput
+  xdotool
   brightnessctl
   playerctl
   flameshot
   blueman
   feh
   easyeffects
+  obs-studio
   i3
   rofi
   i3lock
