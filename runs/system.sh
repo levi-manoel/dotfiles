@@ -52,9 +52,21 @@ sudo journalctl --vacuum-size=300M >/dev/null || true
 sudo usermod -aG docker "$USER"
 sudo usermod -aG video "$USER"
 
+user_unit_dir="${HOME}/.config/systemd/user"
+mkdir -p "$user_unit_dir"
+install -m 0644 \
+  "${SYSTEM_DIR}/user/clean-tmp-caches.service" \
+  "${user_unit_dir}/clean-tmp-caches.service"
+install -m 0644 \
+  "${SYSTEM_DIR}/user/clean-tmp-caches.timer" \
+  "${user_unit_dir}/clean-tmp-caches.timer"
+systemctl --user daemon-reload
+systemctl --user enable --now clean-tmp-caches.timer
+
 echo "system: earlyoom=$(systemctl is-active earlyoom) systemd-oomd=$(systemctl is-active systemd-oomd)"
 echo "system: power=$(powerprofilesctl get 2>/dev/null || echo n/a) thermald=$(systemctl is-active thermald) switcheroo=$(systemctl is-active switcheroo-control)"
 echo "system: bat thresholds=$(cat /sys/class/power_supply/BAT0/charge_control_start_threshold 2>/dev/null)/$(cat /sys/class/power_supply/BAT0/charge_control_end_threshold 2>/dev/null)"
 echo "system: sysrq=$(cat /proc/sys/kernel/sysrq) journal=$(journalctl --disk-usage 2>/dev/null | tr -s ' ')"
 echo "system: docker=$(systemctl is-active docker) redis=$(systemctl is-active redis)"
+echo "system: clean-tmp-caches=$(systemctl --user is-enabled clean-tmp-caches.timer 2>/dev/null || echo n/a)"
 echo "system: log out/in for docker+video groups; reload i3 for polkit/udiskie/chrome desktop"

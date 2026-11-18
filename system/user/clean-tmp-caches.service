@@ -1,0 +1,6 @@
+[Unit]
+Description=Drop unused tmpfs test caches
+
+[Service]
+Type=oneshot
+ExecStart=%h/dev/personal/dotfiles/bin/clean-tmp-caches

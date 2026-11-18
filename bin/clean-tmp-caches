@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Unused Jest, mongodb-memory-server, and node compile caches live on tmpfs (/tmp).
+# Skip a tree touched in the last hour, or held open by a process.
+set -euo pipefail
+
+drop() {
+  local path="$1"
+  [[ -e "$path" ]] || return 0
+  [[ -z "$(find "$path" -mmin -60 -print -quit 2>/dev/null)" ]] || return 0
+  find "$path" -print0 2>/dev/null | xargs -0 fuser -s >/dev/null 2>&1 && return 0
+  rm -rf "$path"
+}
+
+drop /tmp/jest_rs
+drop /tmp/node-compile-cache
+shopt -s nullglob
+for d in /tmp/mongo-mem-*; do
+  drop "$d"
+done
