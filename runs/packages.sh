@@ -33,6 +33,8 @@ base=(
   tmux
   tldr
   fzf
+  btop
+  zoxide
   ripgrep
   jq
   neovim

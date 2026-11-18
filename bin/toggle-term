@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+CLASS="com.scratch.term"
+
+win_workspace() {
+  i3-msg -t get_tree | jq -r --arg c "$CLASS" '
+    .. | objects | select(.type == "workspace")
+    | select(any(.. | objects; .window_properties.class? == $c))
+    | .name
+  ' | head -n 1
+}
+
+spawn() {
+  ghostty \
+    --class="$CLASS" \
+    --x11-instance-name=scratch-term \
+    --title=term \
+    >/dev/null 2>&1 &
+  disown
+
+  local i ws
+  for i in $(seq 1 60); do
+    ws="$(win_workspace)"
+    if [[ "$ws" == "__i3_scratch" ]]; then
+      return 0
+    fi
+    sleep 0.05
+  done
+  echo "toggle-term: window did not appear" >&2
+  return 1
+}
+
+show() {
+  i3-msg "[class=\"${CLASS}\"] scratchpad show, resize set 100 ppt 40 ppt, move position 0 ppt 0 ppt, focus" >/dev/null
+}
+
+hide() {
+  i3-msg "[class=\"${CLASS}\"] move scratchpad" >/dev/null
+}
+
+ws="$(win_workspace)"
+if [[ -z "$ws" ]]; then
+  spawn
+  show
+elif [[ "$ws" == "__i3_scratch" ]]; then
+  show
+else
+  hide
+fi

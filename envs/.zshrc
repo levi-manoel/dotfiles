@@ -41,6 +41,8 @@ if [ -f '/home/levi/dev/shared/google-cloud-sdk/path.zsh.inc' ]; then . '/home/l
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/levi/dev/shared/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/levi/dev/shared/google-cloud-sdk/completion.zsh.inc'; fi
 
+eval "$(zoxide init zsh)"
+
 dalepapai() {
   if git diff --staged --quiet; then
     echo "Error: No staged changes found. Run 'git add' first."

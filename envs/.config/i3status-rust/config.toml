@@ -18,8 +18,21 @@ format = " CPU $utilization "
 
 [[block]]
 block = "memory"
-interval = 1
+interval = 5
 format = " MEM $mem_used_percents "
+format_alt = " SWAP $swap_used_percents "
+warning_mem = 75.0
+critical_mem = 90.0
+warning_swap = 40.0
+critical_swap = 70.0
+
+[[block.click]]
+button = "left"
+cmd = "ghostty -e btop"
+
+[[block.click]]
+button = "right"
+action = "toggle_format"
 
 [[block]]
 block = "custom"

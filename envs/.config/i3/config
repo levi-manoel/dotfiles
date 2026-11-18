@@ -56,6 +56,22 @@ for_window [class="com.scratch.notes"] floating enable
 for_window [class="com.scratch.notes"] border pixel 2
 for_window [class="com.scratch.notes"] move scratchpad
 
+### ----- DROPDOWN TERMINAL -----
+# Super+Shift+Enter. grave is dead_grave on ABNT2, so it is not the bind.
+bindsym $mod+Shift+Return exec --no-startup-id $HOME/dev/personal/dotfiles/bin/toggle-term
+for_window [class="com.scratch.term"] floating enable
+for_window [class="com.scratch.term"] border pixel 2
+for_window [class="com.scratch.term"] move scratchpad
+
+### ----- FOCUS -----
+# Slack, Chrome and Vesktop may request focus while you are typing.
+focus_on_window_activation none
+for_window [class="^(slack|vesktop)$"] no_focus
+for_window [class="Google-chrome" window_type="dialog"] no_focus
+for_window [class="Google-chrome" window_type="utility"] no_focus
+for_window [class="Google-chrome" window_type="notification"] no_focus
+for_window [title="(?i)picture-in-picture"] floating enable, sticky enable, border pixel 2
+
 ### ----- AUDIO CONTROLS -----
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
@@ -97,6 +113,7 @@ bindsym $mod+v exec --no-startup-id env CM_LAUNCHER=rofi CM_HISTLENGTH=12 clipme
 
 # Launcher
 bindsym $mod+space exec --no-startup-id rofi -show drun
+bindsym $mod+Tab exec --no-startup-id rofi -show window
 
 ### ----- FOCUS MOVEMENT -----
 bindsym $mod+h focus left
