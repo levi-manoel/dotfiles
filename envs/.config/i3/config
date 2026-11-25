@@ -89,7 +89,8 @@ bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5%
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
 
-bindsym $mod+b exec --no-startup-id i3lock -i $HOME/dev/personal/dotfiles/wallpaper.png
+# Pauses dunst for the whole lock, then shows what arrived.
+bindsym $mod+b exec --no-startup-id $HOME/dev/personal/dotfiles/bin/lock-screen
 
 ### ----- NOTIFICATIONS -----
 bindsym $mod+comma exec --no-startup-id dunstctl action

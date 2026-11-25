@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# i3lock does not cover dunst, so notifications stay queued until unlock.
+set -euo pipefail
+
+wallpaper="$HOME/dev/personal/dotfiles/wallpaper.png"
+locker_pid=""
+
+unpause() {
+  dunstctl set-paused false >/dev/null 2>&1 || true
+}
+
+stop() {
+  if [[ -n "$locker_pid" ]] && kill -0 "$locker_pid" 2>/dev/null; then
+    kill "$locker_pid" 2>/dev/null || true
+    wait "$locker_pid" 2>/dev/null || true
+  fi
+  exit 0
+}
+
+trap unpause EXIT
+trap stop HUP INT TERM
+
+dunstctl set-paused true >/dev/null 2>&1 || true
+
+# --nofork keeps XSS_SLEEP_LOCK_FD and closes it once the screen is locked.
+# Drop the copy held by this shell so suspend is not delayed until unlock.
+i3lock --nofork -i "$wallpaper" &
+locker_pid=$!
+if [[ -e /dev/fd/${XSS_SLEEP_LOCK_FD:--1} ]]; then
+  exec {XSS_SLEEP_LOCK_FD}<&-
+fi
+
+wait "$locker_pid"
