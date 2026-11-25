@@ -34,6 +34,22 @@ sudo install -D -m 0644 \
   "${SYSTEM_DIR}/etc/systemd/system/battery-charge-threshold.service" \
   /etc/systemd/system/battery-charge-threshold.service
 
+# --- docker interfaces stay out of NetworkManager ---
+sudo install -D -m 0644 \
+  "${SYSTEM_DIR}/etc/NetworkManager/conf.d/99-unmanaged-docker.conf" \
+  /etc/NetworkManager/conf.d/99-unmanaged-docker.conf
+
+if command -v nmcli >/dev/null 2>&1; then
+  sudo nmcli general reload
+  nmcli -t -f DEVICE device | while IFS= read -r dev; do
+    case "$dev" in
+      docker*|br-*|veth*)
+        sudo nmcli device set "$dev" managed no || true
+        ;;
+    esac
+  done
+fi
+
 sudo sysctl --system >/dev/null
 sudo systemctl restart systemd-journald
 sudo systemctl daemon-reload
