@@ -119,10 +119,11 @@ scripts=(
   vesktop.sh
   fastpotify.sh
   xclicker.sh
+  foradecena.sh
 )
 
 for script_name in "${scripts[@]}"; do
-  if [[ "$no_display" == "1" && ( "$script_name" == "vesktop.sh" || "$script_name" == "fastpotify.sh" || "$script_name" == "xclicker.sh" ) ]]; then
+  if [[ "$no_display" == "1" && ( "$script_name" == "vesktop.sh" || "$script_name" == "fastpotify.sh" || "$script_name" == "xclicker.sh" || "$script_name" == "foradecena.sh" ) ]]; then
     log "no-display: skipping $script_name"
     continue
   fi

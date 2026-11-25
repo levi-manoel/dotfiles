@@ -71,6 +71,11 @@ display=(
   feh
   easyeffects
   obs-studio
+  # Fora de Cena: loopback camera, plus Tcl/Tk 8.6 (Fedora's tcl/tk is 9).
+  akmod-v4l2loopback
+  v4l2loopback
+  tcl8
+  tk8
   i3
   rofi
   i3lock

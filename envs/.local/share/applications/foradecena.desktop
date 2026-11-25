@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Fora de Cena
+Comment=Efeitos de desaparecimento para chamadas de vídeo
+Exec=/home/levi/dev/personal/dotfiles/bin/foradecena
+Terminal=false
+Categories=AudioVideo;Video;
+StartupNotify=true

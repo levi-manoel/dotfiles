@@ -1,0 +1,10 @@
+#!/bin/sh
+# Fora de Cena. The Ubuntu build needs libbz2.so.1.0; Fedora ships libbz2.so.1.
+root="${HOME}/.local/opt/ForaDeCena"
+if [ ! -x "${root}/ForaDeCena" ]; then
+  echo "foradecena: not installed (${root}). Run runs/foradecena.sh" >&2
+  exit 1
+fi
+export LD_LIBRARY_PATH="${root}/compat${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
+cd "${root}" || exit 1
+exec "${root}/ForaDeCena" "$@"
